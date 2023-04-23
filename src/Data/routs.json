@@ -1,0 +1,21 @@
+[
+    {
+        "name": "Rout 1",
+        "id": 1,
+        "assign": {
+            "user_id": 1
+        }
+    },
+    {
+        "name": "Rout 2",
+        "id": 1,
+        "assign": {
+            "user_id": 1
+        }
+    },
+    {
+        "name": "Rout 3",
+        "id": 1,
+        "assign": null
+    }
+]

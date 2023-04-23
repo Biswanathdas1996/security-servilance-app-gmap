@@ -1,0 +1,40 @@
+[
+    {
+        "name": "Place 1",
+        "radius": 500,
+        "center": {
+            "lat": 22.571695590417033,
+            "lng": 88.50591509173454
+        }
+    },
+    {
+        "name": "Place 2",
+        "radius": 400,
+        "center": {
+            "lat": 22.581905590677033,
+            "lng": 88.50591509173454
+        }
+    },
+    {
+        "name": "Place 3",
+        "radius": 400,
+        "center": {
+            "lat": 22.54997677339611,
+            "lng": 88.52130889892578
+        },
+        "visited": {
+            "status": false
+        }
+    },
+    {
+        "name": "Place 4",
+        "radius": 400,
+        "center": {
+            "lat": 22.559567932850598,
+            "lng": 88.49538803100586
+        },
+        "visited": {
+            "status": false
+        }
+    }
+]
