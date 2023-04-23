@@ -104,13 +104,13 @@ export default function Map({ defaultCenter, defaultZoom }) {
           />
         )}
 
-        {VisitData &&
+        {/* {VisitData &&
           VisitData.map((marker, index) => (
             <Marker
               key={`marker_${index}`}
               position={{ lat: marker.center.lat, lng: marker.center.lng }}
             />
-          ))}
+          ))} */}
 
         {VisitData &&
           VisitData?.map((val, index) => {

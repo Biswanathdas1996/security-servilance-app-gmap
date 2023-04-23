@@ -8,6 +8,7 @@ import Map from "./Pages/Map";
 import VisitedPath from "./Pages/VisitedPath";
 import AddCircleToRoute from "./Pages/Admin/AddCircleToRoute";
 import ListOfRouts from "./Pages/Admin/ListOfRouts";
+import ListOfUser from "./Pages/Admin/ListOfUser";
 
 class Routing extends React.Component {
   render() {
@@ -18,6 +19,7 @@ class Routing extends React.Component {
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/map" element={<Map />} />
         <Route exact path="/path" element={<VisitedPath />} />
+        <Route exact path="/users" element={<ListOfUser />} />
         <Route exact path="/list-of_routs" element={<ListOfRouts />} />
         <Route exact path="/add-routs/:id" element={<AddCircleToRoute />} />
 
