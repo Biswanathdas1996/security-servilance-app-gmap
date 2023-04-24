@@ -34,7 +34,13 @@ export const MAP = ({ markers, updatedPointer }) => {
       defaultZoom={15}
       onClick={(e) => handleClick(e)}
     >
-      <Marker key={12} position={selectLocation} />
+      <Marker
+        key={12}
+        position={selectLocation}
+        // icon={
+        //   "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+        // }
+      />
     </GoogleMap>
   );
 };

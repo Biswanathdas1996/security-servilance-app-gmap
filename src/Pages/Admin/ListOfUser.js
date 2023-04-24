@@ -63,7 +63,7 @@ export default function CustomizedTables() {
         >
           <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Add new routs
+              Add new user
             </Typography>
             <Box
               component="form"
@@ -82,7 +82,7 @@ export default function CustomizedTables() {
               <Button
                 variant="contained"
                 styel={{ margin: 10 }}
-                color="primary"
+                className="rufous-button"
               >
                 Submit
               </Button>
@@ -103,7 +103,7 @@ export default function CustomizedTables() {
                   variant="contained"
                   onClick={handleOpen}
                   styel={{ margin: 10 }}
-                  color="success"
+                  className="tawny-button"
                 >
                   Add New User
                 </Button>
@@ -130,6 +130,7 @@ export default function CustomizedTables() {
                         variant="contained"
                         href={`/#/user/1`}
                         style={{ float: "right" }}
+                        className="yellow-button"
                       >
                         Assign Routs
                       </Button>
@@ -137,7 +138,11 @@ export default function CustomizedTables() {
                       <Button variant="contained" disabled>
                         Edit
                       </Button>
-                      <Button variant="contained" color="error">
+                      <Button
+                        variant="contained"
+                        color="error"
+                        className="rufous-button"
+                      >
                         Delete
                       </Button>
                       <Button variant="contained" color="warning">
@@ -160,6 +165,7 @@ export default function CustomizedTables() {
                         variant="contained"
                         href={`/#/user/1`}
                         style={{ float: "right" }}
+                        className="yellow-button"
                       >
                         Assign Routs
                       </Button>
@@ -167,7 +173,7 @@ export default function CustomizedTables() {
                       <Button variant="contained" disabled>
                         Edit
                       </Button>
-                      <Button variant="contained" color="error">
+                      <Button variant="contained" className="rufous-button">
                         Delete
                       </Button>
                     </Stack>

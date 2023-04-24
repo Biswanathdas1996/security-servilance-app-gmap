@@ -11,3 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.black-button{
+  background-color: #000000 !important;
+}
+.yellow-button{
+  background-color: #F3BE26 !important;
+  color: #000000 !important;
+}
+.rufous-button{
+  background-color: #AD1B02 !important;
+}
+.tawny-button{
+  background-color: #D85604 !important;
+}
+.beer-button{
+  background-color: #E88D14 !important;
+}

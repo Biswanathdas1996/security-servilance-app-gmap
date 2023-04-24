@@ -20,14 +20,14 @@ const style = {
   p: 4,
 };
 
-export default function Map({ open, handleClose, ...props }) {
+export default function Map({ open, onCloseModal, ...props }) {
   console.log("---", props);
   return (
     <>
       <div>
         <Modal
           open={open}
-          onClose={handleClose}
+          onClose={onCloseModal}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >

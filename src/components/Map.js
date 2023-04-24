@@ -71,13 +71,13 @@ export default function Map({ defaultCenter, defaultZoom }) {
           onClose={handleClose}
           clickedPlace={clickedPlace}
         />
-        <CaptureData open={openCamera} onClose={handleOpenCameraClose} />
+        <CaptureData open={openCamera} onCloseModal={handleOpenCameraClose} />
       </div>
 
       <center>
         <br />
         <br />
-        {isInsideCircle && (
+        {!isInsideCircle && (
           <Button
             variant="contained"
             onClick={handleOpenCameraOpen}
@@ -95,14 +95,7 @@ export default function Map({ defaultCenter, defaultZoom }) {
         defaultOptions={{ styles: mapStyles }}
         onClick={(e) => handleClick(e)}
       >
-        {currentLocation && (
-          <Marker
-            // icon={
-            //   "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
-            // }
-            position={currentLocation}
-          />
-        )}
+        {currentLocation && <Marker position={currentLocation} />}
 
         {/* {VisitData &&
           VisitData.map((marker, index) => (
