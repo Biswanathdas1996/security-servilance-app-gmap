@@ -8,6 +8,8 @@ import TextField from "@mui/material/TextField";
 import { GoogleMap, Circle, Marker } from "react-google-maps";
 import ListOfRoutes from "../../components/ListOfRoutes";
 import MapWrappedComponent from "../../HOC/Map";
+import { useParams } from "react-router-dom";
+import { get, post, put, del } from "../../helper/apiHelper";
 import RouteData from "../../Data/route_id_1.json";
 
 const style = {
@@ -24,12 +26,26 @@ const style = {
 
 function BasicModal() {
   const [open, setOpen] = React.useState(false);
+  const [name, setName] = React.useState("");
+  const [radius, setRadius] = React.useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+  const { id } = useParams();
   const [selectedLocation, setSelectedLocation] = React.useState(RouteData);
-
   const [selectLocation, setSelectLocation] = React.useState(null);
+  const [choosedLocation, setChoosedLocation] = React.useState([]);
+
+  const fetchRoutsData = async () => {
+    const response = await get(`/admin/route/${id}`);
+    console.log("response", response);
+    if (response?.success) {
+      setChoosedLocation(response?.data?.locations);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchRoutsData();
+  }, []);
 
   async function handleClick(event) {
     var lat = event.latLng.lat();
@@ -44,7 +60,26 @@ function BasicModal() {
     setSelectLocation(coordinate);
   };
 
-  // console.log("---selectedLocation--", selectedLocation);
+  const addPlace = async () => {
+    const data = {
+      routeId: Number(id),
+      locations: [
+        {
+          name: name,
+          lat: selectLocation?.lat,
+          long: selectLocation?.lng,
+          radius: Number(radius),
+        },
+      ],
+    };
+
+    const response = await post("/admin/route/location", data);
+    console.log("----response--->", response);
+    await fetchRoutsData();
+    handleClose(false);
+  };
+
+  console.log("---choosedLocation--", choosedLocation);
   return (
     <div>
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
@@ -64,6 +99,7 @@ function BasicModal() {
             label="Enter Name"
             variant="outlined"
             style={{ marginTop: 10, width: "100%" }}
+            onChange={(e) => setName(e.target.value)}
           />
           <TextField
             id="outlined-basic"
@@ -79,10 +115,13 @@ function BasicModal() {
             label="Circle Radius"
             variant="outlined"
             style={{ marginTop: 10, width: "100%" }}
+            onChange={(e) => setRadius(e.target.value)}
           />
           <br />
           <br />
-          <Button variant="contained">Add Place</Button>
+          <Button variant="contained" onClick={() => addPlace()}>
+            Add Place
+          </Button>
         </Box>
       </Modal>
 
@@ -91,16 +130,16 @@ function BasicModal() {
         defaultZoom={13}
         onClick={(e) => handleClick(e)}
       >
-        {selectedLocation?.map((marker, index) => (
+        {choosedLocation?.map((marker, index) => (
           <>
             <Marker
               key={index}
-              position={{ lat: marker?.center?.lat, lng: marker?.center?.lng }}
+              position={{ lat: marker?.lat, lng: marker?.long }}
               title={marker?.name}
               label={marker?.name}
             />
             <Circle
-              center={marker?.center}
+              center={{ lat: marker?.lat, lng: marker?.long }}
               radius={marker?.radius}
               options={{
                 strokeColor: "#FF0000",
