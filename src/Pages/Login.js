@@ -1,17 +1,11 @@
 import React, { useRef, useEffect, useState } from "react";
 import "../App.css";
 import * as tf from "@tensorflow/tfjs";
-// OLD MODEL
-//import * as facemesh from "@tensorflow-models/facemesh";
-import _ from "lodash";
-// import Auth from "../Auth.json";
-// NEW MODEL
 import * as facemesh from "@tensorflow-models/face-landmarks-detection";
 import Webcam from "react-webcam";
 import { drawMesh } from "../utilities";
 import swal from "sweetalert";
-import { _transction_signed, _fetch_signed } from "../web3/connect";
-import { createAnduploadFileToIpfs } from "../ipfs";
+import { _fetch_signed } from "../web3/connect";
 
 function App({ validate, display }) {
   const webcamRef = useRef(null);
@@ -19,7 +13,6 @@ function App({ validate, display }) {
 
   const [user, setUser] = useState(null);
   const [contactNo, setContactNo] = useState("");
-  const [faceData, setFaceData] = useState("");
   const [authFaceData, setAuthFaceData] = useState(null);
   const [unauthenticated, setUnauthenticated] = useState(false);
 
@@ -85,19 +78,12 @@ function App({ validate, display }) {
       canvasRef.current.width = videoWidth;
       canvasRef.current.height = videoHeight;
 
-      // Make Detections
-      // OLD MODEL
-      //       const face = await net.estimateFaces(video);
-      // NEW MODEL
       const face = await net.estimateFaces({
         input: video,
         predictIrises: false,
         flipHorizontal: false,
         predictBoundingBox: true,
       });
-      // console.log(face[0]?.scaledMesh);
-      setFaceData(JSON.stringify(face[0]?.scaledMesh));
-      // console.log("Auth", Auth[0]?.annotations);
 
       const detectedLandmarks = face[0]?.scaledMesh;
 
@@ -112,13 +98,10 @@ function App({ validate, display }) {
       const distances =
         detectedLandmarks &&
         detectedLandmarks.map((landmark, i) => {
-          // console.log("-----landmark-->,", landmark);
-          // console.log("-----authFaceDataVal-->,", authFaceDataVal);
           if (authFaceDataVal) {
             return distance(landmark, authFaceDataVal[i]);
           }
         });
-      // console.log("-----distances--->", distances);
       const isMatch =
         distances &&
         distances.every((distance) => {
