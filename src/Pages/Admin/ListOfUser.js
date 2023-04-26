@@ -14,7 +14,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
-
+import swal from "sweetalert";
 import { get, post, put, del } from "../../helper/apiHelper";
 
 const style = {
@@ -50,144 +50,93 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function CustomizedTables() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [users, setUsers] = React.useState(null);
 
   const fetchUserList = async () => {
     const response = await get("/admin/user?search=&page&limit");
-    console.log("--response", response);
+    if (response?.data?.rows) {
+      setUsers(response?.data?.rows);
+    }
   };
+
+  const approveUser = async (userId) => {
+    const response = await put("/admin/user/approve", { userId });
+    if (response?.success) {
+      swal("Success!", "user approved successfully!", "success").then(
+        (value) => {
+          fetchUserList();
+        }
+      );
+    }
+  };
+
   React.useEffect(() => {
     fetchUserList();
   }, []);
+
   return (
     <>
-      <div>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Add new user
-            </Typography>
-            <Box
-              component="form"
-              sx={{
-                "& > :not(style)": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
-                id="outlined-basic"
-                label="Enter name"
-                variant="outlined"
-                styel={{ width: "100%" }}
-              />
-              <Button
-                variant="contained"
-                styel={{ margin: 10 }}
-                className="rufous-button"
-              >
-                Submit
-              </Button>
-            </Box>
-          </Box>
-        </Modal>
-      </div>
-
       <TableContainer>
         <center>
           <Card>
             <Table
-              sx={{ maxWidth: 700, margin: 3 }}
+              sx={{ maxWidth: 900, margin: 3 }}
               aria-label="customized table"
             >
               <TableHead>
-                <Button
-                  variant="contained"
-                  onClick={handleOpen}
-                  styel={{ margin: 10 }}
-                  className="tawny-button"
-                >
-                  Add New User
-                </Button>
                 <br />
                 <br />
                 <TableRow>
-                  <StyledTableCell>Rout Name</StyledTableCell>
-                  <StyledTableCell align="left">Status</StyledTableCell>
+                  <StyledTableCell> Name</StyledTableCell>
+                  <StyledTableCell align="left">ID No</StyledTableCell>
                   <StyledTableCell align="left">Action</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    User 1
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    Gread 1
-                  </StyledTableCell>
+                {users?.map((user, index) => (
+                  <StyledTableRow>
+                    <StyledTableCell component="th" scope="row">
+                      {user?.name}
+                    </StyledTableCell>
+                    <StyledTableCell component="th" scope="row">
+                      {user?.empID}
+                    </StyledTableCell>
 
-                  <StyledTableCell align="right" component="th" scope="row">
-                    <Stack direction="row" spacing={1}>
-                      <Button
-                        variant="contained"
-                        href={`/#/user/1`}
-                        style={{ float: "right" }}
-                        className="yellow-button"
-                      >
-                        Assign Routs
-                      </Button>
+                    <StyledTableCell align="right" component="th" scope="row">
+                      <Stack direction="row" spacing={1}>
+                        <Button
+                          variant="contained"
+                          href={`/#/user/1`}
+                          style={{ float: "right" }}
+                          // className="yellow-button"
+                          disabled={!user?.isApproved}
+                        >
+                          Assign Routs
+                        </Button>
 
-                      <Button variant="contained" disabled>
-                        Edit
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="error"
-                        className="rufous-button"
-                      >
-                        Delete
-                      </Button>
-                      <Button variant="contained" color="warning">
-                        Approve
-                      </Button>
-                    </Stack>
-                  </StyledTableCell>
-                </StyledTableRow>
-                <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    User 2
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    Gread 2
-                  </StyledTableCell>
-
-                  <StyledTableCell align="right" component="th" scope="row">
-                    <Stack direction="row" spacing={1}>
-                      <Button
-                        variant="contained"
-                        href={`/#/user/1`}
-                        style={{ float: "right" }}
-                        className="yellow-button"
-                      >
-                        Assign Routs
-                      </Button>
-
-                      <Button variant="contained" disabled>
-                        Edit
-                      </Button>
-                      <Button variant="contained" className="rufous-button">
-                        Delete
-                      </Button>
-                    </Stack>
-                  </StyledTableCell>
-                </StyledTableRow>
+                        <Button variant="contained" disabled>
+                          Edit
+                        </Button>
+                        <Button
+                          variant="contained"
+                          color="error"
+                          className="rufous-button"
+                        >
+                          Delete
+                        </Button>
+                        {!user?.isApproved && (
+                          <Button
+                            variant="contained"
+                            color="warning"
+                            onClick={() => approveUser(user?.id)}
+                          >
+                            Approve
+                          </Button>
+                        )}
+                      </Stack>
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
               </TableBody>
             </Table>
           </Card>

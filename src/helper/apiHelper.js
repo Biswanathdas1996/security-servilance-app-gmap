@@ -43,7 +43,7 @@ export const get = async (url, params) => {
         })
         .then((result) => result)
         .catch((error) => console.log("error", error));
-      return response.data;
+      return response;
     } catch (error) {
       throw new Error(error.message);
     }
@@ -66,7 +66,7 @@ export const post = async (url, data) => {
         .then((response) => response.json())
         .then((result) => result)
         .catch((error) => console.log("error", error));
-      return response.data;
+      return response;
     } catch (error) {
       throw new Error(error.message);
     }
@@ -80,12 +80,16 @@ export const put = async (url, data) => {
     return mockData?.default;
   } else {
     try {
-      const requestValues = { ...requestOptions, data };
+      const requestValues = {
+        ...requestOptions,
+        method: "PUT",
+        body: JSON.stringify(data),
+      };
       const response = await fetch(`${BASE_URL}${url}`, requestValues)
         .then((response) => response.json())
         .then((result) => result)
         .catch((error) => console.log("error", error));
-      return response.data;
+      return response;
     } catch (error) {
       throw new Error(error.message);
     }
