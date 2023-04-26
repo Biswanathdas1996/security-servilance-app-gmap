@@ -1,59 +1,22 @@
 import React, { useRef, useEffect, useState } from "react";
 import "../App.css";
 import * as tf from "@tensorflow/tfjs";
-// OLD MODEL
-//import * as facemesh from "@tensorflow-models/facemesh";
 import _ from "lodash";
-import Auth from "../Auth.json";
-// NEW MODEL
 import * as facemesh from "@tensorflow-models/face-landmarks-detection";
 import Webcam from "react-webcam";
 import { drawMesh } from "../utilities";
-import { _transction_signed } from "../web3/connect";
-import { createAnduploadFileToIpfs } from "../ipfs";
+import UserRegister from "./UserRegister";
 
 function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [faceData, setFaceData] = useState("");
   const [loading, setLoading] = useState(false);
   const [start, setStart] = useState(false);
-  const [response, setResponse] = useState(null);
+
   const [findFace, setFindFace] = useState(null);
 
-  function handleNameChange(event) {
-    setName(event.target.value);
-  }
-
-  function handleEmailChange(event) {
-    setEmail(event.target.value);
-  }
-
-  async function handleSubmit(event) {
-    setStart(true);
-    event.preventDefault();
-    const resultsSaveMetaData = await createAnduploadFileToIpfs(faceData);
-    console.log("--->ipfs", resultsSaveMetaData);
-    const txn = await _transction_signed(
-      "create",
-      name,
-      JSON.stringify(resultsSaveMetaData),
-      email
-    );
-    setResponse(txn);
-
-    window.location.replace("/#/login");
-    //
-    // Handle form submission
-  }
-
-  const modalClose = () => {
-    window.location.replace("/#/login");
-    setStart(false);
-  };
   //  Load posenet
   const runFacemesh = async () => {
     setLoading(true);
@@ -171,48 +134,7 @@ function App() {
           </header>
           <center>
             {findFace ? (
-              <form
-                className="registration-form"
-                style={{
-                  width: "20rem",
-                  textAlign: "left",
-                  border: "1px solid #b5b2b2",
-                  borderRadius: 10,
-                  marginTop: 30,
-                }}
-              >
-                <div style={{ margin: 10 }}>
-                  <div className="form-group">
-                    <label htmlFor="name">Name</label>
-                    <input
-                      type="text"
-                      id="name"
-                      className="form-control"
-                      value={name}
-                      onChange={handleNameChange}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="email">PIN</label>
-                    <input
-                      type="text"
-                      id="contact"
-                      className="form-control"
-                      value={email}
-                      onChange={handleEmailChange}
-                    />
-                  </div>
-
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={(e) => handleSubmit(e)}
-                  >
-                    Register
-                  </button>
-                </div>
-              </form>
+              <UserRegister faceData={faceData} />
             ) : (
               <>
                 <div className="loader"></div>

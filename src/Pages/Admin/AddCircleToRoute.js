@@ -13,7 +13,7 @@ import {
   Circle,
   Marker,
 } from "react-google-maps";
-import { MAP_KEY } from "../../config";
+import { Google_Map_URL, MAP_KEY } from "../../config";
 import ListOfRoutes from "../../components/ListOfRoutes";
 
 import RouteData from "../../Data/route_id_1.json";
@@ -137,7 +137,7 @@ export default function App() {
   return (
     <div style={{ height: "100vh", width: "100%" }}>
       <Map
-        googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${MAP_KEY}`}
+        googleMapURL={`${Google_Map_URL}?key=${MAP_KEY}`}
         loadingElement={<div style={{ height: "100%" }} />}
         containerElement={<div style={{ height: "100%" }} />}
         mapElement={<div style={{ height: "80vh" }} />}

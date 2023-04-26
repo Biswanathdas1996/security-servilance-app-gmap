@@ -15,6 +15,8 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
 
+import { get, post, put, del } from "../../helper/apiHelper";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -52,6 +54,13 @@ export default function CustomizedTables() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const fetchUserList = async () => {
+    const response = await get("/admin/user?search=&page&limit");
+    console.log("--response", response);
+  };
+  React.useEffect(() => {
+    fetchUserList();
+  }, []);
   return (
     <>
       <div>
