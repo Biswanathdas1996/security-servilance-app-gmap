@@ -1,11 +1,18 @@
 import React, { useRef, useEffect, useState } from "react";
 import "../App.css";
 import * as tf from "@tensorflow/tfjs";
+// OLD MODEL
+//import * as facemesh from "@tensorflow-models/facemesh";
+import _ from "lodash";
+// import Auth from "../Auth.json";
+// NEW MODEL
 import * as facemesh from "@tensorflow-models/face-landmarks-detection";
 import Webcam from "react-webcam";
 import { drawMesh } from "../utilities";
 import swal from "sweetalert";
-import { _fetch_signed } from "../web3/connect";
+import { _transction_signed, _fetch_signed } from "../web3/connect";
+import { createAnduploadFileToIpfs } from "../ipfs";
+import { get, post, put, del } from "../helper/apiHelper";
 
 function App({ validate, display }) {
   const webcamRef = useRef(null);
@@ -13,6 +20,7 @@ function App({ validate, display }) {
 
   const [user, setUser] = useState(null);
   const [contactNo, setContactNo] = useState("");
+  const [faceData, setFaceData] = useState("");
   const [authFaceData, setAuthFaceData] = useState(null);
   const [unauthenticated, setUnauthenticated] = useState(false);
 
@@ -23,27 +31,32 @@ function App({ validate, display }) {
   }
 
   async function handleSubmit() {
-    const data = await _fetch_signed("getUser", contactNo);
-    console.log("--->data", data);
-    setUser(data);
-    const url = JSON.parse(data?.faceData);
-    var requestOptions = {
-      method: "GET",
-      redirect: "follow",
-    };
+    // const data = await _fetch_signed("getUser", contactNo);
+    // console.log("--->data", data);
+    // setUser(data);
+    // const url = JSON.parse(data?.faceData);
+    // var requestOptions = {
+    //   method: "GET",
+    //   redirect: "follow",
+    // };
 
-    const faceData = await fetch(
-      // `https://ipfs.io/ipfs/${data?.faceData}/ipfs.json`,
-      `https://endpoints.in/endpoints/ipfs/fetch-ipfs.php?id=${url?.path}`,
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((result) => result)
-      .catch((error) => console.log("error", error));
-    console.log("--->faceData", faceData);
+    // const faceData = await fetch(
+    //   // `https://ipfs.io/ipfs/${data?.faceData}/ipfs.json`,
+    //   `https://endpoints.in/endpoints/ipfs/fetch-ipfs.php?id=${url?.path}`,
+    //   requestOptions
+    // )
+    //   .then((response) => response.json())
+    //   .then((result) => result)
+    //   .catch((error) => console.log("error", error));
 
-    setAuthFaceData(JSON.parse(faceData));
-    // window.location.replace("/home");
+    const faceData = await post("/auth/getFaceDataByEmpID", {
+      empID: contactNo,
+    });
+
+    const faceIDData = JSON.parse(faceData?.data?.faceID);
+    console.log("--->faceData", faceIDData);
+    // setAuthFaceData(faceData?.data?.faceID);
+    setAuthFaceData(JSON.parse(faceIDData));
   }
 
   //  Load posenet
@@ -78,12 +91,19 @@ function App({ validate, display }) {
       canvasRef.current.width = videoWidth;
       canvasRef.current.height = videoHeight;
 
+      // Make Detections
+      // OLD MODEL
+      //       const face = await net.estimateFaces(video);
+      // NEW MODEL
       const face = await net.estimateFaces({
         input: video,
         predictIrises: false,
         flipHorizontal: false,
         predictBoundingBox: true,
       });
+      // console.log(face[0]?.scaledMesh);
+      setFaceData(JSON.stringify(face[0]?.scaledMesh));
+      // console.log("Auth", Auth[0]?.annotations);
 
       const detectedLandmarks = face[0]?.scaledMesh;
 
@@ -93,7 +113,7 @@ function App({ validate, display }) {
         return Math.sqrt((ax - bx) ** 2 + (ay - by) ** 2 + (az - bz) ** 2);
       }
 
-      const tolerance = 70; // adjust this value to set the tolerance for matching faces
+      const tolerance = 50; // adjust this value to set the tolerance for matching faces
 
       const distances =
         detectedLandmarks &&
@@ -102,6 +122,7 @@ function App({ validate, display }) {
             return distance(landmark, authFaceDataVal[i]);
           }
         });
+      // console.log("-----distances--->", distances);
       const isMatch =
         distances &&
         distances.every((distance) => {
@@ -113,13 +134,13 @@ function App({ validate, display }) {
         // authenticated user
         console.log("User authenticated");
         clearInterval(interval);
+        validate();
+        setAuthFaceData(null);
         swal(
           "Authenticated !",
           `${user?.name}, Welcome to our portal`,
           "success"
         ).then((value) => {
-          validate();
-          setAuthFaceData(null);
           return;
           // window.location.replace("/");
         });

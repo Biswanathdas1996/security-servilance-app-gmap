@@ -11,9 +11,10 @@ import Stack from "@mui/material/Stack";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
 import AssignUserToRouts from "../../components/AssignUserToRouts";
+import AddNewRoutes from "../../components/AddNewRoutes";
+import { get, post, put, del } from "../../helper/apiHelper";
 
 import RouteData from "../../Data/routs.json";
 
@@ -52,8 +53,23 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function CustomizedTables() {
   const [open, setOpen] = React.useState(false);
   const [openUserModal, setOpenUserModal] = React.useState(false);
+  const [routsData, setRoutsData] = React.useState(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const fetchAllRouts = async () => {
+    const response = await get("/admin/route?search=&page&limit");
+    console.log("-->", response);
+    if (response?.success) {
+      setRoutsData(response?.data?.rows);
+    } else {
+      alert("error");
+    }
+  };
+
+  React.useEffect(() => {
+    fetchAllRouts();
+  }, []);
 
   return (
     <>
@@ -64,33 +80,7 @@ export default function CustomizedTables() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Add new routs
-            </Typography>
-            <Box
-              component="form"
-              sx={{
-                "& > :not(style)": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
-                id="outlined-basic"
-                label="Enter name"
-                variant="outlined"
-                styel={{ width: "100%" }}
-              />
-              <Button
-                variant="contained"
-                styel={{ margin: 10 }}
-                className="rufous-button"
-              >
-                Submit
-              </Button>
-            </Box>
-          </Box>
+          <AddNewRoutes />
         </Modal>
         <Modal
           open={openUserModal}
@@ -141,7 +131,7 @@ export default function CustomizedTables() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {RouteData.map((row) => (
+                {routsData?.map((row) => (
                   <StyledTableRow key={row.name}>
                     <StyledTableCell component="th" scope="row">
                       {row.name}
