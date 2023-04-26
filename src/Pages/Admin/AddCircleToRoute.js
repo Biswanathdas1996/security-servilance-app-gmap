@@ -5,17 +5,9 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import MapForm from "../../components/MapForm";
 import TextField from "@mui/material/TextField";
-
-import {
-  withGoogleMap,
-  withScriptjs,
-  GoogleMap,
-  Circle,
-  Marker,
-} from "react-google-maps";
-import { Google_Map_URL, MAP_KEY } from "../../config";
+import { GoogleMap, Circle, Marker } from "react-google-maps";
 import ListOfRoutes from "../../components/ListOfRoutes";
-
+import MapWrappedComponent from "../../HOC/Map";
 import RouteData from "../../Data/route_id_1.json";
 
 const style = {
@@ -131,18 +123,6 @@ function BasicModal() {
   );
 }
 
-const Map = withScriptjs(withGoogleMap(({}) => <BasicModal />));
-
 export default function App() {
-  return (
-    <div style={{ height: "100vh", width: "100%" }}>
-      <Map
-        googleMapURL={`${Google_Map_URL}?key=${MAP_KEY}`}
-        loadingElement={<div style={{ height: "100%" }} />}
-        containerElement={<div style={{ height: "100%" }} />}
-        mapElement={<div style={{ height: "80vh" }} />}
-        // coordinates={coordinates.coordinates}
-      />
-    </div>
-  );
+  return MapWrappedComponent(BasicModal);
 }
