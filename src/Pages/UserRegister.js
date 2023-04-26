@@ -59,10 +59,7 @@ export default function UserRegister({ faceData }) {
                   faceID: JSON.stringify(faceData),
                 };
                 delete body.confirmPassword;
-                console.log(body);
-
                 const response = await post("/auth/register", body);
-                console.log("---response-->", response);
                 if (response?.success) {
                   window.location = "/register-face-id";
                 } else {

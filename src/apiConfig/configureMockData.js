@@ -1,6 +1,6 @@
 export const mockFileMapping = [
   {
-    url: "/users",
+    url: "/admin/user?search=&page&limit",
     method: "GET",
     mockFile: "user_mock.json",
   },

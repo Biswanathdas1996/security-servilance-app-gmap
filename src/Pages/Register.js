@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import "../App.css";
 import * as tf from "@tensorflow/tfjs";
-import _ from "lodash";
 import * as facemesh from "@tensorflow-models/face-landmarks-detection";
 import Webcam from "react-webcam";
 import { drawMesh } from "../utilities";
