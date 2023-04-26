@@ -49,7 +49,7 @@ export default function CustomizedAccordions({ routeData }) {
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
-  console.log("routeData", routeData);
+
   return (
     <div>
       {routeData?.map((routeData, index) => {
@@ -66,12 +66,12 @@ export default function CustomizedAccordions({ routeData }) {
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                <b>Circle Center:</b>{" "}
+                {/* <b>Circle Center:</b>{" "} */}
                 <code> {JSON.stringify(routeData?.center)}</code>
               </Typography>
               <Typography>
                 <b>Circle Radius:</b>{" "}
-                <code> {JSON.stringify(routeData?.radius)}</code>
+                <code> {JSON.stringify(routeData?.radius)} Mitter</code>
               </Typography>
               <br />
               <Button

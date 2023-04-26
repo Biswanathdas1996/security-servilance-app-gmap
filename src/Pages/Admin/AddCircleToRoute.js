@@ -31,7 +31,7 @@ function BasicModal() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { id } = useParams();
-  const [selectedLocation, setSelectedLocation] = React.useState(RouteData);
+  const [routeData, setRouteData] = React.useState(null);
   const [selectLocation, setSelectLocation] = React.useState(null);
   const [choosedLocation, setChoosedLocation] = React.useState([]);
 
@@ -40,6 +40,7 @@ function BasicModal() {
     console.log("response", response);
     if (response?.success) {
       setChoosedLocation(response?.data?.locations);
+      setRouteData(response?.data);
     }
   };
 
@@ -112,7 +113,7 @@ function BasicModal() {
           <br />
           <TextField
             id="outlined-basic"
-            label="Circle Radius"
+            label="Circle Radius (Mitter)"
             variant="outlined"
             style={{ marginTop: 10, width: "100%" }}
             onChange={(e) => setRadius(e.target.value)}
@@ -125,39 +126,47 @@ function BasicModal() {
         </Box>
       </Modal>
 
-      <GoogleMap
-        defaultCenter={{ lat: 22.571695590417033, lng: 88.50591509173454 }}
-        defaultZoom={13}
-        onClick={(e) => handleClick(e)}
-      >
-        {choosedLocation?.map((marker, index) => (
-          <>
-            <Marker
-              key={index}
-              position={{ lat: marker?.lat, lng: marker?.long }}
-              title={marker?.name}
-              label={marker?.name}
-            />
-            <Circle
-              center={{ lat: marker?.lat, lng: marker?.long }}
-              radius={marker?.radius}
-              options={{
-                strokeColor: "#FF0000",
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: "#FF0000",
-                fillOpacity: 0.35,
-              }}
-            />
-          </>
-        ))}
-      </GoogleMap>
-      <div style={{ margin: 50 }}>
-        <ListOfRoutes routeData={selectedLocation} />
-        <br />
-        <br />
-        <br />
-      </div>
+      {routeData && (
+        <>
+          <GoogleMap
+            defaultCenter={{
+              lat: routeData?.centerLat,
+              lng: routeData?.centerLong,
+            }}
+            defaultZoom={13}
+            onClick={(e) => handleClick(e)}
+          >
+            {choosedLocation?.map((marker, index) => (
+              <>
+                <Marker
+                  key={index}
+                  position={{ lat: marker?.lat, lng: marker?.long }}
+                  title={marker?.name}
+                  label={marker?.name}
+                />
+                <Circle
+                  center={{ lat: marker?.lat, lng: marker?.long }}
+                  radius={marker?.radius}
+                  options={{
+                    strokeColor: "#FF0000",
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: "#FF0000",
+                    fillOpacity: 0.35,
+                  }}
+                />
+              </>
+            ))}
+          </GoogleMap>
+          <div style={{ margin: 50 }}>
+            <ListOfRoutes routeData={choosedLocation} />
+
+            <br />
+            <br />
+            <br />
+          </div>
+        </>
+      )}
     </div>
   );
 }
