@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   language: "English",
-  test: true,
+  loading: false,
 };
 
 export const configSlice = createSlice({
@@ -12,9 +12,12 @@ export const configSlice = createSlice({
     updateLanguage: (state, action) => {
       state.language = action.payload;
     },
+    setLoading: (state, action) => {
+      state.loading = action.payload;
+    },
   },
 });
 
-export const { updateLanguage } = configSlice.actions;
+export const { updateLanguage, setLoading } = configSlice.actions;
 
 export default configSlice.reducer;

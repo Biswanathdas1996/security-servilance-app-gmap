@@ -43,7 +43,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 
-export default function CustomizedAccordions({ routeData }) {
+export default function CustomizedAccordions({ routeData, deletLocation }) {
   const [expanded, setExpanded] = React.useState("panel0");
 
   const handleChange = (panel) => (event, newExpanded) => {
@@ -78,6 +78,7 @@ export default function CustomizedAccordions({ routeData }) {
                 variant="contained"
                 styel={{ marginTop: 20 }}
                 color="error"
+                onClick={() => deletLocation(routeData?.id)}
               >
                 Delete
               </Button>

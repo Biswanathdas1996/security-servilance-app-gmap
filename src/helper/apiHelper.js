@@ -1,18 +1,5 @@
 import { BASE_URL, USE_MOCK } from "../config";
 import { mockResponse } from "../utils/mockMapper";
-import { getCookie } from "./cookies";
-
-const myHeaders = new Headers({
-  "Content-Type": "application/json",
-  Cookie: document.cookie,
-});
-
-// myHeaders.append("Content-Type", "application/json");
-// myHeaders.append("Cookie", `session=${getCookie("session")}`);
-console.log("--requestOptions--->", {
-  "Content-Type": "application/json",
-  Cookie: document.cookie,
-});
 
 const requestOptions = {
   headers: {
@@ -96,19 +83,22 @@ export const put = async (url, data) => {
   }
 };
 
-export const del = async (url, params) => {
+export const del = async (url) => {
   if (USE_MOCK) {
-    const mockFile = mockResponse(url, "DELET");
+    const mockFile = mockResponse(url, "DELETE");
     const mockData = await import(`../apiConfig/Mock/${mockFile}`);
     return mockData?.default;
   } else {
     try {
-      const requestValues = { ...requestOptions, params };
+      const requestValues = {
+        ...requestOptions,
+        method: "DELETE",
+      };
       const response = await fetch(`${BASE_URL}${url}`, requestValues)
         .then((response) => response.json())
         .then((result) => result)
         .catch((error) => console.log("error", error));
-      return response.data;
+      return response;
     } catch (error) {
       throw new Error(error.message);
     }

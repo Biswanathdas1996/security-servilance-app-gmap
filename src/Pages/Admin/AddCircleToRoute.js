@@ -1,7 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import MapForm from "../../components/MapForm";
 import TextField from "@mui/material/TextField";
@@ -9,8 +8,7 @@ import { GoogleMap, Circle, Marker } from "react-google-maps";
 import ListOfRoutes from "../../components/ListOfRoutes";
 import MapWrappedComponent from "../../HOC/Map";
 import { useParams } from "react-router-dom";
-import { get, post, put, del } from "../../helper/apiHelper";
-import RouteData from "../../Data/route_id_1.json";
+import { get, post, del } from "../../helper/apiHelper";
 
 const style = {
   position: "absolute",
@@ -28,31 +26,29 @@ function BasicModal() {
   const [open, setOpen] = React.useState(false);
   const [name, setName] = React.useState("");
   const [radius, setRadius] = React.useState("");
-  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { id } = useParams();
   const [routeData, setRouteData] = React.useState(null);
   const [selectLocation, setSelectLocation] = React.useState(null);
   const [choosedLocation, setChoosedLocation] = React.useState([]);
 
-  const fetchRoutsData = async () => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const fetchRoutsData = React.useCallback(async () => {
     const response = await get(`/admin/route/${id}`);
-    console.log("response", response);
     if (response?.success) {
       setChoosedLocation(response?.data?.locations);
       setRouteData(response?.data);
     }
-  };
+  });
 
   React.useEffect(() => {
     fetchRoutsData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function handleClick(event) {
     var lat = event.latLng.lat();
     var lng = event.latLng.lng();
-    console.log("------>lat", lat);
-    console.log("------>lng", lng);
     setSelectLocation({ lat: lat, lng: lng });
     setOpen(true);
   }
@@ -62,6 +58,7 @@ function BasicModal() {
   };
 
   const addPlace = async () => {
+    setRouteData(null);
     const data = {
       routeId: Number(id),
       locations: [
@@ -74,16 +71,20 @@ function BasicModal() {
       ],
     };
 
-    const response = await post("/admin/route/location", data);
-    console.log("----response--->", response);
-    await fetchRoutsData();
+    await post("/admin/route/location", data);
     handleClose(false);
+    window.location.reload();
   };
 
-  console.log("---choosedLocation--", choosedLocation);
+  const deletLocation = async (id) => {
+    const response = await del(`/admin/route/location/${id}`);
+    if (response?.success) {
+      window.location.reload();
+    }
+  };
+
   return (
-    <div>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
+    <>
       <Modal
         open={open}
         onClose={handleClose}
@@ -159,7 +160,10 @@ function BasicModal() {
             ))}
           </GoogleMap>
           <div style={{ margin: 50 }}>
-            <ListOfRoutes routeData={choosedLocation} />
+            <ListOfRoutes
+              routeData={choosedLocation}
+              deletLocation={deletLocation}
+            />
 
             <br />
             <br />
@@ -167,10 +171,10 @@ function BasicModal() {
           </div>
         </>
       )}
-    </div>
+    </>
   );
 }
 
-export default function App() {
+export default function AddCircleToRoute() {
   return MapWrappedComponent(BasicModal);
 }
