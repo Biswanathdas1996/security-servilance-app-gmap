@@ -109,7 +109,7 @@ const AddNewRouter = () => {
           fullWidth
           id="centerLat"
           name="centerLat"
-          label="Center Latitude"
+          // label="Center Latitude"
           value={formik.values.centerLat}
           onChange={formik.handleChange}
           error={formik.touched.centerLat && Boolean(formik.errors.centerLat)}
@@ -120,7 +120,7 @@ const AddNewRouter = () => {
           fullWidth
           id="centerLong"
           name="centerLong"
-          label="Center Longitude"
+          // label="Center Longitude"
           value={formik.values.centerLong}
           onChange={formik.handleChange}
           error={formik.touched.centerLong && Boolean(formik.errors.centerLong)}

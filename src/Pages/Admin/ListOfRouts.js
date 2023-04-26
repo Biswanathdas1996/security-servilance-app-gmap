@@ -52,6 +52,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function CustomizedTables() {
   const [open, setOpen] = React.useState(false);
+  const [selectedRouteForAssign, setSelectedRouteForAssign] =
+    React.useState(null);
   const [openUserModal, setOpenUserModal] = React.useState(false);
   const [routsData, setRoutsData] = React.useState(null);
   const handleOpen = () => setOpen(true);
@@ -71,6 +73,10 @@ export default function CustomizedTables() {
     fetchAllRouts();
   }, []);
 
+  const assignUser = (id) => {
+    setOpenUserModal(true);
+    setSelectedRouteForAssign(id);
+  };
   return (
     <>
       <div>
@@ -100,7 +106,7 @@ export default function CustomizedTables() {
               noValidate
               autoComplete="off"
             >
-              <AssignUserToRouts />
+              <AssignUserToRouts routeId={selectedRouteForAssign} />
             </Box>
           </Box>
         </Modal>
@@ -144,7 +150,7 @@ export default function CustomizedTables() {
                           <Button
                             variant="contained"
                             color="warning"
-                            onClick={() => setOpenUserModal(true)}
+                            onClick={() => assignUser(row?.id)}
                             className="black-button"
                           >
                             Assign user
