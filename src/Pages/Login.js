@@ -10,8 +10,7 @@ import * as facemesh from "@tensorflow-models/face-landmarks-detection";
 import Webcam from "react-webcam";
 import { drawMesh } from "../utilities";
 import swal from "sweetalert";
-import { _transction_signed, _fetch_signed } from "../web3/connect";
-import { createAnduploadFileToIpfs } from "../ipfs";
+
 import { get, post, put, del } from "../helper/apiHelper";
 
 function App({ validate, display }) {
