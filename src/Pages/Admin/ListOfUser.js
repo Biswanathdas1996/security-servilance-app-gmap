@@ -1,7 +1,7 @@
 import * as React from "react";
 import swal from "sweetalert";
 import { get, put } from "../../helper/apiHelper";
-import { validateResponseAdmin } from "../../function/validateResponse";
+import { validateResponseAdmin } from "../../helper/validateResponse";
 import ListOfUserView from "../../View/Admin/ListOfUser";
 
 export default function ListOfUser() {

@@ -7,7 +7,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import MapForm from "./MapForm";
 import { post } from "../helper/apiHelper";
-import { validateResponseAdmin } from "../function/validateResponse";
+import { validateResponseAdmin } from "../helper/validateResponse";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("Required"),

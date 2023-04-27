@@ -2,7 +2,7 @@ import * as React from "react";
 import MapWrappedComponent from "../../HOC/Map";
 import { useParams } from "react-router-dom";
 import { get, post, del } from "../../helper/apiHelper";
-import { validateResponseAdmin } from "../../function/validateResponse";
+import { validateResponseAdmin } from "../../helper/validateResponse";
 import AddCircleToRoutsView from "../../View/Admin/AddCircleToRoute";
 
 function BasicModal() {

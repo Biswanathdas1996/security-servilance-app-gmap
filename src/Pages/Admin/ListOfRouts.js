@@ -1,7 +1,7 @@
 import * as React from "react";
 import { get } from "../../helper/apiHelper";
 import ListOfRoutsView from "../../View/Admin/ListOfRouts";
-import { validateResponseAdmin } from "../../function/validateResponse";
+import { validateResponseAdmin } from "../../helper/validateResponse";
 
 export default function ListOfRouts() {
   const [open, setOpen] = React.useState(false);
