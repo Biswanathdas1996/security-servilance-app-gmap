@@ -5,17 +5,32 @@ import Button from "@mui/material/Button";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import CircleViewDetailsModal from "../components/CircleViewDetailsModal";
 import CaptureData from "../components/CaptureData";
+import { get } from "../helper/apiHelper";
 
 import VisitData from "../Data/visit_location.json";
 
+import { useParams } from "react-router-dom";
 export default function Map({ defaultCenter, defaultZoom }) {
+  const { id } = useParams();
   const [currentLocation, setCurrentLocation] = React.useState(null);
-
   const [isInsideCircle, setIsInsideCircle] = React.useState(false);
-
   const [open, setOpen] = React.useState(false);
   const [clickedPlace, setClickedPlace] = React.useState(false);
   const [openCamera, setOpenCamera] = React.useState(false);
+
+  const [locations, setLocations] = React.useState(null);
+
+  const fetchData = async () => {
+    const response = await get(`/user/getRouteLocations/${id}`);
+    console.log("--response->", response);
+    if (response) {
+      setLocations(response?.data);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleOpen = (text) => {
     setOpen(true);
@@ -38,21 +53,23 @@ export default function Map({ defaultCenter, defaultZoom }) {
         lng: position.coords.longitude,
       });
       // Check if the current location is inside any of the circles
-      const circles = VisitData;
-      circles.forEach((circle) => {
-        const center = circle.center;
-        const radius = circle.radius;
-        const distanceInMeters =
-          window.google.maps.geometry.spherical.computeDistanceBetween(
-            new window.google.maps.LatLng(latitude, longitude),
-            center
-          );
-        if (distanceInMeters <= radius) {
-          setIsInsideCircle(true);
-        }
-      });
+      const circles = locations;
+      if (circles) {
+        circles.forEach((circle) => {
+          const center = { lat: circle?.lat, lng: circle?.long };
+          const radius = circle.radius;
+          const distanceInMeters =
+            window.google.maps.geometry.spherical.computeDistanceBetween(
+              new window.google.maps.LatLng(latitude, longitude),
+              center
+            );
+          if (distanceInMeters <= radius) {
+            setIsInsideCircle(true);
+          }
+        });
+      }
     });
-  }, []);
+  }, [locations]);
 
   function handleClick(event) {
     var lat = event.latLng.lat();
@@ -105,8 +122,8 @@ export default function Map({ defaultCenter, defaultZoom }) {
             />
           ))} */}
 
-        {VisitData &&
-          VisitData?.map((val, index) => {
+        {locations &&
+          locations?.map((val, index) => {
             let color;
             if (val?.visited?.status) {
               color = "green";
@@ -116,7 +133,7 @@ export default function Map({ defaultCenter, defaultZoom }) {
 
             return (
               <Circle
-                center={val?.center}
+                center={{ lat: val?.lat, lng: val?.long }}
                 radius={val?.radius}
                 onClick={() => handleOpen(val)}
                 options={{

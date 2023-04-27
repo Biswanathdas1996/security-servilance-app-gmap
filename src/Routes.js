@@ -10,21 +10,22 @@ import AddCircleToRoute from "./Pages/Admin/AddCircleToRoute";
 import ListOfRouts from "./Pages/Admin/ListOfRouts";
 import ListOfUser from "./Pages/Admin/ListOfUser";
 import AdminLogin from "./Pages/Admin/AdminLogin";
+import UserLogin from "./Pages/UserLogin";
 
 class Routing extends React.Component {
   render() {
     return (
       <Routes>
-        <Route exact path="/" element={<Home />} />
+        <Route exact path="/home" element={<Home />} />
         <Route exact path="/register" element={<Register />} />
 
-        <Route exact path="/login" element={<Login />} />
-        <Route exact path="/map" element={<Map />} />
+        <Route exact path="/map/:id" element={<Map />} />
         <Route exact path="/path" element={<VisitedPath />} />
         <Route exact path="/users" element={<ListOfUser />} />
         <Route exact path="/list-of_routs" element={<ListOfRouts />} />
         <Route exact path="/add-routs/:id" element={<AddCircleToRoute />} />
         <Route exact path="/admin/login" element={<AdminLogin />} />
+        <Route exact path="/login" element={<UserLogin />} />
 
         <Route
           render={function () {

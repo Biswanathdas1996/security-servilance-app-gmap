@@ -1,27 +1,66 @@
-import React, { useRef, useEffect } from "react";
-import "../App.css";
+import * as React from "react";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
+import ImageIcon from "@mui/icons-material/Image";
+import MapIcon from "../assets/235861.png";
+import { get } from "../helper/apiHelper";
 
-function App() {
+const timeStampToTime = (timestamp) => {
+  const date = new Date(timestamp * 1000); // convert seconds to milliseconds
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; // months are zero-indexed, so add 1
+  const day = date.getDate();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const seconds = date.getSeconds();
+
+  const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  console.log(formattedDate);
+  return formattedDate;
+};
+
+export default function FolderList() {
+  const [routes, setRoutes] = React.useState(null);
+  React.useEffect(() => {
+    fetchRoutes();
+  }, []);
+
+  const fetchRoutes = async () => {
+    const response = await get("/user/getRoutes");
+    console.log("response", response);
+    if (response) {
+      setRoutes(response?.data);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Welcome </h1>
-        <div>
-          <a href="/#/login">
-            <button className="button-home">Login</button>
-          </a>
-          <a href="/#/register">
-            <button
-              className="button-home"
-              style={{ backgroundColor: "#3498DB", marginLeft: 20 }}
-            >
-              Register
-            </button>
-          </a>
-        </div>
-      </header>
-    </div>
+    <>
+      <h2 style={{ textAlign: "center" }}>Assigned Routes</h2>
+      <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+        {routes &&
+          routes?.map((route, index) => {
+            return (
+              <ListItem
+                onClick={() =>
+                  (window.location.href = `#/map/${route?.route?.id}`)
+                }
+              >
+                <ListItemAvatar>
+                  <img src={MapIcon} alt="map" height="50px" />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={route?.route?.name}
+                  secondary={`Start time: ${timeStampToTime(
+                    Number(route?.startTime)
+                  )}`}
+                />
+              </ListItem>
+            );
+          })}
+      </List>
+    </>
   );
 }
-
-export default App;
