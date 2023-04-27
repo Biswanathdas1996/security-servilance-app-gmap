@@ -16,7 +16,6 @@ const style = {
 };
 
 export default function Map({ open, onClose, ...props }) {
-  console.log("---", props?.clickedPlace?.visited);
   return (
     <>
       <div>
@@ -36,14 +35,14 @@ export default function Map({ open, onClose, ...props }) {
               Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
             </Typography>
 
-            {props?.clickedPlace?.visited?.status && (
+            {props?.clickedPlace?.visitData && (
               <>
                 <h2>Visited</h2>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
-                  {props?.clickedPlace?.visited?.data?.time}
+                  {props?.clickedPlace?.visitData?.createdAt}
                 </Typography>
                 <img
-                  src={props?.clickedPlace?.visited?.data?.image}
+                  src={props?.clickedPlace?.visitData?.image}
                   alt="img"
                   style={{ height: 200, width: 250 }}
                 />

@@ -2,10 +2,10 @@ import React, { useState, useRef } from "react";
 import Webcam from "react-webcam";
 import Button from "@mui/material/Button";
 import Login from "../Pages/Login";
-
-function App() {
+import { post } from "../helper/apiHelper";
+function App({ liveCenter }) {
   const [image, setImage] = useState(null);
-  const [faceAuth, setFaceauth] = useState(false);
+  const [faceAuth, setFaceauth] = useState(true);
   const webcamRef = useRef(null);
 
   const capture = () => {
@@ -20,6 +20,20 @@ function App() {
 
   const validate = () => {
     setFaceauth(true);
+  };
+
+  const handleImageUpload = async (event) => {
+    const body = {
+      routeId: liveCenter?.routeId,
+      locationId: liveCenter?.id,
+      image: image,
+      lat: 22.8796787,
+      long: 88.875785,
+    };
+    const response = await post("/user/visitLocation", body);
+    if (response?.success) {
+      window.location.reload();
+    }
   };
 
   return (
@@ -38,6 +52,7 @@ function App() {
                 <Webcam
                   audio={false}
                   ref={webcamRef}
+                  facingMode="environment"
                   style={{
                     marginLeft: "auto",
                     marginRight: "auto",
@@ -58,7 +73,7 @@ function App() {
                 variant="outlined"
                 type="outlined"
                 style={{ marginTop: 10 }}
-                onClick={() => window.location.reload()}
+                onClick={() => handleImageUpload()}
               >
                 Submit
               </Button>

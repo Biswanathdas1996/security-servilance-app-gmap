@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { GoogleMap, Circle, Marker } from "react-google-maps";
 import mapStyles from "../style/mapStyles";
 import Button from "@mui/material/Button";
@@ -7,24 +7,25 @@ import CircleViewDetailsModal from "../components/CircleViewDetailsModal";
 import CaptureData from "../components/CaptureData";
 import { get } from "../helper/apiHelper";
 
-import VisitData from "../Data/visit_location.json";
-
 import { useParams } from "react-router-dom";
-export default function Map({ defaultCenter, defaultZoom }) {
+export default function Map({ defaultZoom }) {
   const { id } = useParams();
   const [currentLocation, setCurrentLocation] = React.useState(null);
   const [isInsideCircle, setIsInsideCircle] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [clickedPlace, setClickedPlace] = React.useState(false);
   const [openCamera, setOpenCamera] = React.useState(false);
-
   const [locations, setLocations] = React.useState(null);
+  const [route, setRoute] = React.useState(null);
+
+  const [liveCenter, setLiveCenter] = useState(null);
 
   const fetchData = async () => {
     const response = await get(`/user/getRouteLocations/${id}`);
     console.log("--response->", response);
     if (response) {
-      setLocations(response?.data);
+      setLocations(response?.data?.locations);
+      setRoute(response?.data?.route);
     }
   };
 
@@ -36,9 +37,10 @@ export default function Map({ defaultCenter, defaultZoom }) {
     setOpen(true);
     setClickedPlace(text);
   };
+
   const handleClose = () => setOpen(false);
 
-  const handleOpenCameraOpen = (text) => {
+  const handleOpenCameraOpen = () => {
     setOpenCamera(true);
   };
 
@@ -65,6 +67,7 @@ export default function Map({ defaultCenter, defaultZoom }) {
             );
           if (distanceInMeters <= radius) {
             setIsInsideCircle(true);
+            setLiveCenter(circle);
           }
         });
       }
@@ -79,6 +82,7 @@ export default function Map({ defaultCenter, defaultZoom }) {
   }
 
   console.log("---isInsideCircle->", isInsideCircle);
+  console.log("---liveCenter->", liveCenter);
 
   return (
     <>
@@ -88,7 +92,14 @@ export default function Map({ defaultCenter, defaultZoom }) {
           onClose={handleClose}
           clickedPlace={clickedPlace}
         />
-        <CaptureData open={openCamera} onCloseModal={handleOpenCameraClose} />
+
+        {liveCenter && (
+          <CaptureData
+            open={openCamera}
+            onCloseModal={handleOpenCameraClose}
+            liveCenter={liveCenter}
+          />
+        )}
       </div>
 
       <center>
@@ -106,15 +117,16 @@ export default function Map({ defaultCenter, defaultZoom }) {
         )}
       </center>
 
-      <GoogleMap
-        defaultZoom={defaultZoom}
-        defaultCenter={defaultCenter}
-        defaultOptions={{ styles: mapStyles }}
-        onClick={(e) => handleClick(e)}
-      >
-        {currentLocation && <Marker position={currentLocation} />}
+      {route && (
+        <GoogleMap
+          defaultZoom={defaultZoom}
+          defaultCenter={{ lat: route?.centerLat, lng: route?.centerLong }}
+          defaultOptions={{ styles: mapStyles }}
+          onClick={(e) => handleClick(e)}
+        >
+          {currentLocation && <Marker position={currentLocation} />}
 
-        {/* {VisitData &&
+          {/* {VisitData &&
           VisitData.map((marker, index) => (
             <Marker
               key={`marker_${index}`}
@@ -122,31 +134,32 @@ export default function Map({ defaultCenter, defaultZoom }) {
             />
           ))} */}
 
-        {locations &&
-          locations?.map((val, index) => {
-            let color;
-            if (val?.visited?.status) {
-              color = "green";
-            } else {
-              color = "#FF0000";
-            }
+          {locations &&
+            locations?.map((val, index) => {
+              let color;
+              if (val?.visited?.status) {
+                color = "green";
+              } else {
+                color = "#FF0000";
+              }
 
-            return (
-              <Circle
-                center={{ lat: val?.lat, lng: val?.long }}
-                radius={val?.radius}
-                onClick={() => handleOpen(val)}
-                options={{
-                  strokeColor: "#FF0000",
-                  strokeOpacity: 0.8,
-                  strokeWeight: 2,
-                  fillColor: color,
-                  fillOpacity: 0.35,
-                }}
-              />
-            );
-          })}
-      </GoogleMap>
+              return (
+                <Circle
+                  center={{ lat: val?.lat, lng: val?.long }}
+                  radius={val?.radius}
+                  onClick={() => handleOpen(val)}
+                  options={{
+                    strokeColor: "#FF0000",
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: color,
+                    fillOpacity: 0.35,
+                  }}
+                />
+              );
+            })}
+        </GoogleMap>
+      )}
     </>
   );
 }

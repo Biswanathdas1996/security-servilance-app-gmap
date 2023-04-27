@@ -1,11 +1,6 @@
 import React from "react";
-import { GoogleMap, Circle, Marker } from "react-google-maps";
-
 import Box from "@mui/material/Box";
-
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-
 import Attendance from "./Attendance";
 
 const style = {
@@ -20,8 +15,8 @@ const style = {
   p: 4,
 };
 
-export default function Map({ open, onCloseModal, ...props }) {
-  console.log("---", props);
+export default function Map({ open, onCloseModal, liveCenter, ...props }) {
+  console.log("--props-->>>>>>-", liveCenter);
   return (
     <>
       <div>
@@ -32,7 +27,7 @@ export default function Map({ open, onCloseModal, ...props }) {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <Attendance />
+            <Attendance liveCenter={liveCenter} />
           </Box>
         </Modal>
       </div>
