@@ -9,6 +9,7 @@ import ListOfRoutes from "../../components/ListOfRoutes";
 import MapWrappedComponent from "../../HOC/Map";
 import { useParams } from "react-router-dom";
 import { get, post, del } from "../../helper/apiHelper";
+import { validateResponseAdmin } from "../../function/validateResponse";
 
 const style = {
   position: "absolute",
@@ -35,7 +36,7 @@ function BasicModal() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchRoutsData = React.useCallback(async () => {
     const response = await get(`/admin/route/${id}`);
-    if (response?.success) {
+    if (validateResponseAdmin(response)) {
       setChoosedLocation(response?.data?.locations);
       setRouteData(response?.data);
     }
@@ -78,7 +79,7 @@ function BasicModal() {
 
   const deletLocation = async (id) => {
     const response = await del(`/admin/route/location/${id}`);
-    if (response?.success) {
+    if (validateResponseAdmin(response)) {
       window.location.reload();
     }
   };

@@ -20,9 +20,12 @@ function App() {
   const runFacemesh = async () => {
     setLoading(true);
     const net = await facemesh.load(
-      facemesh.SupportedPackages.mediapipeFacemesh
+      facemesh.SupportedPackages.mediapipeFacemesh,
+
+      { backend: "webgl" }
     );
     setLoading(false);
+    console.log("======net==>", net);
     setInterval(() => {
       detect(net);
     }, 2000);
@@ -62,9 +65,10 @@ function App() {
       }
       // console.log(face[0]?.scaledMesh);
       setFaceData(faceStringData);
-      console.log("------>", faceStringData);
+      // console.log("------>", faceStringData);
       // Get canvas context
       const ctx = canvasRef.current.getContext("2d");
+
       requestAnimationFrame(() => {
         drawMesh(face, ctx);
       });
@@ -138,7 +142,7 @@ function App() {
               <>
                 <div className="loader"></div>
                 <p style={{ fontSize: 20, fontWeight: "bold" }}>
-                  Inicieating model, Please wait...
+                  Initiating model, Please wait...
                 </p>
               </>
             )}

@@ -6,28 +6,12 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
 import swal from "sweetalert";
-import { get, post, put, del } from "../../helper/apiHelper";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import { get, put } from "../../helper/apiHelper";
+import { validateResponseAdmin } from "../../function/validateResponse";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -49,19 +33,19 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function CustomizedTables() {
+export default function ListOfUserComponent() {
   const [users, setUsers] = React.useState(null);
 
   const fetchUserList = async () => {
     const response = await get("/admin/user?search=&page&limit");
-    if (response?.data?.rows) {
+    if (validateResponseAdmin(response)) {
       setUsers(response?.data?.rows);
     }
   };
 
   const approveUser = async (userId) => {
     const response = await put("/admin/user/approve", { userId });
-    if (response?.success) {
+    if (validateResponseAdmin(response)) {
       swal("Success!", "user approved successfully!", "success").then(
         (value) => {
           fetchUserList();
@@ -104,16 +88,6 @@ export default function CustomizedTables() {
 
                     <StyledTableCell align="right" component="th" scope="row">
                       <Stack direction="row" spacing={1}>
-                        <Button
-                          variant="contained"
-                          href={`/#/user/1`}
-                          style={{ float: "right" }}
-                          // className="yellow-button"
-                          disabled={!user?.isApproved}
-                        >
-                          Assign Routs
-                        </Button>
-
                         <Button variant="contained" disabled>
                           Edit
                         </Button>

@@ -77,7 +77,7 @@ export default function Map({ defaultCenter, defaultZoom }) {
       <center>
         <br />
         <br />
-        {!isInsideCircle && (
+        {isInsideCircle && (
           <Button
             variant="contained"
             onClick={handleOpenCameraOpen}

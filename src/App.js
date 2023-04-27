@@ -1,10 +1,11 @@
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import "./App.css";
 import Router from "./Routes";
 import Header from "./LayOut/Header";
 import { site_text } from "./utils/languageMapper";
 import { useDispatch, useSelector } from "react-redux";
 import { updateLanguage } from "./redux/slices/config/configSlice";
+
 function App() {
   const config = useSelector((state) => state.config);
   const dispatch = useDispatch();

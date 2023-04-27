@@ -2,8 +2,8 @@ import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
-
-import { get, post, put, del } from "../helper/apiHelper";
+import { get, post } from "../helper/apiHelper";
+import { validateResponseAdmin } from "../function/validateResponse";
 
 export default function Filter({ routeId }) {
   const [users, setUsers] = React.useState(null);
@@ -16,7 +16,7 @@ export default function Filter({ routeId }) {
 
   const fetchUserList = async () => {
     const response = await get("/admin/user?search=&page&limit");
-    if (response?.data?.rows) {
+    if (validateResponseAdmin(response)) {
       setUsers(response?.data?.rows);
     }
   };
@@ -24,9 +24,6 @@ export default function Filter({ routeId }) {
   React.useEffect(() => {
     fetchUserList();
   }, []);
-
-  console.log("----users--->", users);
-  console.log("----value--->", value);
 
   const handleSubmit = async () => {
     const data = {
@@ -38,8 +35,7 @@ export default function Filter({ routeId }) {
       endTime: endTime,
     };
     const response = await post(`/admin/user/assignRoute`, data);
-    console.log("----response->", response);
-    if (response?.success) {
+    if (validateResponseAdmin(response)) {
       window.location.reload();
     }
   };

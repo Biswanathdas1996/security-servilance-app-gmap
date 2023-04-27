@@ -14,9 +14,9 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import AssignUserToRouts from "../../components/AssignUserToRouts";
 import AddNewRoutes from "../../components/AddNewRoutes";
-import { get, post, put, del } from "../../helper/apiHelper";
+import { get } from "../../helper/apiHelper";
 
-import RouteData from "../../Data/routs.json";
+import { validateResponseAdmin } from "../../function/validateResponse";
 
 const style = {
   position: "absolute",
@@ -61,11 +61,8 @@ export default function CustomizedTables() {
 
   const fetchAllRouts = async () => {
     const response = await get("/admin/route?search=&page&limit");
-    console.log("-->", response);
-    if (response?.success) {
+    if (validateResponseAdmin(response)) {
       setRoutsData(response?.data?.rows);
-    } else {
-      alert("error");
     }
   };
 

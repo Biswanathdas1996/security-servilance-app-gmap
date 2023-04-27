@@ -25,7 +25,6 @@ export const get = async (url, params) => {
       };
       const response = await fetch(`${BASE_URL}${url}`, requestValues)
         .then((response) => {
-          console.log(response.headers.get("set-cookie"));
           return response.json();
         })
         .then((result) => result)

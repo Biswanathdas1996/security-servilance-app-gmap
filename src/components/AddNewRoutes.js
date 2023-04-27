@@ -6,7 +6,8 @@ import Button from "@mui/material/Button";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import MapForm from "./MapForm";
-import { get, post, put, del } from "../helper/apiHelper";
+import { post } from "../helper/apiHelper";
+import { validateResponseAdmin } from "../function/validateResponse";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("Required"),
@@ -42,8 +43,7 @@ const AddNewRouter = () => {
       console.log(values);
       const body = { ...values, center: "Barasat" };
       const response = await post("/admin/route", body);
-      console.log("---response-->", response);
-      if (response?.success) {
+      if (validateResponseAdmin(response)) {
         window.location = `#/add-routs/${response?.data?.routeId}`;
       } else {
         alert("error");

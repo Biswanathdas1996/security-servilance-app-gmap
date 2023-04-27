@@ -7,8 +7,9 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { get, post, put, del } from "../../helper/apiHelper";
+import { post } from "../../helper/apiHelper";
 import { setCookie } from "../../helper/cookies";
+import { useLocation } from "react-router-dom";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -23,14 +24,20 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function BasicGrid() {
+export default function AdminLogin() {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const returnLink = searchParams?.get("return");
+
   const handleSubmit = async (values, { setSubmitting }) => {
     const body = { ...values, password: parseInt(values?.password) };
 
     const response = await post("/auth/loginWithPassword", body);
     setCookie("session", response?.data?.token);
     document.cookie = `session=${response?.token}; path=/`;
-    console.log("---response", response?.token);
+    if (returnLink) {
+      window.location.replace(returnLink);
+    }
   };
 
   return (
