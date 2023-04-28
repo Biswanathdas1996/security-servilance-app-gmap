@@ -1,17 +1,8 @@
 import { BASE_URL, USE_MOCK } from "../config";
 import { mockResponse } from "../utils/mockMapper";
 
-const requestOptions = {
-  headers: {
-    "Content-Type": "application/json",
-    Cookie: document.cookie,
-  },
-  redirect: "follow",
-  credentials: "include",
-  withCredentials: true,
-};
-
 export const get = async (url, params) => {
+  const token = localStorage.getItem("x-service-token");
   if (USE_MOCK) {
     const mockFile = mockResponse(url, "GET");
     const mockData = await import(`../apiConfig/Mock/${mockFile}`);
@@ -19,7 +10,13 @@ export const get = async (url, params) => {
   } else {
     try {
       const requestValues = {
-        ...requestOptions,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        redirect: "follow",
+        credentials: "include",
+        withCredentials: true,
         method: "GET",
         params,
       };
@@ -37,6 +34,7 @@ export const get = async (url, params) => {
 };
 
 export const post = async (url, data) => {
+  const token = localStorage.getItem("x-service-token");
   if (USE_MOCK) {
     const mockFile = mockResponse(url, "POST");
     const mockData = await import(`../apiConfig/Mock/${mockFile}`);
@@ -44,7 +42,13 @@ export const post = async (url, data) => {
   } else {
     try {
       const requestValues = {
-        ...requestOptions,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        redirect: "follow",
+        credentials: "include",
+        withCredentials: true,
         method: "POST",
         body: JSON.stringify(data),
       };
@@ -60,6 +64,7 @@ export const post = async (url, data) => {
 };
 
 export const put = async (url, data) => {
+  const token = localStorage.getItem("x-service-token");
   if (USE_MOCK) {
     const mockFile = mockResponse(url, "PUT");
     const mockData = await import(`../apiConfig/Mock/${mockFile}`);
@@ -67,7 +72,13 @@ export const put = async (url, data) => {
   } else {
     try {
       const requestValues = {
-        ...requestOptions,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        redirect: "follow",
+        credentials: "include",
+        withCredentials: true,
         method: "PUT",
         body: JSON.stringify(data),
       };
@@ -83,6 +94,7 @@ export const put = async (url, data) => {
 };
 
 export const del = async (url) => {
+  const token = localStorage.getItem("x-service-token");
   if (USE_MOCK) {
     const mockFile = mockResponse(url, "DELETE");
     const mockData = await import(`../apiConfig/Mock/${mockFile}`);
@@ -90,7 +102,13 @@ export const del = async (url) => {
   } else {
     try {
       const requestValues = {
-        ...requestOptions,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        redirect: "follow",
+        credentials: "include",
+        withCredentials: true,
         method: "DELETE",
       };
       const response = await fetch(`${BASE_URL}${url}`, requestValues)

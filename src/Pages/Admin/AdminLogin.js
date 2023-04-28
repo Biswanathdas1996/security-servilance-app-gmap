@@ -13,13 +13,17 @@ export default function AdminLogin() {
     const body = { ...values, password: parseInt(values?.password) };
 
     const response = await post("/auth/loginWithPassword", body);
-    setCookie("session", response?.data?.token);
-    document.cookie = `session=${response?.token}; path=/`;
-    if (returnLink) {
-      window.location.replace(returnLink);
-    } else {
-      window.location.replace("#/users");
-    }
+    // console.log("session", response?.data?.token);
+    localStorage.setItem("x-service-token", response?.data?.token);
+    // return;
+    // document.cookie = `session=${response?.token}; path=/`;
+    setTimeout(() => {
+      if (returnLink) {
+        window.location.href = returnLink;
+      } else {
+        window.location.href = "#/users";
+      }
+    }, 2000);
   };
 
   return <AdminLoginView handleSubmit={handleSubmit} />;

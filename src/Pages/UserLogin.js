@@ -25,12 +25,16 @@ const Login = () => {
     };
     const response = post("/auth/loginWithPassword", body);
     if (response) {
-      setCookie("session", response?.data?.token);
-      document.cookie = `session=${response?.token}; path=/`;
+      // setCookie("session", response?.data?.token);
+      // document.cookie = `session=${response?.token}; path=/`;
       if (returnLink) {
-        window.location.href = returnLink;
+        setTimeout(() => {
+          window.location.href = returnLink;
+        }, 2000);
       } else {
-        window.location.href = "#/home";
+        setTimeout(() => {
+          window.location.href = "#/home";
+        }, 2000);
       }
     }
     console.log("response------->", response);

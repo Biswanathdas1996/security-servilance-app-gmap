@@ -5,6 +5,7 @@ import Header from "./LayOut/Header";
 import { site_text } from "./utils/languageMapper";
 import { useDispatch, useSelector } from "react-redux";
 import { updateLanguage } from "./redux/slices/config/configSlice";
+import CookieModal from "./components/CookiesModal";
 
 function App() {
   const config = useSelector((state) => state.config);
@@ -29,6 +30,7 @@ function App() {
 
   return (
     <>
+      <CookieModal />
       <Header />
       <Router />
     </>
