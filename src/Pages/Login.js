@@ -81,7 +81,7 @@ function App({ validate, display }) {
         return Math.sqrt((ax - bx) ** 2 + (ay - by) ** 2 + (az - bz) ** 2);
       }
 
-      const tolerance = 50; // adjust this value to set the tolerance for matching faces
+      const tolerance = 80; // adjust this value to set the tolerance for matching faces
 
       const distances =
         detectedLandmarks &&
@@ -104,12 +104,12 @@ function App({ validate, display }) {
         clearInterval(interval);
         validate();
         setAuthFaceData(null);
-        swal("Authenticated !", `Welcome to our portal`, "success").then(
-          (value) => {
-            return;
-            // window.location.replace("/");
-          }
-        );
+        // swal("Authenticated !", `Welcome to our portal`, "success").then(
+        //   (value) => {
+        //     return;
+        //     // window.location.replace("/");
+        //   }
+        // );
       } else {
         // unauthenticated user
         console.log("User Unauthenticated");
@@ -186,7 +186,7 @@ function App({ validate, display }) {
                     type="text"
                     id="contact"
                     className="form-control"
-                    placeholder="Enter PIN"
+                    placeholder="Enter Employee ID"
                     value={contactNo}
                     onChange={handleEmailChange}
                   />

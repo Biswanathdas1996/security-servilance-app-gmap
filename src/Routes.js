@@ -11,11 +11,13 @@ import ListOfRouts from "./Pages/Admin/ListOfRouts";
 import ListOfUser from "./Pages/Admin/ListOfUser";
 import AdminLogin from "./Pages/Admin/AdminLogin";
 import UserLogin from "./Pages/UserLogin";
+import LandingPage from "./Pages/LandingPage";
 
 class Routing extends React.Component {
   render() {
     return (
       <Routes>
+        <Route exact path="/" element={<LandingPage />} />
         <Route exact path="/home" element={<Home />} />
         <Route exact path="/register" element={<Register />} />
 

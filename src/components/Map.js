@@ -6,6 +6,7 @@ import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import CircleViewDetailsModal from "../components/CircleViewDetailsModal";
 import CaptureData from "../components/CaptureData";
 import { get } from "../helper/apiHelper";
+import { validateResponseUser } from "../helper/validateResponse";
 
 import { useParams } from "react-router-dom";
 export default function Map({ defaultZoom }) {
@@ -23,7 +24,7 @@ export default function Map({ defaultZoom }) {
   const fetchData = async () => {
     const response = await get(`/user/getRouteLocations/${id}`);
     console.log("--response->", response);
-    if (response) {
+    if (validateResponseUser(response)) {
       setLocations(response?.data?.locations);
       setRoute(response?.data?.route);
     }

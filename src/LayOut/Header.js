@@ -87,11 +87,15 @@ function ResponsiveAppBar() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem key={1} onClick={() => window.location.replace("/#/")}>
+                <Typography textAlign="center">Home</Typography>
+              </MenuItem>
+              <MenuItem
+                key={1}
+                onClick={() => window.location.replace("/#/home")}
+              >
+                <Typography textAlign="center">Routes</Typography>
+              </MenuItem>
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
@@ -117,9 +121,9 @@ function ResponsiveAppBar() {
             <Button
               onClick={handleCloseNavMenu}
               sx={{ my: 2, color: "white", display: "block" }}
-              href={` /#/map`}
+              href={` /#/`}
             >
-              Map
+              Home
             </Button>
             <Button
               onClick={handleCloseNavMenu}
@@ -134,6 +138,13 @@ function ResponsiveAppBar() {
               href={` /#/list-of_routs`}
             >
               Routs list
+            </Button>
+            <Button
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: "white", display: "block" }}
+              href={` /#/admin/login`}
+            >
+              Admin Login
             </Button>
           </Box>
 

@@ -43,8 +43,7 @@ export default function UserRegister({ faceData }) {
   return (
     <Box sx={{ flexGrow: 1, marginTop: 5 }}>
       <Grid container spacing={0}>
-        <Grid item xs={4}></Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12}>
           <Item>
             {" "}
             <Formik
@@ -61,7 +60,7 @@ export default function UserRegister({ faceData }) {
                 delete body.confirmPassword;
                 const response = await post("/auth/register", body);
                 if (response?.success) {
-                  window.location = "/register-face-id";
+                  window.location = "#/login";
                 } else {
                   swal("Sorry!", "Some error occured!", "error");
                 }
@@ -79,7 +78,7 @@ export default function UserRegister({ faceData }) {
                       fullWidth
                       error={formik.touched.empID && formik.errors.empID}
                       helperText={formik.touched.empID && formik.errors.empID}
-                      style={{ marginTop: 20 }}
+                      style={{ marginTop: 20, width: "100%" }}
                     />
                   </div>
                   <div>
@@ -161,7 +160,7 @@ export default function UserRegister({ faceData }) {
                   <Button
                     type="submit"
                     variant="contained"
-                    style={{ marginTop: 20 }}
+                    style={{ marginTop: 20, padding: 10 }}
                   >
                     Submit
                   </Button>
@@ -170,7 +169,6 @@ export default function UserRegister({ faceData }) {
             </Formik>
           </Item>
         </Grid>
-        <Grid item xs={4}></Grid>
       </Grid>
     </Box>
   );

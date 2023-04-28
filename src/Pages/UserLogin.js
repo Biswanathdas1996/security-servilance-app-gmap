@@ -5,6 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { post } from "../helper/apiHelper";
 import { setCookie } from "../helper/cookies";
+import { useLocation } from "react-router-dom";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -12,6 +13,10 @@ const validationSchema = Yup.object().shape({
 });
 
 const Login = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const returnLink = searchParams?.get("return");
+
   const handleSubmit = (values, { setSubmitting }) => {
     console.log(values);
     const body = {
@@ -22,7 +27,11 @@ const Login = () => {
     if (response) {
       setCookie("session", response?.data?.token);
       document.cookie = `session=${response?.token}; path=/`;
-      window.location.replace("#/home");
+      if (returnLink) {
+        window.location.href = returnLink;
+      } else {
+        window.location.href = "#/home";
+      }
     }
     console.log("response------->", response);
     setSubmitting(false);
@@ -43,8 +52,9 @@ const Login = () => {
         handleSubmit,
         isSubmitting,
       }) => (
-        <div style={{ margin: 20 }}>
+        <div style={{ margin: 31, border: "1px solid orange", padding: 20 }}>
           <center>
+            <h1>Sign in</h1>
             <Form>
               <Field
                 name="email"
@@ -57,6 +67,7 @@ const Login = () => {
                 error={touched.email && Boolean(errors.email)}
                 helperText={<ErrorMessage name="email" />}
               />
+              <br />
               <Field
                 name="password"
                 label="Password"
@@ -76,6 +87,7 @@ const Login = () => {
                 color="primary"
                 onClick={handleSubmit}
                 disabled={isSubmitting}
+                style={{ padding: 10 }}
               >
                 Login
               </Button>

@@ -7,6 +7,8 @@ import Avatar from "@mui/material/Avatar";
 import ImageIcon from "@mui/icons-material/Image";
 import MapIcon from "../assets/235861.png";
 import { get } from "../helper/apiHelper";
+import { validateResponseUser } from "../helper/validateResponse";
+import Card from "@mui/material/Card";
 
 const timeStampToTime = (timestamp) => {
   const date = new Date(timestamp * 1000); // convert seconds to milliseconds
@@ -31,7 +33,7 @@ export default function FolderList() {
   const fetchRoutes = async () => {
     const response = await get("/user/getRoutes");
     console.log("response", response);
-    if (response) {
+    if (validateResponseUser(response)) {
       setRoutes(response?.data);
     }
   };
@@ -39,28 +41,34 @@ export default function FolderList() {
   return (
     <>
       <h2 style={{ textAlign: "center" }}>Assigned Routes</h2>
-      <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-        {routes &&
-          routes?.map((route, index) => {
-            return (
-              <ListItem
-                onClick={() =>
-                  (window.location.href = `#/map/${route?.route?.id}`)
-                }
-              >
-                <ListItemAvatar>
-                  <img src={MapIcon} alt="map" height="50px" />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={route?.route?.name}
-                  secondary={`Start time: ${timeStampToTime(
-                    Number(route?.startTime)
-                  )}`}
-                />
-              </ListItem>
-            );
-          })}
-      </List>
+      <center>
+        <List
+          sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+        >
+          {routes &&
+            routes?.map((route, index) => {
+              return (
+                <Card style={{ marginTop: 15 }}>
+                  <ListItem
+                    onClick={() =>
+                      (window.location.href = `#/map/${route?.route?.id}`)
+                    }
+                  >
+                    <ListItemAvatar>
+                      <img src={MapIcon} alt="map" height="50px" />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={route?.route?.name}
+                      secondary={`Start time: ${timeStampToTime(
+                        Number(route?.startTime)
+                      )}`}
+                    />
+                  </ListItem>
+                </Card>
+              );
+            })}
+        </List>
+      </center>
     </>
   );
 }

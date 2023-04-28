@@ -17,3 +17,20 @@ export const validateResponseAdmin = (response) => {
       return false;
   }
 };
+
+export const validateResponseUser = (response) => {
+  console.log("======>", response);
+  switch (response?.message) {
+    case SUCCESS_TRANSCTION:
+      return true;
+    case UNAUTH_TRANSCTION:
+      var returnLink = window.location.href;
+      window.location.replace(
+        "#/login?return=" + encodeURIComponent(returnLink)
+      );
+
+      return false;
+    default:
+      return false;
+  }
+};

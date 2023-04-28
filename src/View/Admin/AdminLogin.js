@@ -25,55 +25,60 @@ const AdminLoginView = ({ handleSubmit }) => {
   return (
     <Box sx={{ flexGrow: 1 }} style={{ marginTop: 20 }}>
       <Grid container spacing={2}>
-        <Grid item xs={4}></Grid>
-        <Grid item xs={4}>
-          <Item>
-            <Formik
-              initialValues={{
-                email: "",
-                password: "",
-              }}
-              validationSchema={LoginSchema}
-              onSubmit={handleSubmit}
-            >
-              {({ errors, touched, isSubmitting }) => (
-                <Form>
-                  <Field
-                    name="email"
-                    type="email"
-                    as={TextField}
-                    label="Email"
-                    variant="outlined"
-                    error={touched.email && Boolean(errors.email)}
-                    helperText={touched.email && errors.email}
-                    style={{ marginTop: 20 }}
-                  />
-                  <Field
-                    name="password"
-                    type="password"
-                    as={TextField}
-                    label="Password"
-                    variant="outlined"
-                    error={touched.password && Boolean(errors.password)}
-                    helperText={touched.password && errors.password}
-                    style={{ marginTop: 20 }}
-                  />
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    disabled={isSubmitting}
-                    style={{ marginTop: 20 }}
-                  >
-                    {isSubmitting ? "Submitting" : "Login"}
-                  </Button>
-                  {errors.submit && <div>{errors.submit}</div>}
-                </Form>
-              )}
-            </Formik>
-          </Item>
+        <Grid item xs={12}>
+          <div style={{ margin: 31, border: "1px solid orange", padding: 20 }}>
+            <center>
+              <h1>Admin Sign in</h1>
+              <Formik
+                initialValues={{
+                  email: "",
+                  password: "",
+                }}
+                validationSchema={LoginSchema}
+                onSubmit={handleSubmit}
+              >
+                {({ errors, touched, isSubmitting }) => (
+                  <Form>
+                    <Field
+                      name="email"
+                      type="email"
+                      as={TextField}
+                      label="Email"
+                      variant="outlined"
+                      error={touched.email && Boolean(errors.email)}
+                      helperText={touched.email && errors.email}
+                      style={{ marginTop: 20 }}
+                    />
+                    <br />
+
+                    <Field
+                      name="password"
+                      type="password"
+                      as={TextField}
+                      label="Password"
+                      variant="outlined"
+                      error={touched.password && Boolean(errors.password)}
+                      helperText={touched.password && errors.password}
+                      style={{ marginTop: 20 }}
+                    />
+                    <br />
+
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      disabled={isSubmitting}
+                      style={{ marginTop: 20 }}
+                    >
+                      {isSubmitting ? "Submitting" : "Login"}
+                    </Button>
+                    {errors.submit && <div>{errors.submit}</div>}
+                  </Form>
+                )}
+              </Formik>
+            </center>
+          </div>
         </Grid>
-        <Grid item xs={4}></Grid>
       </Grid>
     </Box>
   );

@@ -17,6 +17,8 @@ export default function AdminLogin() {
     document.cookie = `session=${response?.token}; path=/`;
     if (returnLink) {
       window.location.replace(returnLink);
+    } else {
+      window.location.replace("#/users");
     }
   };
 
