@@ -113,7 +113,7 @@ function App() {
                     right: 0,
                     textAlign: "center",
                     zindex: 9,
-                    width: 640,
+                    width: "100%",
                     height: 480,
                   }}
                 />
@@ -128,7 +128,7 @@ function App() {
                     right: 0,
                     textAlign: "center",
                     zindex: 9,
-                    width: 640,
+                    width: "100%",
                     height: 480,
                   }}
                 />
