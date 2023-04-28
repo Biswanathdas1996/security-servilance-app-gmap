@@ -75,7 +75,7 @@ export default function FolderList() {
         Today's Duty
       </h2>
       <h3 style={{ marginLeft: 15, marginBottom: 0, color: "#d85604" }}>
-        Upcomming Routes
+        Routes
       </h3>
       <small style={{ marginLeft: 16, color: "grey" }}>
         View all Upcomming routs
@@ -84,8 +84,8 @@ export default function FolderList() {
         <List
           sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
         >
-          {getAllUpcommingRoutes &&
-            getAllUpcommingRoutes?.map((route, index) => {
+          {routes &&
+            routes?.map((route, index) => {
               return (
                 <Card style={{ marginTop: 15 }}>
                   <ListItem
@@ -108,7 +108,7 @@ export default function FolderList() {
             })}
         </List>
       </center>
-      <h3 style={{ marginLeft: 15, marginBottom: 0, color: "#d85604" }}>
+      {/* <h3 style={{ marginLeft: 15, marginBottom: 0, color: "#d85604" }}>
         Previous Routes
       </h3>
       <small style={{ marginLeft: 16, color: "grey" }}>
@@ -141,7 +141,7 @@ export default function FolderList() {
               );
             })}
         </List>
-      </center>
+      </center> */}
     </>
   );
 }

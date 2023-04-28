@@ -138,7 +138,7 @@ export default function Map({ defaultZoom }) {
           {locations &&
             locations?.map((val, index) => {
               let color;
-              if (val?.visited?.status) {
+              if (val?.visitData) {
                 color = "green";
               } else {
                 color = "#FF0000";

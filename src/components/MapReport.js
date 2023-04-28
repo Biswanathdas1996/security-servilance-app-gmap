@@ -35,7 +35,7 @@ const Map = withScriptjs(
     };
     const handleClose = () => setOpen(false);
 
-    console.log("--searchRoutsData--->", routsData);
+    console.log("--data--->", data);
 
     return (
       <>
@@ -55,7 +55,7 @@ const Map = withScriptjs(
           {data?.locations &&
             data?.locations?.map((val) => {
               let color;
-              if (val?.visited?.status) {
+              if (val?.visitData) {
                 color = "green";
               } else {
                 color = "#FF0000";

@@ -17,25 +17,23 @@ const Login = () => {
   const searchParams = new URLSearchParams(location.search);
   const returnLink = searchParams?.get("return");
 
-  const handleSubmit = (values, { setSubmitting }) => {
+  const handleSubmit = async (values, { setSubmitting }) => {
     console.log(values);
     const body = {
       email: values?.email,
       password: Number(values?.password),
     };
-    const response = post("/auth/loginWithPassword", body);
+    const response = await post("/auth/loginWithPassword", body);
     if (response) {
-      // setCookie("session", response?.data?.token);
-      // document.cookie = `session=${response?.token}; path=/`;
-      if (returnLink) {
-        setTimeout(() => {
+      console.log("--->response", response);
+      localStorage.setItem("x-service-token", response?.data?.token);
+      setTimeout(() => {
+        if (returnLink) {
           window.location.href = returnLink;
-        }, 2000);
-      } else {
-        setTimeout(() => {
+        } else {
           window.location.href = "#/home";
-        }, 2000);
-      }
+        }
+      }, 2000);
     }
     console.log("response------->", response);
     setSubmitting(false);
