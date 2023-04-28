@@ -142,6 +142,13 @@ function ResponsiveAppBar() {
             <Button
               onClick={handleCloseNavMenu}
               sx={{ my: 2, color: "white", display: "block" }}
+              href={` /#/route-report`}
+            >
+              Report
+            </Button>
+            <Button
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: "white", display: "block", float: "right" }}
               href={` /#/admin/login`}
             >
               Admin Login

@@ -12,6 +12,7 @@ import ListOfUser from "./Pages/Admin/ListOfUser";
 import AdminLogin from "./Pages/Admin/AdminLogin";
 import UserLogin from "./Pages/UserLogin";
 import LandingPage from "./Pages/LandingPage";
+import RouteReport from "./Pages/Admin/RouteReport";
 
 class Routing extends React.Component {
   render() {
@@ -28,6 +29,7 @@ class Routing extends React.Component {
         <Route exact path="/add-routs/:id" element={<AddCircleToRoute />} />
         <Route exact path="/admin/login" element={<AdminLogin />} />
         <Route exact path="/login" element={<UserLogin />} />
+        <Route exact path="/route-report" element={<RouteReport />} />
 
         <Route
           render={function () {
