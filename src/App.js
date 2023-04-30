@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import Router from "./Routes";
 import Header from "./LayOut/Header";
+import Footer from "./LayOut/Footer";
 import { site_text } from "./utils/languageMapper";
 import { useDispatch, useSelector } from "react-redux";
 import { updateLanguage } from "./redux/slices/config/configSlice";
@@ -31,8 +32,9 @@ function App() {
   return (
     <>
       <CookieModal />
-      <Header />
+      {/* <Header /> */}
       <Router />
+      <Footer />
     </>
   );
 }

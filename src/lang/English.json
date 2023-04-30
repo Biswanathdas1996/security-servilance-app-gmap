@@ -1,11 +1,13 @@
 {
     "pages": {
-        "ApiCall": {
-            "title": "User list",
-            "sub_title": "List of all register user",
-            "loading_text": "Loading...",
-            "fetch_user_button": "Fetch Users",
-            "view_button": "View"
+        "home": {
+            "join_duty": "JOIN DUTY",
+            "todats_route_text": "Today's Routes",
+            "view_all": "All"
+        },
+        "landing": {
+            "sign_in": "Sign In",
+            "register": "Register"
         }
     }
 }
