@@ -81,7 +81,8 @@ function App() {
 
   return (
     <>
-      {start ? (
+      <UserRegister faceData={faceData} />
+      {/* {start ? (
         <div
           style={{
             marginTop: "10rem",
@@ -148,7 +149,7 @@ function App() {
             )}
           </center>
         </div>
-      )}
+      )} */}
     </>
   );
 }

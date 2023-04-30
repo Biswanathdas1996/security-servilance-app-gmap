@@ -4,8 +4,9 @@ import Button from "@mui/material/Button";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { post } from "../helper/apiHelper";
-import { setCookie } from "../helper/cookies";
+import MapIcon from "../assets/map.jpg";
 import { useLocation } from "react-router-dom";
+import icon_activity from "../images/icon_activity.svg";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -40,64 +41,92 @@ const Login = () => {
   };
 
   return (
-    <Formik
-      initialValues={{ email: "", password: "" }}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-    >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isSubmitting,
-      }) => (
-        <div style={{ margin: 31, border: "1px solid orange", padding: 20 }}>
-          <center>
-            <h1>Sign in</h1>
-            <Form>
-              <Field
-                name="email"
-                label="Email"
-                variant="outlined"
-                as={TextField}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.email}
-                error={touched.email && Boolean(errors.email)}
-                helperText={<ErrorMessage name="email" />}
-              />
-              <br />
-              <Field
-                name="password"
-                label="Password"
-                type="password"
-                variant="outlined"
-                as={TextField}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.password}
-                error={touched.password && Boolean(errors.password)}
-                helperText={<ErrorMessage name="password" />}
-              />
-              <br />
-              <br />
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleSubmit}
-                disabled={isSubmitting}
-                style={{ padding: 10 }}
+    <body className="d-flex flex-column h-100 overflow-hidden">
+      <div className="bg-purple"></div>
+      <main className="flex-shrink-0 main-foot-adjust  pt-2">
+        <div className="container">
+          <div
+            style={{
+              backgroundColor: "#5d63d1",
+              padding: "14rem",
+              margin: "-13px",
+              paddingTop: "3rem",
+              background: `url(${MapIcon})`,
+            }}
+          >
+            <div className="row profile-dtl">
+              <div className="col-2"></div>
+            </div>
+          </div>
+
+          <Formik
+            initialValues={{ email: "", password: "" }}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isSubmitting,
+            }) => (
+              <div
+                style={{ margin: 31, border: "1px solid #5d63d1", padding: 20 }}
               >
-                Login
-              </Button>
-            </Form>
-          </center>
+                <center>
+                  <h1>Sign in</h1>
+                  <Form>
+                    <Field
+                      name="email"
+                      label="Email"
+                      variant="outlined"
+                      as={TextField}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.email}
+                      error={touched.email && Boolean(errors.email)}
+                      helperText={<ErrorMessage name="email" />}
+                    />
+                    <br />
+                    <Field
+                      name="password"
+                      label="Password"
+                      type="password"
+                      variant="outlined"
+                      as={TextField}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.password}
+                      error={touched.password && Boolean(errors.password)}
+                      helperText={<ErrorMessage name="password" />}
+                    />
+                    <br />
+                    <br />
+                    <div
+                      className="d-flex justify-content-center mb-1 total-btn  mt-1"
+                      onClick={handleSubmit}
+                      disabled={isSubmitting}
+                      style={{ padding: 8 }}
+                    >
+                      <div>
+                        <img src={icon_activity} alt="" className="mr-2" />
+                      </div>
+                      <div className="total-title">
+                        {window.site_text("pages.landing.sign_in")}
+                      </div>
+                      {/* <div>Total: 04 Routes</div> */}
+                    </div>
+                  </Form>
+                </center>
+              </div>
+            )}
+          </Formik>
         </div>
-      )}
-    </Formik>
+      </main>
+    </body>
   );
 };
 

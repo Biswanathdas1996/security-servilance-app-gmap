@@ -7,7 +7,8 @@ import { validateResponseUser } from "../helper/validateResponse";
 
 function App({ liveCenter }) {
   const [image, setImage] = useState(null);
-  const [faceAuth, setFaceauth] = useState(false);
+  const [faceAuth, setFaceauth] = useState(true); ///   skip the face auth
+
   const webcamRef = useRef(null);
 
   const capture = () => {

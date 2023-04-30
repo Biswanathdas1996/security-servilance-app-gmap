@@ -9,6 +9,8 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { get, post, put, del } from "../helper/apiHelper";
 import swal from "sweetalert";
+import MapIcon from "../assets/map.jpg";
+import icon_activity from "../images/icon_activity.svg";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -41,135 +43,154 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function UserRegister({ faceData }) {
   return (
-    <Box sx={{ flexGrow: 1, marginTop: 5 }}>
-      <Grid container spacing={0}>
-        <Grid item xs={12}>
-          <Item>
-            {" "}
-            <Formik
-              initialValues={initialValues}
-              validationSchema={validationSchema}
-              onSubmit={async (values) => {
-                console.log(values);
+    <body className="d-flex flex-column h-100 overflow-hidden">
+      <div className="bg-purple"></div>
+      <main className="flex-shrink-0 main-foot-adjust  pt-2">
+        <div className="container">
+          <div
+            style={{
+              backgroundColor: "#5d63d1",
+              padding: "12rem",
+              margin: "-13px",
+              paddingTop: "3rem",
+              background: `url(${MapIcon})`,
+            }}
+          >
+            <div className="row profile-dtl">
+              <div className="col-2"></div>
+            </div>
+          </div>
 
-                const body = {
-                  ...values,
-                  password: parseInt(values?.password),
-                  faceID: JSON.stringify(faceData),
-                };
-                delete body.confirmPassword;
-                const response = await post("/auth/register", body);
-                if (response?.success) {
-                  window.location = "#/login";
-                } else {
-                  swal("Sorry!", "Some error occured!", "error");
-                }
-              }}
-              style={{ marginTop: 20 }}
-            >
-              {(formik) => (
-                <Form>
-                  <div>
-                    <Field
-                      name="empID"
-                      as={TextField}
-                      label="emp ID"
-                      variant="outlined"
-                      fullWidth
-                      error={formik.touched.empID && formik.errors.empID}
-                      helperText={formik.touched.empID && formik.errors.empID}
-                      style={{ marginTop: 20, width: "100%" }}
-                    />
-                  </div>
-                  <div>
-                    <Field
-                      name="name"
-                      as={TextField}
-                      label="Name"
-                      variant="outlined"
-                      fullWidth
-                      error={formik.touched.name && formik.errors.name}
-                      helperText={formik.touched.name && formik.errors.name}
-                      style={{ marginTop: 20 }}
-                    />
-                  </div>
-                  <div>
-                    <Field
-                      name="email"
-                      as={TextField}
-                      label="Email"
-                      variant="outlined"
-                      fullWidth
-                      error={formik.touched.email && formik.errors.email}
-                      helperText={formik.touched.email && formik.errors.email}
-                      style={{ marginTop: 20 }}
-                    />
-                  </div>
-                  <div>
-                    <Field
-                      name="contactNumber"
-                      as={TextField}
-                      label="Contact Number"
-                      variant="outlined"
-                      fullWidth
-                      error={
-                        formik.touched.contactNumber &&
-                        formik.errors.contactNumber
-                      }
-                      helperText={
-                        formik.touched.contactNumber &&
-                        formik.errors.contactNumber
-                      }
-                      style={{ marginTop: 20 }}
-                    />
-                  </div>
-                  <div>
-                    <Field
-                      name="password"
-                      type="password"
-                      as={TextField}
-                      label="Password"
-                      variant="outlined"
-                      fullWidth
-                      error={formik.touched.password && formik.errors.password}
-                      helperText={
-                        formik.touched.password && formik.errors.password
-                      }
-                      style={{ marginTop: 20 }}
-                    />
-                  </div>
-                  <div>
-                    <Field
-                      name="confirmPassword"
-                      type="password"
-                      as={TextField}
-                      label="Confirm Password"
-                      variant="outlined"
-                      fullWidth
-                      error={
-                        formik.touched.confirmPassword &&
-                        formik.errors.confirmPassword
-                      }
-                      helperText={
-                        formik.touched.confirmPassword &&
-                        formik.errors.confirmPassword
-                      }
-                      style={{ marginTop: 20 }}
-                    />
-                  </div>
-                  <Button
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={async (values) => {
+              console.log(values);
+
+              const body = {
+                ...values,
+                password: parseInt(values?.password),
+                faceID: JSON.stringify(faceData),
+              };
+              delete body.confirmPassword;
+              const response = await post("/auth/register", body);
+              if (response?.success) {
+                window.location = "#/login";
+              } else {
+                swal("Sorry!", "Some error occured!", "error");
+              }
+            }}
+            style={{ marginTop: 20 }}
+          >
+            {(formik) => (
+              <Form>
+                <div>
+                  <Field
+                    name="empID"
+                    as={TextField}
+                    label={window.site_text("pages.register.emp_ID")}
+                    variant="outlined"
+                    fullWidth
+                    error={formik.touched.empID && formik.errors.empID}
+                    helperText={formik.touched.empID && formik.errors.empID}
+                    style={{ marginTop: 20, width: "100%" }}
+                  />
+                </div>
+                <div>
+                  <Field
+                    name="name"
+                    as={TextField}
+                    label={window.site_text("pages.register.name")}
+                    variant="outlined"
+                    fullWidth
+                    error={formik.touched.name && formik.errors.name}
+                    helperText={formik.touched.name && formik.errors.name}
+                    style={{ marginTop: 20 }}
+                  />
+                </div>
+                <div>
+                  <Field
+                    name="email"
+                    as={TextField}
+                    label={window.site_text("pages.register.email")}
+                    variant="outlined"
+                    fullWidth
+                    error={formik.touched.email && formik.errors.email}
+                    helperText={formik.touched.email && formik.errors.email}
+                    style={{ marginTop: 20 }}
+                  />
+                </div>
+                <div>
+                  <Field
+                    name="contactNumber"
+                    as={TextField}
+                    label={window.site_text("pages.register.contact")}
+                    variant="outlined"
+                    fullWidth
+                    error={
+                      formik.touched.contactNumber &&
+                      formik.errors.contactNumber
+                    }
+                    helperText={
+                      formik.touched.contactNumber &&
+                      formik.errors.contactNumber
+                    }
+                    style={{ marginTop: 20 }}
+                  />
+                </div>
+                <div>
+                  <Field
+                    name="password"
+                    type="password"
+                    as={TextField}
+                    label={window.site_text("pages.register.password")}
+                    variant="outlined"
+                    fullWidth
+                    error={formik.touched.password && formik.errors.password}
+                    helperText={
+                      formik.touched.password && formik.errors.password
+                    }
+                    style={{ marginTop: 20 }}
+                  />
+                </div>
+                <div>
+                  <Field
+                    name="confirmPassword"
+                    type="password"
+                    as={TextField}
+                    label={window.site_text("pages.register.confirm_passowrd")}
+                    variant="outlined"
+                    fullWidth
+                    error={
+                      formik.touched.confirmPassword &&
+                      formik.errors.confirmPassword
+                    }
+                    helperText={
+                      formik.touched.confirmPassword &&
+                      formik.errors.confirmPassword
+                    }
+                    style={{ marginTop: 20 }}
+                  />
+                </div>
+                <center>
+                  <button
+                    className="d-flex justify-content-center mb-4 total-btn  mt-3"
                     type="submit"
-                    variant="contained"
-                    style={{ marginTop: 20, padding: 10 }}
+                    style={{ padding: 14, width: 230 }}
                   >
-                    Submit
-                  </Button>
-                </Form>
-              )}
-            </Formik>
-          </Item>
-        </Grid>
-      </Grid>
-    </Box>
+                    <div>
+                      <img src={icon_activity} alt="" className="mr-2" />
+                    </div>
+                    <div className="total-title">
+                      {window.site_text("pages.register.button")}
+                    </div>
+                  </button>
+                </center>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </main>
+    </body>
   );
 }
