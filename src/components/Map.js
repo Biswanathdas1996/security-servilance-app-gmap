@@ -1,14 +1,21 @@
 import React, { useState } from "react";
 import { GoogleMap, Circle, Marker } from "react-google-maps";
-import mapStyles from "../style/mapStyles";
+import mapStyles from "../css/mapStyles";
 import Button from "@mui/material/Button";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import CircleViewDetailsModal from "../components/CircleViewDetailsModal";
 import CaptureData from "../components/CaptureData";
 import { get } from "../helper/apiHelper";
 import { validateResponseUser } from "../helper/validateResponse";
-
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Card from "@mui/material/Card";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import IconButton from "@mui/material/IconButton";
 import { useParams } from "react-router-dom";
+import icon_activity from "../images/icon_activity.svg";
+
 export default function Map({ defaultZoom }) {
   const { id } = useParams();
   const [currentLocation, setCurrentLocation] = React.useState(null);
@@ -104,30 +111,33 @@ export default function Map({ defaultZoom }) {
       </div>
 
       <center>
-        <br />
-        <br />
         {isInsideCircle && (
-          <Button
-            variant="contained"
-            onClick={handleOpenCameraOpen}
-            styly={{ marginTop: 40 }}
-            endIcon={<PhotoCamera />}
-          >
-            Capture and Submit
-          </Button>
+          <>
+            <br />
+            <br />
+            <Button
+              variant="contained"
+              onClick={handleOpenCameraOpen}
+              styly={{ marginTop: 40 }}
+              endIcon={<PhotoCamera />}
+            >
+              Capture and Submit
+            </Button>
+          </>
         )}
       </center>
 
       {route && (
-        <GoogleMap
-          defaultZoom={defaultZoom}
-          defaultCenter={{ lat: route?.centerLat, lng: route?.centerLong }}
-          defaultOptions={{ styles: mapStyles }}
-          onClick={(e) => handleClick(e)}
-        >
-          {currentLocation && <Marker position={currentLocation} />}
+        <>
+          <GoogleMap
+            defaultZoom={defaultZoom}
+            defaultCenter={{ lat: route?.centerLat, lng: route?.centerLong }}
+            defaultOptions={{ styles: mapStyles }}
+            onClick={(e) => handleClick(e)}
+          >
+            {currentLocation && <Marker position={currentLocation} />}
 
-          {/* {VisitData &&
+            {/* {VisitData &&
           VisitData.map((marker, index) => (
             <Marker
               key={`marker_${index}`}
@@ -135,31 +145,87 @@ export default function Map({ defaultZoom }) {
             />
           ))} */}
 
-          {locations &&
-            locations?.map((val, index) => {
-              let color;
-              if (val?.visitData) {
-                color = "green";
-              } else {
-                color = "#FF0000";
-              }
+            {locations &&
+              locations?.map((val, index) => {
+                let color;
 
-              return (
-                <Circle
-                  center={{ lat: val?.lat, lng: val?.long }}
-                  radius={val?.radius}
-                  onClick={() => handleOpen(val)}
-                  options={{
-                    strokeColor: "#FF0000",
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: color,
-                    fillOpacity: 0.35,
-                  }}
-                />
-              );
-            })}
-        </GoogleMap>
+                if (val?.isVisited) {
+                  color = "green";
+                } else {
+                  color = "#FF0000";
+                }
+
+                return (
+                  <Circle
+                    center={{ lat: val?.lat, lng: val?.long }}
+                    radius={val?.radius}
+                    onClick={() => handleOpen(val)}
+                    options={{
+                      strokeColor: "#FF0000",
+                      strokeOpacity: 0.8,
+                      strokeWeight: 2,
+                      fillColor: color,
+                      fillOpacity: 0.35,
+                    }}
+                  />
+                );
+              })}
+          </GoogleMap>
+          <Card
+            style={{
+              marginTop: 20,
+              marginBottom: "2rem",
+              padding: 15,
+              width: "90%",
+              paddingBottom: "1rem",
+            }}
+          >
+            <List
+              sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+            >
+              {locations &&
+                locations?.map((val) => {
+                  console.log("val=========>", val);
+                  return (
+                    <ListItem
+                      key={val?.name + val?.id}
+                      disableGutters
+                      secondaryAction={
+                        <IconButton aria-label="comment">
+                          <CheckCircleIcon
+                            color={val?.isVisited ? "success" : "disabled"}
+                          />
+                        </IconButton>
+                      }
+                      onClick={() => handleOpen(val)}
+                    >
+                      <ListItemText
+                        primary={`${val?.name}`}
+                        secondary={
+                          val?.isVisited
+                            ? `Time: ${val?.visitData?.createdAt}`
+                            : "Not Visited"
+                        }
+                      />
+                    </ListItem>
+                  );
+                })}
+            </List>
+          </Card>
+          <div
+            className="d-flex justify-content-center total-btn "
+            style={{ marginBottom: "4rem" }}
+          >
+            <div>
+              <img src={icon_activity} alt="" className="mr-2" />
+            </div>
+            <div className="total-title">
+              {window.site_text("pages.map.finish_now")}
+            </div>
+            {/* <div>Total: 04 Routes</div> */}
+          </div>
+          <br />
+        </>
       )}
     </>
   );

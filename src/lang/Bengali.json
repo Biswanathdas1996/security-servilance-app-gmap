@@ -1,11 +1,22 @@
 {
     "pages": {
-        "ApiCall": {
-            "title": "ব্যবহারকারী তালিকা",
-            "sub_title": "সমস্ত নিবন্ধিত ব্যবহারকারীর তালিকা",
-            "loading_text": "লোডিং...",
-            "fetch_user_button": "ব্যবহারকারীদের তথ্য নির্বাচন করুন",
-            "view_button": "দর্শন"
+        "home": {
+            "join_duty": "JOIN DUTY",
+            "todats_route_text": "Today's Routes",
+            "view_all": "All"
+        },
+        "landing": {
+            "sign_in": "Sign In",
+            "register": "Register"
+        },
+        "register": {
+            "emp_ID": "Emp ID",
+            "name": "Name",
+            "email": "Email",
+            "contact": "Contact Number",
+            "password": "Password",
+            "confirm_passowrd": "Confirm Password",
+            "button": "Register"
         }
     }
 }

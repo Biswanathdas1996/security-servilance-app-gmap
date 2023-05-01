@@ -13,7 +13,7 @@ import "../css/style.css";
 
 import img_profile from "../images/img_profile.jpg";
 import icon_more from "../images/icon_more.svg";
-import icon_activity from "../images/icon_activity.svg";
+
 import img_map_1 from "../images/img_map_1.jpg";
 
 const timeStampToTime = (timestamp) => {
@@ -128,17 +128,8 @@ export default function FolderList() {
               </div>
             </div>
           </div>
-          <div className="d-flex justify-content-center mb-4 total-btn  mt-5">
-            <div>
-              <img src={icon_activity} alt="" className="mr-2" />
-            </div>
-            <div className="total-title">
-              {window.site_text("pages.home.join_duty")}
-            </div>
-            {/* <div>Total: 04 Routes</div> */}
-          </div>
 
-          <div className="d-flex justify-content-between mb-4">
+          <div className="d-flex justify-content-between mb-4 mt-5">
             <div>
               <strong>
                 {" "}

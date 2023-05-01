@@ -13,23 +13,38 @@ import AdminLogin from "./Pages/Admin/AdminLogin";
 import UserLogin from "./Pages/UserLogin";
 import LandingPage from "./Pages/LandingPage";
 import RouteReport from "./Pages/Admin/RouteReport";
+import RealTimePCRTracking from "./Pages/Admin/RealTimePCRTracking";
+import { AdminLayout, UserLayout, UserHeaderlessLayout } from "./HOC/LayOutHOC";
 
 class Routing extends React.Component {
   render() {
     return (
       <Routes>
-        <Route exact path="/" element={<LandingPage />} />
-        <Route exact path="/home" element={<Home />} />
-        <Route exact path="/register" element={<Register />} />
+        <Route exact path="/" element={UserHeaderlessLayout(LandingPage)} />
+        <Route exact path="/home" element={UserHeaderlessLayout(Home)} />
+        <Route
+          exact
+          path="/register"
+          element={UserHeaderlessLayout(Register)}
+        />
 
-        <Route exact path="/map/:id" element={<Map />} />
-        <Route exact path="/path" element={<VisitedPath />} />
-        <Route exact path="/users" element={<ListOfUser />} />
-        <Route exact path="/list-of_routs" element={<ListOfRouts />} />
-        <Route exact path="/add-routs/:id" element={<AddCircleToRoute />} />
-        <Route exact path="/admin/login" element={<AdminLogin />} />
-        <Route exact path="/login" element={<UserLogin />} />
-        <Route exact path="/route-report" element={<RouteReport />} />
+        <Route exact path="/map/:id" element={UserLayout(Map)} />
+        <Route exact path="/path" element={UserLayout(VisitedPath)} />
+        <Route exact path="/users" element={AdminLayout(ListOfUser)} />
+        <Route exact path="/list-of_routs" element={AdminLayout(ListOfRouts)} />
+        <Route
+          exact
+          path="/add-routs/:id"
+          element={AdminLayout(AddCircleToRoute)}
+        />
+        <Route exact path="/admin/login" element={AdminLayout(AdminLogin)} />
+        <Route exact path="/login" element={UserHeaderlessLayout(UserLogin)} />
+        <Route exact path="/route-report" element={AdminLayout(RouteReport)} />
+        <Route
+          exact
+          path="/track-pcr-vans"
+          element={AdminLayout(RealTimePCRTracking)}
+        />
 
         <Route
           render={function () {

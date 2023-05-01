@@ -26,23 +26,24 @@ export default function Map({ open, onClose, ...props }) {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <h2>Details</h2>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              {props?.clickedPlace?.name}
-            </Typography>
-
-            {props?.clickedPlace?.visitData && (
+            <center>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                {props?.clickedPlace?.name}
+              </Typography>
+            </center>
+            {props?.clickedPlace?.isVisited ? (
               <>
-                <h2>Visited</h2>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                  {props?.clickedPlace?.visitData?.createdAt}
-                </Typography>
                 <img
                   src={props?.clickedPlace?.visitData?.image}
                   alt="img"
                   style={{ height: 200, width: 250 }}
                 />
+                <div className="contentTT">
+                  {props?.clickedPlace?.visitData?.createdAt}
+                </div>
               </>
+            ) : (
+              <small>Not visited yet</small>
             )}
           </Box>
         </Modal>

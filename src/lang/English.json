@@ -17,6 +17,9 @@
             "password": "Password",
             "confirm_passowrd": "Confirm Password",
             "button": "Register"
+        },
+        "map": {
+            "finish_now": "End Duty"
         }
     }
 }
