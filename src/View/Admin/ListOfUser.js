@@ -9,6 +9,9 @@ import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Card from "@mui/material/Card";
+import DeleteIcon from "@mui/icons-material/Delete";
+import OfflinePinIcon from "@mui/icons-material/OfflinePin";
+import SpellcheckIcon from "@mui/icons-material/Spellcheck";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -30,65 +33,78 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const ListOfUserView = ({ users, approveUser }) => {
+const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
   return (
     <>
-      <TableContainer>
-        <center>
-          <Card>
-            <Table
-              sx={{ maxWidth: 900, margin: 3 }}
-              aria-label="customized table"
-            >
-              <TableHead>
-                <br />
-                <br />
-                <TableRow>
-                  <StyledTableCell> Name</StyledTableCell>
-                  <StyledTableCell align="left">ID No</StyledTableCell>
-                  <StyledTableCell align="left">Action</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {users?.map((user, index) => (
-                  <StyledTableRow>
-                    <StyledTableCell component="th" scope="row">
-                      {user?.name}
-                    </StyledTableCell>
-                    <StyledTableCell component="th" scope="row">
-                      {user?.empID}
-                    </StyledTableCell>
+      {users ? (
+        <Card style={{ margin: "3rem" }}>
+          <h4 style={{ margin: "1rem", marginBottom: 0 }}>User List</h4>
+          <TableContainer>
+            <center>
+              <Table sx={{ margin: 0 }} aria-label="customized table">
+                <TableHead>
+                  <br />
+                  <br />
+                  <TableRow>
+                    <StyledTableCell> Name</StyledTableCell>
+                    <StyledTableCell align="left">ID No</StyledTableCell>
+                    <StyledTableCell align="left">Created On</StyledTableCell>
+                    <StyledTableCell align="left">Action</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {users?.map((user, index) => (
+                    <StyledTableRow>
+                      <StyledTableCell component="th" scope="row">
+                        {user?.name}
+                      </StyledTableCell>
+                      <StyledTableCell component="th" scope="row">
+                        {user?.empID}
+                      </StyledTableCell>
+                      <StyledTableCell component="th" scope="row">
+                        {user?.createdAt}
+                      </StyledTableCell>
 
-                    <StyledTableCell align="right" component="th" scope="row">
-                      <Stack direction="row" spacing={1}>
-                        <Button variant="contained" disabled>
+                      <StyledTableCell align="right" component="th" scope="row">
+                        <Stack direction="row" spacing={1}>
+                          {/* <Button variant="contained" disabled>
                           Edit
-                        </Button>
-                        <Button
-                          variant="contained"
-                          color="error"
-                          className="rufous-button"
-                        >
-                          Delete
-                        </Button>
-                        {!user?.isApproved && (
+                        </Button> */}
                           <Button
                             variant="contained"
-                            color="warning"
-                            onClick={() => approveUser(user?.id)}
+                            color={user?.status ? "error" : "success"}
+                            // className="rufous-button"
+                            onClick={() => updateUserStatus(user?.id)}
+                            startIcon={
+                              user?.status ? <DeleteIcon /> : <SpellcheckIcon />
+                            }
                           >
-                            Approve
+                            {user?.status ? "Deactive" : "Activate"}
                           </Button>
-                        )}
-                      </Stack>
-                    </StyledTableCell>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Card>
+                          {!user?.isApproved && (
+                            <Button
+                              variant="contained"
+                              color="warning"
+                              onClick={() => approveUser(user?.id)}
+                              startIcon={<OfflinePinIcon />}
+                            >
+                              Approve
+                            </Button>
+                          )}
+                        </Stack>
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </center>
+          </TableContainer>
+        </Card>
+      ) : (
+        <center>
+          <div className="loader" style={{ margin: "5rem" }}></div>
         </center>
-      </TableContainer>
+      )}
     </>
   );
 };

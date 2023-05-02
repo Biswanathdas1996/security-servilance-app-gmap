@@ -55,7 +55,7 @@ const Map = withScriptjs(
           {data?.locations &&
             data?.locations?.map((val) => {
               let color;
-              if (val?.visitData) {
+              if (val?.isVisited) {
                 color = "green";
               } else {
                 color = "#FF0000";

@@ -55,7 +55,7 @@ const Login = () => {
         <div className="container">
           <div
             style={{
-              backgroundColor: "#5d63d1",
+              backgroundColor: "#ff8126",
               padding: "14rem",
               margin: "-13px",
               paddingTop: "3rem",
@@ -84,7 +84,7 @@ const Login = () => {
               <div
                 style={{
                   marginTop: 31,
-                  border: "1px solid #5d63d1",
+                  border: "1px solid #ff8126",
                   padding: 10,
                 }}
               >

@@ -29,11 +29,11 @@ code {
 
 
 .swal-button:not([disabled]):hover {
-  background-color: #5d63d1 !important;
+  background-color: #ff8126 !important;
 }
 
 .swal-button {
-  background-color:  #5d63d1 !important;
+  background-color:  #ff8126 !important;
   color: #fff;
   border: none;
   box-shadow: none;
@@ -59,7 +59,7 @@ code {
 
 .loader {
   border: 5px solid #f3f3f3;
-  border-top: 5px solid #5d63d1;
+  border-top: 5px solid #ff8126;
   border-radius: 50%;
   width: 30px;
   height: 30px;

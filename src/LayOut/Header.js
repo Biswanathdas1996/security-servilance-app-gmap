@@ -121,13 +121,6 @@ function ResponsiveAppBar() {
             <Button
               onClick={handleCloseNavMenu}
               sx={{ my: 2, color: "white", display: "block" }}
-              href={` /#/`}
-            >
-              Home
-            </Button>
-            <Button
-              onClick={handleCloseNavMenu}
-              sx={{ my: 2, color: "white", display: "block" }}
               href={` /#/users`}
             >
               Users
@@ -146,13 +139,13 @@ function ResponsiveAppBar() {
             >
               Report
             </Button>
-            <Button
+            {/* <Button
               onClick={handleCloseNavMenu}
               sx={{ my: 2, color: "white", display: "block", float: "right" }}
               href={` /#/admin/login`}
             >
               Admin Login
-            </Button>
+            </Button> */}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>

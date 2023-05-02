@@ -14,7 +14,10 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import AssignUserToRouts from "../../components/AssignUserToRouts";
 import AddNewRoutes from "../../components/AddNewRoutes";
-import { get } from "../../helper/apiHelper";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
+import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
+import SignpostIcon from "@mui/icons-material/Signpost";
 
 const style = {
   position: "absolute",
@@ -57,6 +60,7 @@ const ListOfRoutsView = ({
   handleOpen,
   routsData,
   assignUser,
+  deleteRoute,
 }) => {
   return (
     <>
@@ -77,8 +81,9 @@ const ListOfRoutsView = ({
         >
           <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Assign user to routs
+              Assign a employeet to this routes
             </Typography>
+            <br />
             <Box
               component="form"
               sx={{
@@ -92,80 +97,106 @@ const ListOfRoutsView = ({
           </Box>
         </Modal>
       </div>
-
-      <TableContainer>
-        <center>
-          <Card>
-            <Table
-              sx={{ maxWidth: 900, margin: 3 }}
-              aria-label="customized table"
+      {routsData ? (
+        <Card style={{ margin: "3rem" }}>
+          <div
+            style={{
+              margin: "1rem",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <h4>Route List</h4>
+            <Button
+              variant="contained"
+              onClick={handleOpen}
+              className="tawny-button"
+              startIcon={<SignpostIcon />}
             >
-              <TableHead>
-                <Button
-                  variant="contained"
-                  onClick={handleOpen}
-                  styel={{ margin: 10 }}
-                  className="tawny-button"
-                >
-                  Add Routs
-                </Button>
-                <br />
-                <br />
-                <TableRow>
-                  <StyledTableCell>Rout Name</StyledTableCell>
-                  <StyledTableCell align="left">Status</StyledTableCell>
-                  <StyledTableCell align="left">Action</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {routsData?.map((row) => (
-                  <StyledTableRow key={row.name}>
-                    <StyledTableCell component="th" scope="row">
-                      {row.name}
-                    </StyledTableCell>
-                    <StyledTableCell component="th" scope="row">
-                      {row.assign ? (
-                        <b>User Assigned</b>
-                      ) : (
-                        <>
-                          <Button
-                            variant="contained"
-                            color="warning"
-                            onClick={() => assignUser(row?.id)}
-                            className="black-button"
-                          >
-                            Assign user
-                          </Button>
-                        </>
-                      )}
-                    </StyledTableCell>
+              Add New Routs
+            </Button>
+          </div>
+          <TableContainer>
+            <center>
+              <Card>
+                <Table sx={{ margin: 0 }} aria-label="customized table">
+                  <TableHead>
+                    <TableRow>
+                      <StyledTableCell>Rout Name</StyledTableCell>
+                      <StyledTableCell align="left">Created at</StyledTableCell>
+                      <StyledTableCell align="left">Add</StyledTableCell>
+                      <StyledTableCell align="left">Action</StyledTableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {routsData?.map((row) => (
+                      <StyledTableRow key={row.name}>
+                        <StyledTableCell component="th" scope="row">
+                          {row?.name}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {row?.createdAt}
+                        </StyledTableCell>
+                        <StyledTableCell component="th" scope="row">
+                          {row?.assign ? (
+                            <b>User Assigned</b>
+                          ) : (
+                            <>
+                              <Button
+                                variant="contained"
+                                color="warning"
+                                onClick={() => assignUser(row?.id)}
+                                className="black-button"
+                                startIcon={<PersonAddAlt1Icon />}
+                              >
+                                Assign user
+                              </Button>
+                            </>
+                          )}
+                        </StyledTableCell>
 
-                    <StyledTableCell align="right" component="th" scope="row">
-                      <Stack direction="row" spacing={1}>
-                        <Button
-                          variant="contained"
-                          href={`/#/add-routs/${row.id}`}
-                          style={{ float: "right" }}
-                          className="yellow-button"
+                        <StyledTableCell
+                          align="right"
+                          component="th"
+                          scope="row"
                         >
-                          Add Circle
-                        </Button>
+                          <Stack direction="row" spacing={1}>
+                            <Button
+                              variant="contained"
+                              href={`/#/add-routs/${row?.id}`}
+                              style={{ float: "right" }}
+                              className="yellow-button"
+                              startIcon={<AddLocationAltIcon />}
+                            >
+                              Add Circle
+                            </Button>
 
-                        <Button variant="contained" disabled>
-                          Edit
-                        </Button>
-                        <Button variant="contained" className="rufous-button">
-                          Delete
-                        </Button>
-                      </Stack>
-                    </StyledTableCell>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Card>
+                            {/* <Button variant="contained" disabled>
+                            Edit
+                          </Button> */}
+                            <Button
+                              variant="contained"
+                              className="rufous-button"
+                              onClick={() => deleteRoute(row?.id)}
+                              startIcon={<DeleteIcon />}
+                            >
+                              Delete
+                            </Button>
+                          </Stack>
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Card>
+            </center>
+          </TableContainer>
+        </Card>
+      ) : (
+        <center>
+          <div className="loader" style={{ margin: "5rem" }}></div>
         </center>
-      </TableContainer>
+      )}
     </>
   );
 };

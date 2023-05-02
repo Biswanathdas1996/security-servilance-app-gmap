@@ -54,16 +54,30 @@ export default function CustomizedAccordions({ data, index, routsData }) {
 
   return (
     <div style={{ marginTop: 20 }}>
-      <Accordion expanded={expanded === index} onChange={handleChange(index)}>
-        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-          <Typography>
-            {data?.name} (#{data?.empID})
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <MapReport data={data} routsData={routsData} />
-        </AccordionDetails>
-      </Accordion>
+      <Typography>
+        Route: <b>{routsData?.name}</b>
+      </Typography>
+      <br />
+      {data?.map((user, index) => {
+        return (
+          <Accordion
+            expanded={expanded === index}
+            onChange={handleChange(index)}
+          >
+            <AccordionSummary
+              aria-controls="panel1d-content"
+              id="panel1d-header"
+            >
+              <Typography>
+                User: <b>{user?.name}</b>
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <MapReport data={user} routsData={routsData} />
+            </AccordionDetails>
+          </Accordion>
+        );
+      })}
     </div>
   );
 }

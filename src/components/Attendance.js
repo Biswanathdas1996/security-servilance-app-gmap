@@ -29,6 +29,7 @@ function App({ liveCenter }) {
     const body = {
       routeId: liveCenter?.routeId,
       locationId: liveCenter?.id,
+      refId: liveCenter?.refId,
       image: image,
       lat: 22.8796787,
       long: 88.875785,

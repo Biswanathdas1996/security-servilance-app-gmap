@@ -1,7 +1,8 @@
 import * as React from "react";
-import { get } from "../../helper/apiHelper";
+import { get, del } from "../../helper/apiHelper";
 import ListOfRoutsView from "../../View/Admin/ListOfRouts";
 import { validateResponseAdmin } from "../../helper/validateResponse";
+import swal from "sweetalert";
 
 export default function ListOfRouts() {
   const [open, setOpen] = React.useState(false);
@@ -16,6 +17,17 @@ export default function ListOfRouts() {
     const response = await get("/admin/route?search=&page&limit");
     if (validateResponseAdmin(response)) {
       setRoutsData(response?.data?.rows);
+    }
+  };
+
+  const deleteRoute = async (id) => {
+    const response = await del(`/admin/route/${id}`);
+    if (validateResponseAdmin(response)) {
+      swal("Success!", "Route deleted successfully!", "success").then(
+        (value) => {
+          fetchAllRouts();
+        }
+      );
     }
   };
 
@@ -37,6 +49,7 @@ export default function ListOfRouts() {
       handleOpen={handleOpen}
       routsData={routsData}
       assignUser={assignUser}
+      deleteRoute={deleteRoute}
     />
   );
 }

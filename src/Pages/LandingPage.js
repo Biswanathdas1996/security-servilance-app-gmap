@@ -11,7 +11,7 @@ export default function FolderList() {
         <div className="container">
           <div
             style={{
-              backgroundColor: "#5d63d1",
+              backgroundColor: "#ff8126",
               padding: "16rem",
               margin: "-13px",
               paddingTop: "3rem",

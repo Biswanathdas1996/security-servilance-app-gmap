@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Poppins-Regular';
 }
 
 
@@ -62,7 +62,7 @@ label {
 
 .loader {
   border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #5d63d1; /* Blue */
+  border-top: 16px solid #ff8126; /* Blue */
   border-radius: 50%;
   width: 120px;
   height: 120px;
@@ -108,4 +108,31 @@ label {
   width: 80%;
   font-size: 18px;
   text-align: center;
+}
+
+.mat-flat-button {
+  box-sizing: border-box;
+  position: relative;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+  display: inline-block;
+  white-space: nowrap;
+  text-decoration: none;
+  vertical-align: baseline;
+  text-align: center;
+  margin: 0;
+  min-width: 64px;
+  line-height: 36px;
+  padding: 0 16px;
+  border-radius: 4px;
+  overflow: visible;
+}
+
+
+button, select {
+  text-transform: none !important;
 }

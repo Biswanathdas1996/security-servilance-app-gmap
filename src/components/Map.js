@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import CircleViewDetailsModal from "../components/CircleViewDetailsModal";
 import CaptureData from "../components/CaptureData";
-import { get } from "../helper/apiHelper";
+import { get, post } from "../helper/apiHelper";
 import { validateResponseUser } from "../helper/validateResponse";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -29,7 +29,10 @@ export default function Map({ defaultZoom }) {
   const [liveCenter, setLiveCenter] = useState(null);
 
   const fetchData = async () => {
-    const response = await get(`/user/getRouteLocations/${id}`);
+    const response = await post(`/user/getRouteLocations`, {
+      routeId: Number(id),
+      date: "02-05-2023",
+    });
     console.log("--response->", response);
     if (validateResponseUser(response)) {
       setLocations(response?.data?.locations);
@@ -91,6 +94,18 @@ export default function Map({ defaultZoom }) {
 
   console.log("---isInsideCircle->", isInsideCircle);
   console.log("---liveCenter->", liveCenter);
+
+  const finishDuty = async () => {
+    if (locations[0]["refId"]) {
+      const response = await post(`/user/finishDuty`, {
+        refId: locations[0]["refId"],
+      });
+      console.log("--response->", response);
+      if (validateResponseUser(response)) {
+        window.location.replace("#/home");
+      }
+    }
+  };
 
   return (
     <>
@@ -219,7 +234,7 @@ export default function Map({ defaultZoom }) {
             <div>
               <img src={icon_activity} alt="" className="mr-2" />
             </div>
-            <div className="total-title">
+            <div className="total-title" onClick={() => finishDuty()}>
               {window.site_text("pages.map.finish_now")}
             </div>
             {/* <div>Total: 04 Routes</div> */}

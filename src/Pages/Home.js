@@ -9,12 +9,14 @@ import MapIcon from "../assets/235861.png";
 import { get, post } from "../helper/apiHelper";
 import { validateResponseUser } from "../helper/validateResponse";
 import Card from "@mui/material/Card";
+import Button from "@mui/material/Button";
 import "../css/style.css";
-
+import SearchIcon from "@mui/icons-material/Search";
+import dayjs from "dayjs";
+import DutyListData from "../components/DutyListData";
+import DatePicker from "../components/DatePicker";
 import img_profile from "../images/img_profile.jpg";
 import icon_more from "../images/icon_more.svg";
-
-import img_map_1 from "../images/img_map_1.jpg";
 
 const timeStampToTime = (timestamp) => {
   const date = new Date(timestamp * 1000); // convert seconds to milliseconds
@@ -32,21 +34,22 @@ const timeStampToTime = (timestamp) => {
 
 export default function FolderList() {
   const [routes, setRoutes] = React.useState(null);
+  const [date, setDate] = React.useState(dayjs(new Date()));
 
   React.useEffect(() => {
     fetchRoutes();
   }, []);
 
   const fetchRoutes = async () => {
-    const response = await get("/user/getRoutes");
-    console.log("response", response);
+    const response = await post("/user/getRoutes", {
+      date: date,
+    });
     if (validateResponseUser(response)) {
       setRoutes(response?.data);
     }
   };
 
   const checkIfFutureDate = (date) => {
-    console.log("---->date", date);
     const inputDate = new Date(date);
     const currentDate = new Date();
 
@@ -66,7 +69,9 @@ export default function FolderList() {
     checkIfFutureDate(timeStampToTime(route?.startTime))
   );
 
-  console.log("---->getAllPrevRoutes", getAllUpcommingRoutes);
+  const updateDateOnButtonClick = (date) => {
+    setDate(date);
+  };
 
   return (
     <body className="d-flex flex-column h-100">
@@ -75,10 +80,8 @@ export default function FolderList() {
         <div className="container">
           <div
             style={{
-              background: "#5d63d1",
-              padding: 22,
-              margin: "-13px",
-              paddingTop: "3rem",
+              padding: "1rem 6px 0px",
+              margin: 0,
             }}
           >
             <div className="row profile-dtl">
@@ -88,7 +91,7 @@ export default function FolderList() {
                 </div>
               </div>
               <div className="col-8">
-                <div className="desc-hldr">
+                <div className="desc-hldr" style={{ color: "black" }}>
                   <h2>
                     Hello, <strong>Aronna Chowdhury</strong>
                   </h2>
@@ -101,85 +104,69 @@ export default function FolderList() {
             </div>
 
             <div className="container prog-holder mb-4">
-              <div className="d-flex justify-content-between mb-4">
-                <div className="goal-title">
-                  Week goal <strong>50 km</strong>
+              <center>
+                <DatePicker defaultValue={date} getDate={setDate} />
+                <div className="d-flex justify-right mb-1 mt-3">
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    color="warning"
+                    style={{ marginRight: 5, fontSize: 10 }}
+                    onClick={() =>
+                      updateDateOnButtonClick(dayjs().subtract(1, "day"))
+                    }
+                  >
+                    Yesterday
+                  </Button>
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    color="warning"
+                    style={{ marginRight: 5, fontSize: 10 }}
+                    onClick={() => updateDateOnButtonClick(dayjs(new Date()))}
+                  >
+                    Today
+                  </Button>
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    color="warning"
+                    style={{ fontSize: 10 }}
+                    onClick={() =>
+                      updateDateOnButtonClick(dayjs().add(1, "day"))
+                    }
+                  >
+                    Tommrrow
+                  </Button>
                 </div>
-                <div>
-                  <i className="bi bi-chevron-right"></i>
-                </div>
-              </div>
-              <div>
-                <div className="d-flex justify-content-between progress-title">
-                  <div>2 Route Done</div>
-                  <div>1 Route left</div>
-                </div>
-
-                <div className="progress">
-                  <div
-                    className="progress-bar"
-                    role="progressbar"
-                    style={{ width: "75%" }}
-                    aria-valuenow="75"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  ></div>
-                </div>
-              </div>
+                <Button
+                  variant="contained"
+                  style={{
+                    background: "#fe8027",
+                    padding: "10px 20px",
+                    borderRadius: 12,
+                    marginTop: "1rem",
+                    height: 48,
+                    width: "100%",
+                    fontSize: "1.125rem",
+                  }}
+                  startIcon={<SearchIcon />}
+                >
+                  Find Duty
+                </Button>
+              </center>
             </div>
           </div>
-
-          <div className="d-flex justify-content-between mb-4 mt-5">
+          <div className="d-flex justify-content-between mb-1 mt-1">
             <div>
               <strong>
                 {" "}
                 {window.site_text("pages.home.todats_route_text")}
               </strong>
             </div>
-            <div>
-              <a href="#url">{window.site_text("pages.home.view_all")}</a>
-            </div>
           </div>
 
-          <div className="container activity-hldr">
-            {routes ? (
-              routes?.map((route, index) => {
-                return (
-                  <div
-                    className="row activity-card"
-                    onClick={() =>
-                      (window.location.href = `#/map/${route?.route?.id}`)
-                    }
-                    key={`cers-${index}`}
-                  >
-                    <div className="col">
-                      <div className="img-hldr">
-                        <img src={MapIcon} alt="map" height="65px" />
-                      </div>
-                    </div>
-                    <div className="col">
-                      <div className="desc-hldr">
-                        <p>{route?.date}</p>
-                        <p>
-                          <strong>{route?.route?.name}</strong>
-                        </p>
-                        <p>{`${timeStampToTime(Number(route?.startTime))}`}</p>
-                      </div>
-                    </div>
-                    <div className="col my-auto activity-btn">
-                      <button>
-                        <i className="bi bi-chevron-right"></i>
-                      </button>
-                    </div>
-                  </div>
-                );
-              })
-            ) : (
-              <center>
-                <div className="loader"></div>
-              </center>
-            )}
-          </div>
+          <DutyListData routes={routes} />
         </div>
       </main>
     </body>

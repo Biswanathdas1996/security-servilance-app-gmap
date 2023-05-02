@@ -25,13 +25,29 @@ export default function ListOfUser() {
     }
   };
 
+  const updateUserStatus = async (userId) => {
+    const response = await put("/admin/user/toggleUserStatus", { userId });
+    if (validateResponseAdmin(response)) {
+      console.log(response);
+      swal("Success!", "User status successfully changed!", "success").then(
+        (value) => {
+          fetchUserList();
+        }
+      );
+    }
+  };
+
   React.useEffect(() => {
     fetchUserList();
   }, []);
 
   return (
     <>
-      <ListOfUserView users={users} approveUser={approveUser} />
+      <ListOfUserView
+        users={users}
+        approveUser={approveUser}
+        updateUserStatus={updateUserStatus}
+      />
     </>
   );
 }
