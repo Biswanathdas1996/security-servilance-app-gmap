@@ -31,36 +31,41 @@ export function FolderList({ routes }) {
       {routes ? (
         routes?.map((route, index) => {
           return (
-            <>
-              <ListItem
+            <div
+              className="list-hldr"
+              key={`cers-${index}`}
+              style={{ marginTop: 5 }}
+            >
+              <div className="img-hldr">
+                <img src="../images/transport.png" alt="" />
+              </div>
+              <div className="desc-hldr">
+                <p>
+                  <strong>{route?.route?.name}</strong>
+                </p>
+                <p>
+                  <small style={{ fontWeight: 200, color: "#3c3c3c" }}>
+                    Date & Time
+                  </small>
+                  {/* {route?.date} */}
+                  <br />
+
+                  {dayjs(new Date(route?.startTime * 1000)).format(
+                    "YYYY-MM-DD hh:mm A"
+                  )}
+                </p>
+              </div>
+              <div
+                className="lst-btn-hldr"
                 onClick={() =>
                   (window.location.href = `#/map/${route?.route?.id}`)
                 }
-                key={`cers-${index}`}
-                style={{ padding: 0 }}
               >
-                <ListItemAvatar>
-                  <Avatar style={{ background: "#fd8027" }}>
-                    <MapIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  primary={route?.route?.name}
-                  secondary={dayjs(new Date(route?.startTime * 1000)).format(
-                    "YYYY-MM-DD HH:mm:ss"
-                  )}
-                />
-                <Button
-                  size="medium"
-                  variant="outlined"
-                  color="warning"
-                  style={{ marginRight: 5, fontSize: 10 }}
-                >
-                  {/* View */}
-                  <KeyboardArrowRightIcon />
-                </Button>
-              </ListItem>
-            </>
+                <button>
+                  <img src="../images/ArrowBarUp.png" alt="" />
+                </button>
+              </div>
+            </div>
           );
         })
       ) : (
@@ -84,7 +89,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ pt: 1 }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -98,22 +103,28 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
 export default function BasicTabs({ routes }) {
   const [value, setValue] = React.useState(1);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+
+    console.log("----routes", routes);
   };
 
+  function a11yProps(index) {
+    return {
+      id: `simple-tab-${index}`,
+      "aria-controls": `simple-tabpanel-${index}`,
+    };
+  }
+
+  const completedRoutes = routes?.filter(
+    (route) => route?.completedAt !== null
+  );
+  const pendingRoutes = routes?.filter((route) => route?.completedAt === null);
   return (
-    <Box sx={{ width: "100%", padding: 0 }}>
+    <>
       <Box sx={{ borderBottom: 1, borderColor: "divider", padding: 0 }}>
         <Tabs
           value={value}
@@ -121,16 +132,32 @@ export default function BasicTabs({ routes }) {
           aria-label="basic tabs example"
           style={{ padding: 0 }}
         >
-          <Tab label="Completed" {...a11yProps(0)} />
-          <Tab label="Pending" {...a11yProps(1)} />
+          <Tab label={"Completed"} {...a11yProps(0)} />
+          <Tab label={"Pending"} {...a11yProps(1)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        Complited
+        {completedRoutes?.length > 0 ? (
+          <FolderList routes={completedRoutes} />
+        ) : (
+          <div className="register mt-4">
+            <p>
+              No <strong>route</strong> found
+            </p>
+          </div>
+        )}
       </TabPanel>
       <TabPanel value={value} index={1} style={{ padding: 0 }}>
-        <FolderList routes={routes} />
+        {pendingRoutes?.length > 0 ? (
+          <FolderList routes={pendingRoutes} />
+        ) : (
+          <div className="register mt-4">
+            <p>
+              No <strong>route</strong> found
+            </p>
+          </div>
+        )}
       </TabPanel>
-    </Box>
+    </>
   );
 }

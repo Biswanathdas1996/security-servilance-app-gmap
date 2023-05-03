@@ -145,13 +145,11 @@ const Login = () => {
           </div> */}
         </div>
         <div
-          className="register mt-4"
+          className="register mt-3"
           onClick={() => (window.location.href = "#/register")}
         >
           <p>Not a registered user? </p>
-          <p>
-            <strong>CLICK HERE</strong> to register
-          </p>
+          <strong>CLICK HERE</strong> to register
         </div>
       </div>
     </body>

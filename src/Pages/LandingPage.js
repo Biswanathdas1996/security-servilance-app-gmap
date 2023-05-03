@@ -20,19 +20,23 @@ export default function FolderList() {
         <div className="img_map">
           <img src="../images/image1.png" alt="" />
         </div>
-        <div className="button">
-          <button
+        <div
+          className="button"
+          onClick={() => (window.location.href = "#/login")}
+          style={{ marginTop: 15 }}
+        >
+          {/* <button
             type="button"
             className="btn"
-            onClick={() => (window.location.href = "#/login")}
+           
             style={{ width: "auto" }}
-          >
-            <div className="text">
-              <h6>Get Started</h6>
-            </div>
-          </button>
+          > */}
+          <div className="text">
+            <h6>Get Started</h6>
+          </div>
+          {/* </button> */}
         </div>
-        <div className="register">
+        <div className="register" style={{ marginTop: 15 }}>
           <h6 onClick={() => (window.location.href = "#/register")}>
             Not a registered user? <b>CLICK HERE</b> to register
           </h6>

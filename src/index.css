@@ -1,11 +1,11 @@
 
 
 .swal-button:not([disabled]):hover {
-  background-color: #ff8126 !important;
+  background-color: #ad0004 !important;
 }
 
 .swal-button {
-  background-color:  #ff8126 !important;
+  background-color:  #ad0004 !important;
   color: #fff;
   border: none;
   box-shadow: none;
@@ -31,7 +31,7 @@
 
 .loader {
   border: 5px solid #f3f3f3;
-  border-top: 5px solid #ff8126;
+  border-top: 5px solid #ad0004;
   border-radius: 50%;
   width: 30px;
   height: 30px;

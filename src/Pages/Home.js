@@ -10,13 +10,13 @@ import { get, post } from "../helper/apiHelper";
 import { validateResponseUser } from "../helper/validateResponse";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
-import "../css/style.css";
 import SearchIcon from "@mui/icons-material/Search";
 import dayjs from "dayjs";
 import DutyListData from "../components/DutyListData";
 import DatePicker from "../components/DatePicker";
 import img_profile from "../images/img_profile.jpg";
 import icon_more from "../images/icon_more.svg";
+import "../css/dashboard.css";
 
 const timeStampToTime = (timestamp) => {
   const date = new Date(timestamp * 1000); // convert seconds to milliseconds
@@ -28,145 +28,161 @@ const timeStampToTime = (timestamp) => {
   const seconds = date.getSeconds();
 
   const formattedDate = `${year}/${month}/${day} ${hours}:${minutes}`;
-  console.log(formattedDate);
+  // console.log(formattedDate);
   return formattedDate;
 };
 
 export default function FolderList() {
   const [routes, setRoutes] = React.useState(null);
-  const [date, setDate] = React.useState(dayjs(new Date()));
+  const [loadding, setLoadding] = React.useState(false);
+  const [date, setDate] = React.useState(
+    dayjs(new Date()).format("YYYY-MM-DD")
+  );
 
   React.useEffect(() => {
-    fetchRoutes();
+    fetchRoutes(date);
   }, []);
 
-  const fetchRoutes = async () => {
+  const fetchRoutes = async (date) => {
+    setRoutes(null);
+    setLoadding(true);
     const response = await post("/user/getRoutes", {
       date: date,
     });
     if (validateResponseUser(response)) {
       setRoutes(response?.data);
     }
+    setLoadding(false);
   };
 
-  const checkIfFutureDate = (date) => {
-    const inputDate = new Date(date);
-    const currentDate = new Date();
-
-    if (inputDate > currentDate) {
-      console.log("The input date is in the future.");
-      return true;
-    } else {
-      console.log("The input date is not in the future.");
-      return false;
-    }
+  const findRoute = () => {
+    fetchRoutes(date);
   };
-
-  const getAllUpcommingRoutes = routes?.filter((route) =>
-    checkIfFutureDate(timeStampToTime(route?.startTime))
-  );
-  const getAllPrevRoutes = routes?.filter((route) =>
-    checkIfFutureDate(timeStampToTime(route?.startTime))
-  );
 
   const updateDateOnButtonClick = (date) => {
     setDate(date);
+    fetchRoutes(date);
   };
 
   return (
     <body className="d-flex flex-column h-100">
-      <div className="bg-purple"></div>
-      <main className="flex-shrink-0 main-foot-adjust  pt-2">
-        <div className="container">
-          <div
-            style={{
-              padding: "1rem 6px 0px",
-              margin: 0,
-            }}
-          >
-            <div className="row profile-dtl">
-              <div className="col-2">
-                <div className="img-hldr">
-                  <img src={img_profile} alt="" />
-                </div>
-              </div>
-              <div className="col-8">
-                <div className="desc-hldr" style={{ color: "black" }}>
-                  <h2>
-                    Hello, <strong>Aronna Chowdhury</strong>
-                  </h2>
-                  <p>Sub Inspector</p>
-                </div>
-              </div>
-              <div className="col-2">
-                <img src={icon_more} alt="More" />
+      <div className="bg-default" style={{ zIndex: 0 }}></div>
+
+      <main className="flex-shrink-0 main-foot-adjust" style={{ zIndex: 1 }}>
+        <div className="container pt-5">
+          <div className="row profile-dtl">
+            <div className="col-2">
+              <div className="img-hldr">
+                <img src="../images/img_profile.png" alt="" />
               </div>
             </div>
+            <div className="col-8">
+              <div className="desc-hldr">
+                <h2>
+                  Hello, <strong>Aronna Chowdhury</strong>
+                </h2>
+                <p>Sub Inspector</p>
+              </div>
+            </div>
+            <div className="col-2">
+              <img src="../images/icon_more.svg" alt="More" />
+            </div>
+          </div>
 
-            <div className="container prog-holder mb-4">
-              <center>
-                <DatePicker defaultValue={date} getDate={setDate} />
-                <div className="d-flex justify-right mb-1 mt-3">
-                  <Button
-                    size="small"
-                    variant="outlined"
-                    color="warning"
-                    style={{ marginRight: 5, fontSize: 10 }}
-                    onClick={() =>
-                      updateDateOnButtonClick(dayjs().subtract(1, "day"))
-                    }
-                  >
-                    Yesterday
-                  </Button>
-                  <Button
-                    size="small"
-                    variant="outlined"
-                    color="warning"
-                    style={{ marginRight: 5, fontSize: 10 }}
-                    onClick={() => updateDateOnButtonClick(dayjs(new Date()))}
-                  >
-                    Today
-                  </Button>
-                  <Button
-                    size="small"
-                    variant="outlined"
-                    color="warning"
-                    style={{ fontSize: 10 }}
-                    onClick={() =>
-                      updateDateOnButtonClick(dayjs().add(1, "day"))
-                    }
-                  >
-                    Tommrrow
-                  </Button>
+          <div className="container find-duty-hldr mb-4">
+            <div className="datepicker">
+              <div className="mb-3 mt-3">
+                <input
+                  type="date"
+                  className="form-control"
+                  id=""
+                  placeholder=""
+                  name=""
+                  onChange={(e) => setDate(e.target.value)}
+                  value={date}
+                />
+              </div>
+            </div>
+            <div className="time-picker-hldr">
+              <div
+                className="time-hldr"
+                onClick={() =>
+                  updateDateOnButtonClick(
+                    dayjs().subtract(1, "day").format("YYYY-MM-DD")
+                  )
+                }
+              >
+                <div className="time">
+                  {dayjs().subtract(1, "day").format("MMM DD YYYY")}
                 </div>
-                <Button
-                  variant="contained"
-                  style={{
-                    background: "#fe8027",
-                    padding: "10px 20px",
-                    borderRadius: 12,
-                    marginTop: "1rem",
-                    height: 48,
-                    width: "100%",
-                    fontSize: "1.125rem",
-                  }}
-                  startIcon={<SearchIcon />}
-                >
+                <div className="time-icon">
+                  <img src="../images/icon-time.png" alt="" />
+                </div>
+              </div>
+              <div
+                className="time-hldr"
+                onClick={() =>
+                  updateDateOnButtonClick(
+                    dayjs(new Date()).format("YYYY-MM-DD")
+                  )
+                }
+              >
+                <div className="time">
+                  {dayjs(new Date()).format("MMM DD YYYY")}
+                </div>
+                <div className="time-icon">
+                  <img src="../images/icon-time.png" alt="" />
+                </div>
+              </div>
+              <div
+                className="time-hldr"
+                onClick={() =>
+                  updateDateOnButtonClick(
+                    dayjs().add(1, "day").format("YYYY-MM-DD")
+                  )
+                }
+              >
+                <div className="time">
+                  {dayjs().add(1, "day").format("MMM DD YYYY")}
+                </div>
+                <div className="time-icon">
+                  <img src="../images/icon-time.png" alt="" />
+                </div>
+              </div>
+            </div>
+            <div className="container">
+              <p className="routes-txt">
+                You Have <span>{routes?.length} Routes</span> Today
+              </p>
+              <button className="find-btn" onClick={() => findRoute()}>
+                <span>
+                  <img src="../images/loupe.png" alt="" />
+                </span>
+                <div className="txt-hldr pl-3" style={{ color: "white" }}>
                   Find Duty
-                </Button>
-              </center>
-            </div>
-          </div>
-          <div className="d-flex justify-content-between mb-1 mt-1">
-            <div>
-              <strong>
-                {" "}
-                {window.site_text("pages.home.todats_route_text")}
-              </strong>
+                </div>
+              </button>
             </div>
           </div>
 
-          <DutyListData routes={routes} />
+          <div className="container route-info-hdr">
+            <span>
+              <img src="../images/route.png" alt="" />
+            </span>
+            <h3>
+              <strong>Route Information</strong> List
+            </h3>
+          </div>
+
+          <div className="container">
+            {!loadding ? (
+              <DutyListData routes={routes} />
+            ) : (
+              <center>
+                <div className="loader" style={{ marginTop: 10 }}></div>
+              </center>
+            )}
+          </div>
         </div>
       </main>
     </body>

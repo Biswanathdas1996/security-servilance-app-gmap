@@ -142,9 +142,9 @@ body {
   height: 56px;
   text-align: center;
   background: #AD0004;
-  box-shadow: 1px 4px 5px rgba(0, 0, 0, 0.16);
+  /* box-shadow: 1px 4px 5px rgba(0, 0, 0, 0.16); */
   border-radius: 10px;
-  color: white;
+  color: white !important;
 
 }
 

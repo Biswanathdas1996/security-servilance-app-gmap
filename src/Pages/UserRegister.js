@@ -44,7 +44,7 @@ export default function UserRegister({ faceData }) {
             <h6 style={{ color: "white" }}>Welcome To</h6>
           </div>
           <div className="Security">
-            <h1 style={{ color: "white" }}>Security Surveillance System</h1>
+            <h3 style={{ color: "white" }}>Security Surveillance System</h3>
           </div>
           <div className="Register">
             <h1>Register Your Details</h1>
