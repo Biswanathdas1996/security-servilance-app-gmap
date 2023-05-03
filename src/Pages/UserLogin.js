@@ -121,12 +121,15 @@ const Login = () => {
                     </button>
                   </div>
                 ) : (
-                  <div className="loader"></div>
+                  <center>
+                    <div className="loader"></div>
+                    <br />
+                  </center>
                 )}
               </Form>
             )}
           </Formik>
-
+          {/* 
           <div className="_container">
             <div className="row form_toggle">
               <div className="col">
@@ -139,7 +142,7 @@ const Login = () => {
                 <p>Forgot Password?</p>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
         <div
           className="register mt-4"
