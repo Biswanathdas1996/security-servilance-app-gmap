@@ -3,10 +3,9 @@ import TextField from "@mui/material/TextField";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { post } from "../helper/apiHelper";
-import MapIcon from "../assets/map.jpg";
 import { useLocation } from "react-router-dom";
-import icon_activity from "../images/icon_activity.svg";
 import swal from "sweetalert";
+import "../css/start.css";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -49,24 +48,19 @@ const Login = () => {
   };
 
   return (
-    <body className="d-flex flex-column h-100 overflow-hidden">
-      <div className="bg-purple"></div>
-      <main className="flex-shrink-0 main-foot-adjust  pt-2">
-        <div className="container">
-          <div
-            style={{
-              backgroundColor: "#ff8126",
-              padding: "14rem",
-              margin: "-13px",
-              paddingTop: "3rem",
-              background: `url(${MapIcon})`,
-            }}
-          >
-            <div className="row profile-dtl">
-              <div className="col-2"></div>
-            </div>
-          </div>
+    <body className="d-flex flex-column h-100">
+      <div className="main container">
+        <div className="welcome">
+          <h6>Welcome To</h6>
+        </div>
+        <div className="Security">
+          <h1>Security Surveillance System</h1>
+        </div>
+        <div className="lorem">
+          <h6>Lorem ipsum doller sit amet, orem ipsum doller sit amet</h6>
+        </div>
 
+        <div className="form container px-0" style={{ boxShadow: "none" }}>
           <Formik
             initialValues={{ email: "", password: "" }}
             validationSchema={validationSchema}
@@ -81,70 +75,82 @@ const Login = () => {
               handleSubmit,
               isSubmitting,
             }) => (
-              <div
-                style={{
-                  marginTop: 31,
-                  border: "1px solid #ff8126",
-                  padding: 10,
-                }}
-              >
-                <center>
-                  <h1>Sign in</h1>
-                  <Form>
-                    <Field
-                      name="email"
-                      label="Email"
-                      variant="outlined"
-                      as={TextField}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.email}
-                      error={touched.email && Boolean(errors.email)}
-                      helperText={<ErrorMessage name="email" />}
-                      style={{ width: "100%" }}
-                    />
-                    <br />
-                    <br />
-                    <Field
-                      name="password"
-                      label="Password"
-                      type="password"
-                      variant="outlined"
-                      as={TextField}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.password}
-                      error={touched.password && Boolean(errors.password)}
-                      helperText={<ErrorMessage name="password" />}
-                      style={{ width: "100%" }}
-                    />
-                    <br />
-                    <br />
-                    {!isSubmitting ? (
-                      <div
-                        className="d-flex justify-content-center mb-1 total-btn  mt-1"
-                        onClick={handleSubmit}
-                        disabled={isSubmitting}
-                        style={{ padding: 8 }}
-                      >
-                        <div>
-                          <img src={icon_activity} alt="" className="mr-2" />
-                        </div>
-                        <div className="total-title">
-                          {window.site_text("pages.landing.sign_in")}
-                        </div>
-                        {/* <div>Total: 04 Routes</div> */}
+              <Form>
+                <div className="form-group mb-4">
+                  <input
+                    type="email"
+                    name="email"
+                    className="form-control icon-input input-email"
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                    placeholder="Email"
+                    as={TextField}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.email}
+                    error={touched.email && Boolean(errors.email)}
+                  />
+                  <ErrorMessage name="email" />
+                </div>
+                <div className="form-group mb-4">
+                  <input
+                    type="password"
+                    className="form-control icon-input input-password"
+                    id="exampleInputPassword1"
+                    placeholder="Password"
+                    as={TextField}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.password}
+                    error={touched.password && Boolean(errors.password)}
+                    name="password"
+                  />
+                  <ErrorMessage name="password" />
+                </div>
+
+                {!isSubmitting ? (
+                  <div
+                    className="login-button"
+                    onClick={handleSubmit}
+                    disabled={isSubmitting}
+                  >
+                    <button type="button" className="btn">
+                      <div className="text">
+                        <h6>{window.site_text("pages.landing.sign_in")}</h6>
                       </div>
-                    ) : (
-                      <div className="loader"></div>
-                    )}
-                  </Form>
-                </center>
-              </div>
+                    </button>
+                  </div>
+                ) : (
+                  <div className="loader"></div>
+                )}
+              </Form>
             )}
           </Formik>
+
+          <div className="_container">
+            <div className="row form_toggle">
+              <div className="col">
+                <div className="form-chec form-switch switch">
+                  <input className="form-check-input " type="checkbox" />
+                  <p className="ml-4">&nbsp;&nbsp;&nbsp; Remember Me</p>
+                </div>
+              </div>
+              <div className="col">
+                <p>Forgot Password?</p>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
+        <div
+          className="register mt-4"
+          onClick={() => (window.location.href = "#/register")}
+        >
+          <p>Not a registered user? </p>
+          <p>
+            <strong>CLICK HERE</strong> to register
+          </p>
+        </div>
+      </div>
     </body>
   );
 };

@@ -1,53 +1,43 @@
 import * as React from "react";
-import MapIcon from "../assets/map.jpg";
-import "../css/style.css";
-import icon_activity from "../images/icon_activity.svg";
+import "../css/start.css";
 
 export default function FolderList() {
   return (
-    <body className="d-flex flex-column h-100 overflow-hidden">
-      <div className="bg-purple"></div>
-      <main className="flex-shrink-0 main-foot-adjust  pt-2">
-        <div className="container">
-          <div
-            style={{
-              backgroundColor: "#ff8126",
-              padding: "16rem",
-              margin: "-13px",
-              paddingTop: "3rem",
-              background: `url(${MapIcon})`,
-            }}
-          >
-            <div className="row profile-dtl">
-              <div className="col-2"></div>
-            </div>
-          </div>
-          <div
-            className="d-flex justify-content-center mb-4 total-btn  mt-5"
-            onClick={() => (window.location.href = "/#/login")}
-          >
-            <div>
-              <img src={icon_activity} alt="" className="mr-2" />
-            </div>
-            <div className="total-title">
-              {window.site_text("pages.landing.sign_in")}
-            </div>
-            {/* <div>Total: 04 Routes</div> */}
-          </div>
-          <div
-            className="d-flex justify-content-center mb-4 total-btn  mt-1"
-            onClick={() => (window.location.href = "/#/register")}
-          >
-            <div>
-              <img src={icon_activity} alt="" className="mr-2" />
-            </div>
-            <div className="total-title">
-              {window.site_text("pages.landing.register")}
-            </div>
-            {/* <div>Total: 04 Routes</div> */}
-          </div>
+    <body>
+      <div className="main container">
+        <div className="welcome">
+          <h6>Welcome To</h6>
         </div>
-      </main>
+        <div className="Security">
+          <h1>Security Surveillance System</h1>
+        </div>
+        <div className="lorem">
+          <h6>
+            Lorem ipsum doller sit amet, orem ipsum doller sit amet, orem ipsum
+            doller sit amet, orem ipsum doller
+          </h6>
+        </div>
+        <div className="img_map">
+          <img src="../images/image1.png" alt="" />
+        </div>
+        <div className="button">
+          <button
+            type="button"
+            className="btn"
+            onClick={() => (window.location.href = "#/login")}
+            style={{ width: "auto" }}
+          >
+            <div className="text">
+              <h6>Get Started</h6>
+            </div>
+          </button>
+        </div>
+        <div className="register">
+          <h6 onClick={() => (window.location.href = "#/register")}>
+            Not a registered user? <b>CLICK HERE</b> to register
+          </h6>
+        </div>
+      </div>
     </body>
   );
 }

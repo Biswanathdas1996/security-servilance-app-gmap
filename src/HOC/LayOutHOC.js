@@ -17,7 +17,7 @@ export function UserLayout(Body) {
     <>
       <UserBAckScreenHeader />
       <Body />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
@@ -26,7 +26,7 @@ export function UserHeaderlessLayout(Body) {
   return (
     <>
       <Body />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
