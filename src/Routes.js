@@ -28,7 +28,7 @@ class Routing extends React.Component {
           element={UserHeaderlessLayout(Register)}
         />
 
-        <Route exact path="/map/:id" element={UserLayout(Map)} />
+        <Route exact path="/map/:id/:date" element={UserLayout(Map)} />
         <Route exact path="/path" element={UserLayout(VisitedPath)} />
         <Route exact path="/users" element={AdminLayout(ListOfUser)} />
         <Route exact path="/list-of_routs" element={AdminLayout(ListOfRouts)} />

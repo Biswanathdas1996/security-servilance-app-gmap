@@ -172,3 +172,12 @@
     border-radius: 16px;
     color: #BFC2C8;
 }
+
+.capture-submit-btn{
+    margin: 1rem;
+    color: white;
+    background: #ad0004;
+    border: 1px solid #ad0004;
+    padding: 15px;
+    border-radius: 15px;
+}
