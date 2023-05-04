@@ -69,19 +69,26 @@ function App({ liveCenter }) {
                     height: 300,
                   }}
                 />
-                <Button variant="contained" onClick={capture}>
-                  Capture Photo
-                </Button>
+                <center>
+                  <button
+                    className="button"
+                    style={{ marginTop: "1rem", color: "white" }}
+                    onClick={capture}
+                  >
+                    Capture Photo
+                  </button>
+                </center>
               </>
             ) : (
-              <Button
-                variant="outlined"
-                type="outlined"
-                style={{ marginTop: 10 }}
-                onClick={() => handleImageUpload()}
-              >
-                Submit
-              </Button>
+              <center>
+                <button
+                  className="button"
+                  style={{ marginTop: "1rem", color: "white" }}
+                  onClick={() => handleImageUpload()}
+                >
+                  Submit
+                </button>
+              </center>
             )}
           </form>
         </>

@@ -15,9 +15,10 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import IconButton from "@mui/material/IconButton";
 import { useParams } from "react-router-dom";
 import icon_activity from "../images/icon_activity.svg";
+import "../css/dutylist.css";
 
 export default function Map({ defaultZoom }) {
-  const { id } = useParams();
+  const { id, date } = useParams();
   const [currentLocation, setCurrentLocation] = React.useState(null);
   const [isInsideCircle, setIsInsideCircle] = React.useState(false);
   const [open, setOpen] = React.useState(false);
@@ -31,7 +32,7 @@ export default function Map({ defaultZoom }) {
   const fetchData = async () => {
     const response = await post(`/user/getRouteLocations`, {
       routeId: Number(id),
-      date: "02-05-2023",
+      date: date,
     });
     console.log("--response->", response);
     if (validateResponseUser(response)) {
@@ -125,23 +126,6 @@ export default function Map({ defaultZoom }) {
         )}
       </div>
 
-      <center>
-        {isInsideCircle && (
-          <>
-            <br />
-            <br />
-            <Button
-              variant="contained"
-              onClick={handleOpenCameraOpen}
-              styly={{ marginTop: 40 }}
-              endIcon={<PhotoCamera />}
-            >
-              Capture and Submit
-            </Button>
-          </>
-        )}
-      </center>
-
       {route && (
         <>
           <GoogleMap
@@ -186,60 +170,79 @@ export default function Map({ defaultZoom }) {
                 );
               })}
           </GoogleMap>
-          <Card
-            style={{
-              marginTop: 20,
-              marginBottom: "2rem",
-              padding: 15,
-              width: "90%",
-              paddingBottom: "1rem",
-            }}
-          >
-            <List
-              sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-            >
-              {locations &&
-                locations?.map((val) => {
-                  console.log("val=========>", val);
-                  return (
-                    <ListItem
-                      key={val?.name + val?.id}
-                      disableGutters
-                      secondaryAction={
-                        <IconButton aria-label="comment">
-                          <CheckCircleIcon
-                            color={val?.isVisited ? "success" : "disabled"}
-                          />
-                        </IconButton>
-                      }
-                      onClick={() => handleOpen(val)}
-                    >
-                      <ListItemText
-                        primary={`${val?.name}`}
-                        secondary={
-                          val?.isVisited
-                            ? `Time: ${val?.visitData?.createdAt}`
-                            : "Not Visited"
-                        }
-                      />
-                    </ListItem>
-                  );
-                })}
-            </List>
-          </Card>
-          <div
-            className="d-flex justify-content-center total-btn "
-            style={{ marginBottom: "4rem" }}
-          >
-            <div>
-              <img src={icon_activity} alt="" className="mr-2" />
+
+          <div className="container grey-location">
+            <div className="row routecard">
+              <div className="col-9">
+                <p className="text-black">Route Name : Odisha</p>
+                <p className="text-black-sm">20.06.23 - 10:00 PM</p>
+              </div>
+              <div className="col-2">
+                <span className="red-circle">
+                  <img src="../images/Vector.png" alt="" />
+                </span>
+              </div>
             </div>
-            <div className="total-title" onClick={() => finishDuty()}>
-              {window.site_text("pages.map.finish_now")}
-            </div>
-            {/* <div>Total: 04 Routes</div> */}
           </div>
-          <br />
+          <div className="container pb-5">
+            {isInsideCircle && (
+              <center>
+                <button
+                  className="button"
+                  style={{ marginTop: "1rem", color: "white" }}
+                  onClick={handleOpenCameraOpen}
+                >
+                  Capture and Submit
+                </button>
+              </center>
+            )}
+          </div>
+          <div className="container pb-5">
+            <table className="table caption-top red-header">
+              <thead>
+                <tr>
+                  <th scope="col">Location</th>
+                  <th scope="col">Time</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {locations &&
+                  locations?.map((val) => {
+                    return (
+                      <tr
+                        className={val?.isVisited ? "active" : ""}
+                        key={val?.name + val?.id}
+                      >
+                        <td>{val?.name}</td>
+                        <td>
+                          {val?.isVisited
+                            ? `${val?.visitData?.createdAt}`
+                            : "Not Visited"}
+                        </td>
+                        <td>
+                          <img
+                            src="../images/placeholder.png"
+                            alt=""
+                            onClick={() => handleOpen(val)}
+                          />
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+            <center>
+              <button
+                type="button"
+                className="button"
+                style={{ marginTop: "3rem", color: "white" }}
+                onClick={() => finishDuty()}
+              >
+                {window.site_text("pages.map.finish_now")}
+              </button>
+            </center>
+          </div>
         </>
       )}
     </>
