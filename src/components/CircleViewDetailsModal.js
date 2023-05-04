@@ -2,6 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import ImageCard from "./ImageCard";
 
 const style = {
   position: "absolute",
@@ -33,13 +34,18 @@ export default function Map({ open, onClose, ...props }) {
             </center>
             {props?.clickedPlace?.isVisited ? (
               <>
-                <img
-                  src={props?.clickedPlace?.visitData?.image}
-                  alt="img"
-                  style={{ height: 200, width: 250 }}
+                <ImageCard
+                  img={props?.clickedPlace?.visitData?.profileImage}
+                  text="Selfie"
                 />
+                <ImageCard
+                  img={props?.clickedPlace?.visitData?.image}
+                  text="Site image"
+                />
+
                 <div className="contentTT">
-                  {props?.clickedPlace?.visitData?.createdAt}
+                  Captured at :
+                  <b>{props?.clickedPlace?.visitData?.createdAt}</b>
                 </div>
               </>
             ) : (

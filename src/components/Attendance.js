@@ -7,18 +7,20 @@ import { validateResponseUser } from "../helper/validateResponse";
 
 function App({ liveCenter }) {
   const [image, setImage] = useState(null);
+  const [selfImage, setSelfImage] = useState(null);
   const [faceAuth, setFaceauth] = useState(true); ///   skip the face auth
 
   const webcamRef = useRef(null);
+  const webcam2Ref = useRef(null);
 
   const capture = () => {
     const imageSrc = webcamRef.current.getScreenshot();
     setImage(imageSrc);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // TODO: Submit the form data, including the captured image
+  const captureSelfie = () => {
+    const imageSrc = webcam2Ref.current.getScreenshot();
+    setSelfImage(imageSrc);
   };
 
   const validate = () => {
@@ -31,6 +33,7 @@ function App({ liveCenter }) {
       locationId: liveCenter?.id,
       refId: liveCenter?.refId,
       image: image,
+      profileImage: selfImage,
       lat: 22.8796787,
       long: 88.875785,
     };
@@ -45,52 +48,94 @@ function App({ liveCenter }) {
       <Login validate={validate} display={!faceAuth} />
       {faceAuth && (
         <>
-          <h5 style={{ color: "green" }}>User Authenticated!</h5>
-          <h3>Please Capture Image</h3>
-          {image && (
-            <img src={image} alt="rrr" style={{ height: 200, width: 250 }} />
-          )}
+          {/* <h5 style={{ color: "green" }}>User Authenticated!</h5> */}
 
-          <form onSubmit={handleSubmit}>
-            {!image ? (
-              <>
-                <Webcam
-                  audio={false}
-                  ref={webcamRef}
-                  facingMode="environment"
-                  style={{
-                    marginLeft: "auto",
-                    marginRight: "auto",
-                    left: 0,
-                    right: 0,
-                    textAlign: "center",
-                    zindex: 9,
-                    width: 300,
-                    height: 300,
-                  }}
-                />
-                <center>
-                  <button
-                    className="button"
-                    style={{ marginTop: "1rem", color: "white" }}
-                    onClick={capture}
-                  >
-                    Capture Photo
-                  </button>
-                </center>
-              </>
-            ) : (
+          {!image ? (
+            <>
+              <h3>Please Capture Site Image</h3>
+              <Webcam
+                audio={false}
+                ref={webcamRef}
+                facingMode="environment"
+                style={{
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  left: 0,
+                  right: 0,
+                  textAlign: "center",
+                  zindex: 9,
+                  width: 300,
+                  height: 300,
+                }}
+              />
               <center>
                 <button
                   className="button"
                   style={{ marginTop: "1rem", color: "white" }}
-                  onClick={() => handleImageUpload()}
+                  onClick={capture}
                 >
-                  Submit
+                  Capture Photo
                 </button>
               </center>
-            )}
-          </form>
+            </>
+          ) : (
+            <>
+              {!selfImage ? (
+                <>
+                  <h3>Please Capture Selfie</h3>
+                  <Webcam
+                    audio={false}
+                    ref={webcam2Ref}
+                    style={{
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                      left: 0,
+                      right: 0,
+                      textAlign: "center",
+                      zindex: 9,
+                      width: 300,
+                      height: 300,
+                    }}
+                  />
+                  <center>
+                    <button
+                      className="button"
+                      style={{ marginTop: "1rem", color: "white" }}
+                      onClick={captureSelfie}
+                    >
+                      Capture Selfie
+                    </button>
+                  </center>
+                </>
+              ) : (
+                <center>
+                  <b>Site Image</b>
+                  <br />
+                  <img
+                    src={image}
+                    alt="rrr"
+                    style={{ height: 200, width: 250 }}
+                  />
+                  <br />
+                  <b>Site Selfie</b>
+                  <br />
+                  <img
+                    src={selfImage}
+                    alt="rrr"
+                    style={{ height: 200, width: 250 }}
+                  />
+                  <br />
+                  <button
+                    className="button"
+                    style={{ marginTop: "1rem", color: "white" }}
+                    onClick={() => handleImageUpload()}
+                  >
+                    Submit
+                  </button>
+                </center>
+              )}
+            </>
+          )}
         </>
       )}
     </center>

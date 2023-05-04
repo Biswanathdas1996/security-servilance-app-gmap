@@ -14,7 +14,7 @@ import Card from "@mui/material/Card";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import IconButton from "@mui/material/IconButton";
 import { useParams } from "react-router-dom";
-import icon_activity from "../images/icon_activity.svg";
+import swal from "sweetalert";
 import "../css/dutylist.css";
 
 export default function Map({ defaultZoom }) {
@@ -93,24 +93,34 @@ export default function Map({ defaultZoom }) {
     console.log("------>lng", lng);
   }
 
-  console.log("---isInsideCircle->", isInsideCircle);
-  console.log("---liveCenter->", liveCenter);
+  // console.log("---isInsideCircle->", isInsideCircle);
+  // console.log("---liveCenter->", liveCenter);
 
   const finishDuty = async () => {
-    if (locations[0]["refId"]) {
-      const response = await post(`/user/finishDuty`, {
-        refId: locations[0]["refId"],
-      });
-      console.log("--response->", response);
-      if (validateResponseUser(response)) {
-        window.location.replace("#/home");
+    swal({
+      title: "Are you sure?",
+      text: "You want to finish your duty",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then(async (willDelete) => {
+      if (willDelete) {
+        if (locations[0]["refId"]) {
+          const response = await post(`/user/finishDuty`, {
+            refId: locations[0]["refId"],
+          });
+          console.log("--response->", response);
+          if (validateResponseUser(response)) {
+            window.location.replace("#/home");
+          }
+        }
       }
-    }
+    });
   };
 
   return (
-    <>
-      <div>
+    <body class="d-flex flex-column h-100">
+      <>
         <CircleViewDetailsModal
           open={open}
           onClose={handleClose}
@@ -124,7 +134,7 @@ export default function Map({ defaultZoom }) {
             liveCenter={liveCenter}
           />
         )}
-      </div>
+      </>
 
       {route && (
         <>
@@ -174,25 +184,29 @@ export default function Map({ defaultZoom }) {
           <div className="container grey-location">
             <div className="row routecard">
               <div className="col-9">
-                <p className="text-black">Route Name : Odisha</p>
-                <p className="text-black-sm">20.06.23 - 10:00 PM</p>
+                <p className="text-black">
+                  Route Name : <b>{route?.name}</b>
+                </p>
+                <p className="text-black-sm">{route?.center}</p>
               </div>
-              <div className="col-2">
+              <div className="col-2" style={{ marginTop: "-4rem" }}>
                 <span className="red-circle">
                   <img src="../images/Vector.png" alt="" />
                 </span>
               </div>
             </div>
           </div>
+
           <div className="container pb-5">
             {isInsideCircle && (
               <center>
                 <button
                   className="button"
-                  style={{ marginTop: "1rem", color: "white" }}
+                  style={{ color: "white", padding: 12 }}
                   onClick={handleOpenCameraOpen}
                 >
                   Capture and Submit
+                  <img src="../images/Vector.png" alt="" />
                 </button>
               </center>
             )}
@@ -240,11 +254,12 @@ export default function Map({ defaultZoom }) {
                 onClick={() => finishDuty()}
               >
                 {window.site_text("pages.map.finish_now")}
+                <img src="../images/Vector.png" alt="" />
               </button>
             </center>
           </div>
         </>
       )}
-    </>
+    </body>
   );
 }

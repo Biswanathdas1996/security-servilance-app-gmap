@@ -20,9 +20,9 @@ const validationSchema = Yup.object().shape({
   password: Yup.string()
     .matches(/^\d{6}$/, "Enter only 6 digits number")
     .required("Password is required"),
-  confirmPassword: Yup.number()
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
-    .required("Confirm Password is required"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password"), null], "Pin must match")
+    .required("Confirm Pin is required"),
 });
 
 const initialValues = {
