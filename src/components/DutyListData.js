@@ -58,7 +58,7 @@ export function FolderList({ routes }) {
               <div
                 className="lst-btn-hldr"
                 onClick={() =>
-                  (window.location.href = `#/map/${route?.route?.id}`)
+                  (window.location.href = `#/map/${route?.route?.id}/${route?.date}`)
                 }
               >
                 <button>
