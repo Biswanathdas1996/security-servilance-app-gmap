@@ -16,9 +16,13 @@ const Login = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const returnLink = searchParams?.get("return");
+  const [errorTxt, setErrorTxt] = React.useState(null);
+  const [loadding, SetLoading] = React.useState(false);
 
   const handleSubmit = async (values, { setSubmitting }) => {
     console.log(values);
+    setErrorTxt(null);
+    SetLoading(true);
     const body = {
       email: values?.email,
       password: Number(values?.password),
@@ -27,24 +31,29 @@ const Login = () => {
     if (response) {
       if (response?.status === 200) {
         localStorage.setItem("x-service-token", response?.data?.token);
-        // swal("Authenticated!", "Successfully logged in", "success");
-        swal("Authenticated!", "Successfully logged in", "success").then(
-          (value) => {
-            if (returnLink) {
-              window.location.href = returnLink;
-            } else {
-              window.location.href = "#/home";
-            }
+        const userData = JSON.stringify(response?.data?.data);
+        console.log("userData---->", userData);
+        localStorage.setItem("x-user-data", userData);
+
+        setTimeout(() => {
+          if (returnLink) {
+            window.location.href = returnLink;
+          } else {
+            window.location.href = "#/home";
           }
-        );
+          SetLoading(false);
+        }, 2000);
       } else if (response?.status === 403 || response?.status === 404) {
-        swal("Sorry!", response?.message, "warning");
+        // swal("Sorry!", response?.message, "warning");
+        setErrorTxt(response?.message);
+        SetLoading(false);
       } else {
-        swal("Error!", response?.message, "error");
+        // swal("Error!", response?.message, "error");
+        setErrorTxt(response?.message);
+        SetLoading(false);
       }
     }
     console.log("response------->", response);
-    setSubmitting(false);
   };
 
   return (
@@ -59,7 +68,18 @@ const Login = () => {
         <div className="lorem">
           <h6>Lorem ipsum doller sit amet, orem ipsum doller sit amet</h6>
         </div>
-
+        <center>
+          {errorTxt && (
+            <b
+              style={{
+                color: "#ad0004",
+                textTransform: "capitalize",
+              }}
+            >
+              {errorTxt}
+            </b>
+          )}
+        </center>
         <div className="form container px-0" style={{ boxShadow: "none" }}>
           <Formik
             initialValues={{ email: "", password: "" }}
@@ -108,7 +128,7 @@ const Login = () => {
                   <ErrorMessage name="password" />
                 </div>
 
-                {!isSubmitting ? (
+                {!loadding ? (
                   <div
                     className="login-button"
                     onClick={handleSubmit}

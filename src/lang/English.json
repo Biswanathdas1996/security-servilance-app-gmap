@@ -10,12 +10,13 @@
             "register": "Register"
         },
         "register": {
+            "designation": "Designation",
             "emp_ID": "Emp ID",
             "name": "Name",
             "email": "Email",
             "contact": "Contact Number",
-            "password": "Password",
-            "confirm_passowrd": "Confirm Password",
+            "password": "PIN",
+            "confirm_passowrd": "Confirm PIN",
             "button": "Register"
         },
         "map": {

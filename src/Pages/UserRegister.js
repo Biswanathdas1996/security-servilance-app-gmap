@@ -14,10 +14,11 @@ import "../css/registration.css";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
-  empID: Yup.string().required("empID is required"),
+  designation: Yup.string().required("Designation is required"),
+  empID: Yup.string().required("EmpID is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
-  password: Yup.number()
-    .min(6, "Password must be at least 6 characters")
+  password: Yup.string()
+    .matches(/^\d{6}$/, "Enter only 6 digits number")
     .required("Password is required"),
   confirmPassword: Yup.number()
     .oneOf([Yup.ref("password"), null], "Passwords must match")
@@ -32,9 +33,24 @@ const initialValues = {
   password: null,
   confirmPassword: "",
   contactNumber: "",
+  designation: "",
 };
 
 export default function UserRegister({ faceData }) {
+  const [image, setImage] = React.useState(null);
+
+  function handleImageUpload(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+    reader.onloadend = function () {
+      const base64String = reader.result;
+      setImage(base64String);
+      // Do something with the base64String, such as send it to the server
+    };
+  }
+
   return (
     <body className="d-flex flex-column h-100">
       <div className="container main">
@@ -61,6 +77,7 @@ export default function UserRegister({ faceData }) {
                 ...values,
                 password: parseInt(values?.password),
                 faceID: JSON.stringify(faceData),
+                profileImage: JSON.stringify(image),
               };
               delete body.confirmPassword;
               const response = await post("/auth/register", body);
@@ -75,6 +92,25 @@ export default function UserRegister({ faceData }) {
           >
             {(formik) => (
               <Form>
+                <div className="mb-3">
+                  <input
+                    type="text"
+                    className="form-control icon-input input-eid"
+                    id="exampleInputdesignation"
+                    placeholder={window.site_text("pages.register.designation")}
+                    name="designation"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.designation}
+                    error={
+                      formik.touched.designation && formik.errors.designation
+                    }
+                    helperText={
+                      formik.touched.designation && formik.errors.designation
+                    }
+                  />
+                  <ErrorMessage name="designation" />
+                </div>
                 <div className="mb-3">
                   <input
                     type="text"
@@ -184,12 +220,21 @@ export default function UserRegister({ faceData }) {
                   />
                   <ErrorMessage name="confirmPassword" />
                 </div>
-                {/* <div className="textinput">
+                <div className="textinput">
                   <p>Take Your Picture</p>
-                  <div className="camera-icon">
-                    <img src="../images/camera.png" alt="camera" />
-                  </div>
-                </div> */}
+                  {/* <input */}
+                  <input
+                    type="file"
+                    id="image-upload"
+                    onChange={handleImageUpload}
+                    style={{ display: "none" }}
+                  />
+                  <label htmlFor="image-upload">
+                    <div className="camera-icon">
+                      <img src="../images/camera.png" alt="camera" />
+                    </div>
+                  </label>
+                </div>
 
                 <center>
                   {!formik?.isSubmitting ? (

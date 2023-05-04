@@ -34,6 +34,7 @@ const timeStampToTime = (timestamp) => {
 
 export default function FolderList() {
   const [routes, setRoutes] = React.useState(null);
+  const [user, setUser] = React.useState(null);
   const [loadding, setLoadding] = React.useState(false);
   const [date, setDate] = React.useState(
     dayjs(new Date()).format("YYYY-MM-DD")
@@ -41,6 +42,10 @@ export default function FolderList() {
 
   React.useEffect(() => {
     fetchRoutes(date);
+    const user = localStorage.getItem("x-user-data");
+    if (user) {
+      setUser(JSON.parse(user));
+    }
   }, []);
 
   const fetchRoutes = async (date) => {
@@ -64,6 +69,7 @@ export default function FolderList() {
     fetchRoutes(date);
   };
 
+  console.log("--user-->", user);
   return (
     <body className="d-flex flex-column h-100">
       <div className="bg-default" style={{ zIndex: 0 }}></div>
@@ -73,15 +79,21 @@ export default function FolderList() {
           <div className="row profile-dtl">
             <div className="col-2">
               <div className="img-hldr">
-                <img src="../images/img_profile.png" alt="" />
+                <img
+                  src={user?.image && JSON.parse(user?.image)}
+                  alt=""
+                  height={50}
+                  width={50}
+                  style={{ borderRadius: "50%" }}
+                />
               </div>
             </div>
             <div className="col-8">
               <div className="desc-hldr">
                 <h2>
-                  Hello, <strong>Aronna Chowdhury</strong>
+                  Hello, <strong>{user?.name}</strong>
                 </h2>
-                <p>Sub Inspector</p>
+                <p>{user?.designation}</p>
               </div>
             </div>
             <div className="col-2">
