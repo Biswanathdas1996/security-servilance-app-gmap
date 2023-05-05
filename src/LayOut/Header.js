@@ -36,7 +36,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static" style={{ background: "#D85604" }}>
+    <AppBar position="static" style={{ background: "#ad0004" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
@@ -55,7 +55,7 @@ function ResponsiveAppBar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            SS-APP
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -65,7 +65,7 @@ function ResponsiveAppBar() {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              style={{ color: "white" }}
             >
               <MenuIcon />
             </IconButton>
@@ -87,14 +87,23 @@ function ResponsiveAppBar() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              <MenuItem key={1} onClick={() => window.location.replace("/#/")}>
-                <Typography textAlign="center">Home</Typography>
+              <MenuItem
+                key={1}
+                onClick={() => window.location.replace("/#/users")}
+              >
+                <Typography textAlign="center">Users</Typography>
               </MenuItem>
               <MenuItem
                 key={1}
-                onClick={() => window.location.replace("/#/home")}
+                onClick={() => window.location.replace("/#/list-of_routs")}
               >
                 <Typography textAlign="center">Routes</Typography>
+              </MenuItem>
+              <MenuItem
+                key={1}
+                onClick={() => window.location.replace("/#/route-report")}
+              >
+                <Typography textAlign="center">Report</Typography>
               </MenuItem>
             </Menu>
           </Box>
@@ -115,7 +124,7 @@ function ResponsiveAppBar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            ADMIN
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <Button
@@ -146,36 +155,6 @@ function ResponsiveAppBar() {
             >
               Admin Login
             </Button> */}
-          </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
           </Box>
         </Toolbar>
       </Container>

@@ -13,6 +13,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import OfflinePinIcon from "@mui/icons-material/OfflinePin";
 import SpellcheckIcon from "@mui/icons-material/Spellcheck";
 
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import Divider from "@mui/material/Divider";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
+import Typography from "@mui/material/Typography";
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -37,9 +45,65 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
   return (
     <>
       {users ? (
-        <Card style={{ margin: "3rem" }}>
-          <h4 style={{ margin: "1rem", marginBottom: 0 }}>User List</h4>
-          <TableContainer>
+        <Card>
+          <List
+            sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+          >
+            {users?.map((user, index) => (
+              <ListItem alignItems="flex-start">
+                <img
+                  alt="Remy Sharp"
+                  src={user?.profileImage}
+                  style={{ width: 80, height: 80, margin: 15 }}
+                />
+
+                <ListItemText
+                  primary={user?.name}
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        sx={{ display: "inline" }}
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                      >
+                        {user?.designation}
+                      </Typography>
+                      {`- ${user?.empID}`}
+                      <p>
+                        Created At: <b>{user?.createdAt}</b>
+                      </p>
+                      <StyledTableCell align="right" component="th" scope="row">
+                        <Stack direction="row" spacing={1}>
+                          <button
+                            type="button"
+                            onClick={() => updateUserStatus(user?.id)}
+                            className="admin-button"
+                          >
+                            {user?.status ? "Deactive" : "Activate"}
+                          </button>
+
+                          {!user?.isApproved && (
+                            <button
+                              type="button"
+                              onClick={() => approveUser(user?.id)}
+                              className="admin-green-button"
+                            >
+                              Approve
+                            </button>
+                          )}
+                        </Stack>
+                      </StyledTableCell>
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
+            ))}
+          </List>
+          {users?.length === 0 && (
+            <b style={{ margin: "2rem", textAlign: "center" }}>No user found</b>
+          )}
+          {/* <TableContainer>
             <center>
               <Table sx={{ margin: 0 }} aria-label="customized table">
                 <TableHead>
@@ -47,6 +111,7 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
                   <br />
                   <TableRow>
                     <StyledTableCell> Name</StyledTableCell>
+                    <StyledTableCell> Image</StyledTableCell>
                     <StyledTableCell align="left">ID No</StyledTableCell>
                     <StyledTableCell align="left">Created On</StyledTableCell>
                     <StyledTableCell align="left">Action</StyledTableCell>
@@ -59,46 +124,25 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
                         {user?.name}
                       </StyledTableCell>
                       <StyledTableCell component="th" scope="row">
+                        <img
+                          src={user?.profileImage}
+                          alt=""
+                          height={50}
+                          width={50}
+                        />
+                      </StyledTableCell>
+                      <StyledTableCell component="th" scope="row">
                         {user?.empID}
                       </StyledTableCell>
                       <StyledTableCell component="th" scope="row">
                         {user?.createdAt}
-                      </StyledTableCell>
-
-                      <StyledTableCell align="right" component="th" scope="row">
-                        <Stack direction="row" spacing={1}>
-                          {/* <Button variant="contained" disabled>
-                          Edit
-                        </Button> */}
-                          <Button
-                            variant="contained"
-                            color={user?.status ? "error" : "success"}
-                            // className="rufous-button"
-                            onClick={() => updateUserStatus(user?.id)}
-                            startIcon={
-                              user?.status ? <DeleteIcon /> : <SpellcheckIcon />
-                            }
-                          >
-                            {user?.status ? "Deactive" : "Activate"}
-                          </Button>
-                          {!user?.isApproved && (
-                            <Button
-                              variant="contained"
-                              color="warning"
-                              onClick={() => approveUser(user?.id)}
-                              startIcon={<OfflinePinIcon />}
-                            >
-                              Approve
-                            </Button>
-                          )}
-                        </Stack>
                       </StyledTableCell>
                     </StyledTableRow>
                   ))}
                 </TableBody>
               </Table>
             </center>
-          </TableContainer>
+          </TableContainer> */}
         </Card>
       ) : (
         <center>

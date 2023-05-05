@@ -41,6 +41,19 @@ export default function UserRegister({ faceData }) {
 
   function handleImageUpload(event) {
     const file = event.target.files[0];
+
+    const fileSize = file.size / 1024; // Convert to kilobytes
+    const maxSize = 2024; // Set the maximum size to 1 MB
+
+    if (fileSize > maxSize) {
+      swal(
+        "Large File!",
+        "File size exceeds the maximum limit of 1MB",
+        "error"
+      );
+      return;
+    }
+
     const reader = new FileReader();
 
     reader.readAsDataURL(file);
@@ -194,6 +207,8 @@ export default function UserRegister({ faceData }) {
                     helperText={
                       formik.touched.password && formik.errors.password
                     }
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                   />
                   <ErrorMessage name="password" />
                 </div>
@@ -217,9 +232,26 @@ export default function UserRegister({ faceData }) {
                       formik.touched.confirmPassword &&
                       formik.errors.confirmPassword
                     }
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                   />
                   <ErrorMessage name="confirmPassword" />
                 </div>
+                {image && (
+                  <center>
+                    <img
+                      src={image}
+                      alt="user"
+                      height={100}
+                      width={100}
+                      style={{
+                        margin: 10,
+                        border: "5px solid gray",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  </center>
+                )}
                 <div className="textinput">
                   <p>Take Your Picture</p>
                   {/* <input */}

@@ -101,3 +101,20 @@ button:not(:disabled) {
   padding: 14px 25px !important;
   color: white !important;
 }
+
+.admin-button{
+  height: 45px !important;;
+  background: rgb(173, 0, 4) !important;;
+  border-radius: 10px !important;;
+  border: 1px solid rgb(173, 0, 4) !important;;
+  color: white !important;;
+  padding: 10px !important;;
+}
+.admin-green-button{
+  height: 45px !important;;
+  background: #229954 !important;;
+  border-radius: 10px !important;;
+  border: 1px solid #229954 !important;;
+  color: white !important;;
+  padding: 10px !important;;
+}

@@ -21,7 +21,7 @@ const MyForm = () => {
   const [searchRoutsData, setSearchRoutsData] = React.useState(null);
 
   const fetchUserList = async () => {
-    const response = await get("/admin/user?search=&page&limit");
+    const response = await get("/admin/user?search=&page&limit=1000");
     if (validateResponseAdmin(response)) {
       setUsers(response?.data?.rows);
     }

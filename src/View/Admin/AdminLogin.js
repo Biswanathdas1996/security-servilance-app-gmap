@@ -26,7 +26,7 @@ const AdminLoginView = ({ handleSubmit }) => {
     <Box sx={{ flexGrow: 1 }} style={{ marginTop: 20 }}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <div style={{ margin: 31, border: "1px solid orange", padding: 20 }}>
+          <div style={{ margin: 31, border: "1px solid #ad0004", padding: 20 }}>
             <center>
               <h1>Admin Sign in</h1>
               <Formik
@@ -63,15 +63,14 @@ const AdminLoginView = ({ handleSubmit }) => {
                     />
                     <br />
 
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      color="primary"
-                      disabled={isSubmitting}
-                      style={{ marginTop: 20 }}
-                    >
-                      {isSubmitting ? "Submitting" : "Login"}
-                    </Button>
+                    <div className="login-button" style={{ marginTop: "2rem" }}>
+                      <button className="btn" type="submit">
+                        <div className="text">
+                          <h6>{isSubmitting ? "Submitting" : "Login"}</h6>
+                        </div>
+                      </button>
+                    </div>
+
                     {errors.submit && <div>{errors.submit}</div>}
                   </Form>
                 )}
