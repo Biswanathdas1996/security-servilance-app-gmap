@@ -21,14 +21,24 @@ export default function ListOfRouts() {
   };
 
   const deleteRoute = async (id) => {
-    const response = await del(`/admin/route/${id}`);
-    if (validateResponseAdmin(response)) {
-      swal("Success!", "Route deleted successfully!", "success").then(
-        (value) => {
-          fetchAllRouts();
+    swal({
+      title: "Are you sure?",
+      text: "You want to delete the route",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then(async (willDelete) => {
+      if (willDelete) {
+        const response = await del(`/admin/route/${id}`);
+        if (validateResponseAdmin(response)) {
+          swal("Success!", "Route deleted successfully!", "success").then(
+            (value) => {
+              fetchAllRouts();
+            }
+          );
         }
-      );
-    }
+      }
+    });
   };
 
   React.useEffect(() => {

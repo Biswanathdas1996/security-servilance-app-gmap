@@ -18,13 +18,19 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import SignpostIcon from "@mui/icons-material/Signpost";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import CommentIcon from "@mui/icons-material/Comment";
+import IconButton from "@mui/material/IconButton";
+import dayjs from "dayjs";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "800px",
+  width: "100%",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -81,7 +87,7 @@ const ListOfRoutsView = ({
         >
           <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Assign a employeet to this routes
+              Assign user to routes
             </Typography>
             <br />
             <Box
@@ -98,7 +104,7 @@ const ListOfRoutsView = ({
         </Modal>
       </div>
       {routsData ? (
-        <Card style={{ margin: "3rem" }}>
+        <Card style={{ margin: "10px" }}>
           <div
             style={{
               margin: "1rem",
@@ -107,16 +113,51 @@ const ListOfRoutsView = ({
             }}
           >
             <h4>Route List</h4>
-            <Button
-              variant="contained"
+            <button
+              type="button"
               onClick={handleOpen}
-              className="tawny-button"
-              startIcon={<SignpostIcon />}
+              className="admin-green-button"
+              style={{ margin: 0 }}
             >
-              Add New Routs
-            </Button>
+              <SignpostIcon /> Add New Routs
+            </button>
           </div>
-          <TableContainer>
+
+          <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+            {routsData?.map((row) => (
+              <ListItem
+                key={row?.name + row?.id}
+                disableGutters
+                secondaryAction={
+                  <IconButton aria-label="comment">
+                    <PersonAddAlt1Icon
+                      onClick={() => assignUser(row?.id)}
+                      style={{ fontSize: 30, marginRight: 10 }}
+                    />
+                    <a href={`/#/add-routs/${row?.id}`}>
+                      <AddLocationAltIcon
+                        style={{ fontSize: 30, marginRight: 10 }}
+                      />
+                    </a>
+                    <DeleteIcon
+                      onClick={() => deleteRoute(row?.id)}
+                      style={{ fontSize: 30, color: "#ad0004" }}
+                    />
+                  </IconButton>
+                }
+                style={{ padding: 12 }}
+              >
+                <ListItemText
+                  primary={row?.name}
+                  secondary={`Created At: ${dayjs(
+                    new Date(row?.createdAt)
+                  ).format("YYYY-MM-DD")}`}
+                />
+              </ListItem>
+            ))}
+          </List>
+
+          {/* <TableContainer>
             <center>
               <Card>
                 <Table sx={{ margin: 0 }} aria-label="customized table">
@@ -171,9 +212,6 @@ const ListOfRoutsView = ({
                               Add Circle
                             </Button>
 
-                            {/* <Button variant="contained" disabled>
-                            Edit
-                          </Button> */}
                             <Button
                               variant="contained"
                               className="rufous-button"
@@ -190,7 +228,7 @@ const ListOfRoutsView = ({
                 </Table>
               </Card>
             </center>
-          </TableContainer>
+          </TableContainer> */}
         </Card>
       ) : (
         <center>

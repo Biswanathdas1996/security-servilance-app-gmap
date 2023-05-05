@@ -7,6 +7,14 @@ import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Avatar from "@mui/material/Avatar";
+import ImageIcon from "@mui/icons-material/Image";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -52,7 +60,32 @@ export default function CustomizedAccordions({ routeData, deletLocation }) {
 
   return (
     <div>
-      {routeData?.map((routeData, index) => {
+      <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+        {routeData?.map((route, index) => {
+          return (
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar>
+                  <ImageIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary={route?.name}
+                secondary={`Lat: ${parseFloat(route?.lat).toFixed(
+                  4
+                )} | Lng: ${parseFloat(route?.long).toFixed(4)}`}
+                // secondary="Jan 7, 2014"
+              />
+              <DeleteIcon
+                onClick={() => deletLocation(route?.id)}
+                style={{ fontSize: 30, color: "#ad0004" }}
+              />
+            </ListItem>
+          );
+        })}
+      </List>
+
+      {/* {routeData?.map((routeData, index) => {
         return (
           <Accordion
             expanded={expanded === `panel${index}`}
@@ -66,8 +99,8 @@ export default function CustomizedAccordions({ routeData, deletLocation }) {
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                {/* <b>Circle Center:</b>{" "} */}
-                <code> {JSON.stringify(routeData?.center)}</code>
+             
+                // <code> {JSON.stringify(routeData?.center)}</code>
               </Typography>
               <Typography>
                 <b>Circle Radius:</b>{" "}
@@ -78,14 +111,13 @@ export default function CustomizedAccordions({ routeData, deletLocation }) {
                 variant="contained"
                 styel={{ marginTop: 20 }}
                 color="error"
-                onClick={() => deletLocation(routeData?.id)}
               >
                 Delete
               </Button>
             </AccordionDetails>
           </Accordion>
         );
-      })}
+      })} */}
     </div>
   );
 }

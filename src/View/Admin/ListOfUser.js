@@ -12,7 +12,7 @@ import Card from "@mui/material/Card";
 import DeleteIcon from "@mui/icons-material/Delete";
 import OfflinePinIcon from "@mui/icons-material/OfflinePin";
 import SpellcheckIcon from "@mui/icons-material/Spellcheck";
-
+import dayjs from "dayjs";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
@@ -50,7 +50,7 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
             sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
           >
             {users?.map((user, index) => (
-              <ListItem alignItems="flex-start">
+              <ListItem alignItems="flex-start" style={{ padding: 0 }}>
                 <img
                   alt="Remy Sharp"
                   src={user?.profileImage}
@@ -69,11 +69,21 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
                       >
                         {user?.designation}
                       </Typography>
-                      {`- ${user?.empID}`}
-                      <p>
-                        Created At: <b>{user?.createdAt}</b>
+                      <p style={{ margin: 0 }}>{`${user?.empID}`}</p>
+                      <p style={{ margin: 0 }}>
+                        Created At:{" "}
+                        <b>
+                          {dayjs(new Date(user?.createdAt)).format(
+                            "YYYY-MM-DD"
+                          )}
+                        </b>
                       </p>
-                      <StyledTableCell align="right" component="th" scope="row">
+                      <StyledTableCell
+                        align="right"
+                        component="th"
+                        scope="row"
+                        style={{ padding: 10 }}
+                      >
                         <Stack direction="row" spacing={1}>
                           <button
                             type="button"

@@ -44,112 +44,119 @@ export default function Filter({ routeId }) {
 
   return (
     <>
-      <label>Employee ID</label>
-      {users && (
-        <Autocomplete
-          style={{ width: "auto" }}
-          value={value}
-          onChange={(event, newValue) => {
-            if (typeof newValue === "string") {
-              setValue({
-                empID: newValue,
-              });
-            } else if (newValue && newValue.inputValue) {
-              // Create a new value from the user input
-              setValue({
-                empID: newValue.inputValue,
-              });
-            } else {
-              setValue(newValue);
-            }
-          }}
-          filterOptions={(options, params) => {
-            const filtered = filter(options, params);
+      {users ? (
+        <>
+          <label>Employee ID</label>
+          {users && (
+            <Autocomplete
+              style={{ width: "auto" }}
+              value={value}
+              onChange={(event, newValue) => {
+                if (typeof newValue === "string") {
+                  setValue({
+                    empID: newValue,
+                  });
+                } else if (newValue && newValue.inputValue) {
+                  // Create a new value from the user input
+                  setValue({
+                    empID: newValue.inputValue,
+                  });
+                } else {
+                  setValue(newValue);
+                }
+              }}
+              filterOptions={(options, params) => {
+                const filtered = filter(options, params);
 
-            const { inputValue } = params;
-            // Suggest the creation of a new value
-            const isExisting = options.some(
-              (option) => inputValue === option.empID
-            );
-            if (inputValue !== "" && !isExisting) {
-              filtered.push({
-                inputValue,
-                title: `Add "${inputValue}"`,
-              });
-            }
+                const { inputValue } = params;
+                // Suggest the creation of a new value
+                const isExisting = options.some(
+                  (option) => inputValue === option.empID
+                );
+                if (inputValue !== "" && !isExisting) {
+                  filtered.push({
+                    inputValue,
+                    title: `Add "${inputValue}"`,
+                  });
+                }
 
-            return filtered;
-          }}
-          selectOnFocus
-          clearOnBlur
-          handleHomeEndKeys
-          id="free-solo-with-text-demo"
-          options={users}
-          getOptionLabel={(option) => {
-            // Value selected with enter, right from the input
-            if (typeof option === "string") {
-              return option;
-            }
-            // Add "xxx" option created dynamically
-            if (option.inputValue) {
-              return option.inputValue;
-            }
-            // Regular option
-            return option.empID;
-          }}
-          renderOption={(props, option) => <li {...props}>{option.empID}</li>}
-          freeSolo
-          renderInput={(params) => (
-            <TextField {...params} label="Employee ID" />
+                return filtered;
+              }}
+              selectOnFocus
+              clearOnBlur
+              handleHomeEndKeys
+              id="free-solo-with-text-demo"
+              options={users}
+              getOptionLabel={(option) => {
+                // Value selected with enter, right from the input
+                if (typeof option === "string") {
+                  return option;
+                }
+                // Add "xxx" option created dynamically
+                if (option.inputValue) {
+                  return option.inputValue;
+                }
+                // Regular option
+                return option.empID;
+              }}
+              renderOption={(props, option) => (
+                <li {...props}>{option.empID}</li>
+              )}
+              freeSolo
+              renderInput={(params) => (
+                <TextField {...params} label="Employee ID" />
+              )}
+            />
           )}
-        />
+          <label>Start date</label>
+          <br />
+          <TextField
+            type="date"
+            id="outlined-basic"
+            variant="outlined"
+            style={{ width: "100%" }}
+            onChange={(e) => setStartDate(e.target.value)}
+          />
+          <br />
+          <label>End date</label>
+          <br />
+          <TextField
+            type="date"
+            id="outlined-basic"
+            variant="outlined"
+            style={{ width: "100%" }}
+            onChange={(e) => setEndDate(e.target.value)}
+          />
+          <br />
+          <label>Start time</label>
+          <br />
+          <TextField
+            type="time"
+            variant="outlined"
+            style={{ width: "100%" }}
+            onChange={(e) => setStartTime(e.target.value)}
+          />
+          <br />
+          <label>End time</label>
+          <br />
+          <TextField
+            type="time"
+            variant="outlined"
+            style={{ width: "100%" }}
+            onChange={(e) => setEndTime(e.target.value)}
+          />
+          <br />
+          <button
+            type="button"
+            onClick={() => handleSubmit()}
+            className="admin-button"
+          >
+            Assign
+          </button>
+        </>
+      ) : (
+        <b>Please wait ...</b>
       )}
-      <label>Start date</label>
-      <br />
-      <TextField
-        type="date"
-        id="outlined-basic"
-        variant="outlined"
-        style={{ width: "100%" }}
-        onChange={(e) => setStartDate(e.target.value)}
-      />
-      <br />
-      <label>End date</label>
-      <br />
-      <TextField
-        type="date"
-        id="outlined-basic"
-        variant="outlined"
-        style={{ width: "100%" }}
-        onChange={(e) => setEndDate(e.target.value)}
-      />
-      <br />
-      <label>Start time</label>
-      <br />
-      <TextField
-        type="time"
-        variant="outlined"
-        style={{ width: "100%" }}
-        onChange={(e) => setStartTime(e.target.value)}
-      />
-      <br />
-      <label>End time</label>
-      <br />
-      <TextField
-        type="time"
-        variant="outlined"
-        style={{ width: "100%" }}
-        onChange={(e) => setEndTime(e.target.value)}
-      />
-      <br />
-      <Button
-        variant="contained"
-        style={{ margin: 10 }}
-        className="rufous-button"
-        onClick={() => handleSubmit()}
-      >
-        Assign
-      </Button>
     </>
   );
 }

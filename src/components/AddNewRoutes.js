@@ -21,7 +21,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "auto",
+  width: "100%",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -127,15 +127,13 @@ const AddNewRouter = () => {
           helperText={formik.touched.centerLong && formik.errors.centerLong}
           style={{ marginTop: 20 }}
         />
-        <Button
-          color="primary"
-          variant="contained"
-          fullWidth
+        <button
           type="submit"
-          style={{ marginTop: 20 }}
+          style={{ marginTop: 20, width: 150 }}
+          className="admin-button"
         >
-          Submit
-        </Button>
+          Add
+        </button>
       </form>
     </Box>
   );

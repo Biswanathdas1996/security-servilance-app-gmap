@@ -12,7 +12,7 @@ const style = {
   top: "40%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "500px",
+  width: "100%",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -70,12 +70,18 @@ const AddCircleToRoutsView = ({
           />
           <br />
           <br />
-          <Button variant="contained" onClick={() => addPlace()}>
-            Add Place
-          </Button>
+          <button
+            type="button"
+            onClick={() => addPlace()}
+            className="admin-button"
+          >
+            Add Circle
+          </button>
         </Box>
       </Modal>
-
+      <h2 style={{ padding: 12 }}>
+        <b>Add Circles to routes</b>
+      </h2>
       {routeData && (
         <>
           <GoogleMap
@@ -108,7 +114,7 @@ const AddCircleToRoutsView = ({
               </>
             ))}
           </GoogleMap>
-          <div style={{ margin: 50 }}>
+          <div style={{ margin: 10 }}>
             <ListOfRoutes
               routeData={choosedLocation}
               deletLocation={deletLocation}
