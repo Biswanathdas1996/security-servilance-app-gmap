@@ -17,6 +17,8 @@ import { useParams } from "react-router-dom";
 import swal from "sweetalert";
 import "../css/dutylist.css";
 
+import VisitTable from "./VisitTable";
+
 export default function Map({ defaultZoom }) {
   const { id, date } = useParams();
   const [currentLocation, setCurrentLocation] = React.useState(null);
@@ -211,41 +213,9 @@ export default function Map({ defaultZoom }) {
               </center>
             )}
           </div>
+
           <div className="container pb-5">
-            <table className="table caption-top red-header">
-              <thead>
-                <tr>
-                  <th scope="col">Location</th>
-                  <th scope="col">Time</th>
-                  <th scope="col">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {locations &&
-                  locations?.map((val) => {
-                    return (
-                      <tr
-                        className={val?.isVisited ? "active" : ""}
-                        key={val?.name + val?.id}
-                      >
-                        <td>{val?.name}</td>
-                        <td>
-                          {val?.isVisited
-                            ? `${val?.visitData?.createdAt}`
-                            : "Not Visited"}
-                        </td>
-                        <td>
-                          <img
-                            src="../images/placeholder.png"
-                            alt=""
-                            onClick={() => handleOpen(val)}
-                          />
-                        </td>
-                      </tr>
-                    );
-                  })}
-              </tbody>
-            </table>
+            <VisitTable locations={locations} handleOpen={handleOpen} />
             <center>
               <button
                 type="button"

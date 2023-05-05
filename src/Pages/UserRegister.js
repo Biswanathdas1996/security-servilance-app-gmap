@@ -90,7 +90,7 @@ export default function UserRegister({ faceData }) {
                 ...values,
                 password: parseInt(values?.password),
                 faceID: JSON.stringify(faceData),
-                profileImage: JSON.stringify(image),
+                profileImage: image,
               };
               delete body.confirmPassword;
               const response = await post("/auth/register", body);

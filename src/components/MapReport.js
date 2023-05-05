@@ -6,8 +6,14 @@ import {
   Polyline,
   Circle,
 } from "react-google-maps";
-import coordinates from "../Data/coordinates.json";
+
 import CircleViewDetailsModal from "../components/CircleViewDetailsModal";
+import VisitTable from "./VisitTable";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 const API_KEY = "AIzaSyAet8Mk1nPvOn_AebLE5ZxXoGejOD8tPzA&amp";
 
@@ -23,6 +29,39 @@ const options = {
   geodesic: false,
   zIndex: 1,
 };
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
 const Map = withScriptjs(
   withGoogleMap(({ data, routsData }) => {
@@ -75,7 +114,13 @@ const Map = withScriptjs(
                 />
               );
             })}
-          {/* <Polyline path={coordinates?.coordinates} options={options} /> */}
+          <Polyline
+            path={data?.locations?.map((val) => ({
+              lat: val?.lat,
+              lng: val?.long,
+            }))}
+            options={options}
+          />
         </GoogleMap>
       </>
     );
@@ -83,16 +128,41 @@ const Map = withScriptjs(
 );
 
 export default function App({ data, routsData }) {
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
-    <div style={{ height: "70vh", width: "100%" }}>
-      <Map
-        googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}`}
-        loadingElement={<div style={{ height: "100%" }} />}
-        containerElement={<div style={{ height: "100%" }} />}
-        mapElement={<div style={{ height: "70vh" }} />}
-        data={data}
-        routsData={routsData}
-      />
-    </div>
+    <Box sx={{ width: "100%", padding: 0 }}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider", padding: 0 }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+        >
+          <Tab label="Map View" {...a11yProps(0)} />
+          <Tab label="List View" {...a11yProps(1)} />
+        </Tabs>
+      </Box>
+      <TabPanel value={value} index={0} style={{ padding: 0 }}>
+        <div style={{ height: "70vh", width: "100%", padding: 0 }}>
+          <Map
+            googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}`}
+            loadingElement={<div style={{ height: "100%" }} />}
+            containerElement={<div style={{ height: "100%" }} />}
+            mapElement={<div style={{ height: "70vh" }} />}
+            data={data}
+            routsData={routsData}
+          />
+        </div>
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        <div style={{ marginTop: "2rem", zIndex: 2 }}>
+          <VisitTable locations={data?.locations} />
+        </div>
+      </TabPanel>
+    </Box>
   );
 }

@@ -43,6 +43,10 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 
+function calculatePercentage(total, currentCount) {
+  return (currentCount / total) * 100;
+}
+
 export default function CustomizedAccordions({ data, index, routsData }) {
   const [expanded, setExpanded] = React.useState(null);
 
@@ -59,20 +63,55 @@ export default function CustomizedAccordions({ data, index, routsData }) {
       </Typography>
       <br />
       {data?.map((user, index) => {
+        const complitionPercentage = calculatePercentage(
+          user?.totalLocationsCount,
+          user?.locationsVisited
+        );
+
         return (
           <Accordion
             expanded={expanded === index}
             onChange={handleChange(index)}
+            style={{ Zindex: "-1" }}
           >
             <AccordionSummary
               aria-controls="panel1d-content"
               id="panel1d-header"
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
             >
-              <Typography>
-                User: <b>{user?.name}</b>
-              </Typography>
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography>
+                  <>
+                    <b>{user?.name}</b>
+                  </>
+                </Typography>
+                <Typography style={{ fontSize: 12 }}>
+                  <b
+                    style={{
+                      color:
+                        complitionPercentage === 0
+                          ? "red"
+                          : complitionPercentage < 100
+                          ? "orange"
+                          : "black",
+                    }}
+                  >
+                    Progress : {complitionPercentage}%
+                  </b>
+                </Typography>
+              </div>
             </AccordionSummary>
-            <AccordionDetails>
+            <AccordionDetails style={{ padding: 0 }}>
               <MapReport data={user} routsData={routsData} />
             </AccordionDetails>
           </Accordion>

@@ -80,7 +80,7 @@ export default function FolderList() {
             <div className="col-2">
               <div className="img-hldr">
                 <img
-                  src={user?.image && JSON.parse(user?.image)}
+                  src={user?.image && user?.image}
                   alt=""
                   height={50}
                   width={50}
