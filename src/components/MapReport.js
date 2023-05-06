@@ -147,7 +147,7 @@ export default function App({ data, routsData }) {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0} style={{ padding: 0 }}>
-        <div style={{ height: "70vh", width: "100%", padding: 0 }}>
+        <div style={{ height: "60vh", width: "100%", padding: 0 }}>
           <Map
             googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}`}
             loadingElement={<div style={{ height: "100%" }} />}

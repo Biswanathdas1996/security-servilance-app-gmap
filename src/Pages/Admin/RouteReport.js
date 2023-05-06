@@ -109,7 +109,16 @@ const MyForm = () => {
               </div>
             </div>
 
-            <div className="container mb-2">
+            <div
+              className="container mb-2 p-0"
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <b style={{ marginTop: "1.5rem", fontSize: "1.2rem" }}>
+                Route Report
+              </b>
               <FilterDrawer
                 selectedOption={selectedOption}
                 handleOptionChange={handleOptionChange}
@@ -124,33 +133,31 @@ const MyForm = () => {
               />
             </div>
 
-            <div className="container">
-              {!loadding ? (
-                <Grid container spacing={1}>
-                  <Grid item xs={12} style={{ padding: 20 }}>
-                    {searchRoutsData &&
-                      searchRoutsData?.map((data, index) => {
-                        return (
-                          <RouteReportAccordian
-                            data={data?.data}
-                            index={index}
-                            routsData={data?.route}
-                          />
-                        );
-                      })}
-                  </Grid>
+            {!loadding ? (
+              <Grid container spacing={1}>
+                <Grid item xs={12} style={{ padding: 10 }}>
+                  {searchRoutsData &&
+                    searchRoutsData?.map((data, index) => {
+                      return (
+                        <RouteReportAccordian
+                          data={data?.data}
+                          index={index}
+                          routsData={data?.route}
+                        />
+                      );
+                    })}
                 </Grid>
-              ) : (
-                <center>
-                  <div className="loader" style={{ marginTop: "4rem" }}></div>
-                </center>
-              )}
-              {searchRoutsData?.length === 0 && (
-                <div className="desc-hldr">
-                  <p>No data found</p>
-                </div>
-              )}
-            </div>
+              </Grid>
+            ) : (
+              <center>
+                <div className="loader" style={{ marginTop: "4rem" }}></div>
+              </center>
+            )}
+            {searchRoutsData?.length === 0 && (
+              <div className="desc-hldr">
+                <p>No data found</p>
+              </div>
+            )}
           </div>
         </main>
       </body>
