@@ -42,6 +42,9 @@ function App({ liveCenter }) {
       window.location.reload();
     }
   };
+  const videoConstraints = {
+    facingMode: "environment",
+  };
 
   return (
     <center>
@@ -56,7 +59,7 @@ function App({ liveCenter }) {
               <Webcam
                 audio={false}
                 ref={webcamRef}
-                facingMode="environment"
+                videoConstraints={videoConstraints}
                 style={{
                   marginLeft: "auto",
                   marginRight: "auto",

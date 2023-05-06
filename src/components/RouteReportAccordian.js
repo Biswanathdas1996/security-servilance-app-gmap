@@ -106,7 +106,7 @@ export default function CustomizedAccordions({ data, index, routsData }) {
                           : "black",
                     }}
                   >
-                    Progress : {complitionPercentage}%
+                    Progress : {parseFloat(complitionPercentage).toFixed(0)}%
                   </b>
                 </Typography>
               </div>

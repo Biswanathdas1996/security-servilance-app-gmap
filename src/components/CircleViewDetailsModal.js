@@ -4,6 +4,13 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import ImageCard from "./ImageCard";
 
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+import ImageListItemBar from "@mui/material/ImageListItemBar";
+import ListSubheader from "@mui/material/ListSubheader";
+import IconButton from "@mui/material/IconButton";
+import InfoIcon from "@mui/icons-material/Info";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -27,26 +34,68 @@ export default function Map({ open, onClose, ...props }) {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <center>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                {props?.clickedPlace?.name}
-              </Typography>
-            </center>
+            <Typography
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+              style={{ margin: 10 }}
+            >
+              Spot name: <b>{props?.clickedPlace?.name}</b>
+            </Typography>
+
             {props?.clickedPlace?.isVisited ? (
               <>
-                <ImageCard
+                <ImageList sx={{ width: 300, height: 200 }}>
+                  <ImageListItem style={{ borderRadius: 12 }}>
+                    <img
+                      src={props?.clickedPlace?.visitData?.profileImage}
+                      srcSet={props?.clickedPlace?.visitData?.profileImage}
+                      alt={`item.title`}
+                      loading="lazy"
+                    />
+                    <ImageListItemBar
+                      title={`Selfie`}
+                      subtitle={`${props?.clickedPlace?.visitData?.createdAt}`}
+                      actionIcon={
+                        <IconButton
+                          sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+                          aria-label={`info about `}
+                        >
+                          <InfoIcon />
+                        </IconButton>
+                      }
+                    />
+                  </ImageListItem>
+                  <ImageListItem>
+                    <img
+                      src={props?.clickedPlace?.visitData?.image}
+                      srcSet={props?.clickedPlace?.visitData?.image}
+                      alt={`item.title`}
+                      loading="lazy"
+                    />
+                    <ImageListItemBar
+                      title={`Site image`}
+                      subtitle={`${props?.clickedPlace?.visitData?.createdAt}`}
+                      actionIcon={
+                        <IconButton
+                          sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+                          aria-label={`info about `}
+                        >
+                          <InfoIcon />
+                        </IconButton>
+                      }
+                    />
+                  </ImageListItem>
+                </ImageList>
+
+                {/* <ImageCard
                   img={props?.clickedPlace?.visitData?.profileImage}
                   text="Selfie"
                 />
                 <ImageCard
                   img={props?.clickedPlace?.visitData?.image}
                   text="Site image"
-                />
-
-                <div className="contentTT">
-                  Captured at :
-                  <b>{props?.clickedPlace?.visitData?.createdAt}</b>
-                </div>
+                /> */}
               </>
             ) : (
               <small>Not visited yet</small>
