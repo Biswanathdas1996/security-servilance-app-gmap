@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import { get, post } from "../helper/apiHelper";
 import { validateResponseAdmin } from "../helper/validateResponse";
 
-export default function Filter({ routeId }) {
+export default function Filter({ routeId, onClose }) {
   const [users, setUsers] = React.useState(null);
   const [value, setValue] = React.useState(null);
 
@@ -139,6 +139,7 @@ export default function Filter({ routeId }) {
           <br />
           <label>End time</label>
           <br />
+
           <TextField
             type="time"
             variant="outlined"
@@ -146,13 +147,23 @@ export default function Filter({ routeId }) {
             onChange={(e) => setEndTime(e.target.value)}
           />
           <br />
-          <button
-            type="button"
-            onClick={() => handleSubmit()}
-            className="admin-button"
-          >
-            Assign
-          </button>
+          <div style={{ display: "flex" }}>
+            <button
+              type="button"
+              onClick={() => handleSubmit()}
+              className="admin-button"
+            >
+              Assign
+            </button>
+
+            <button
+              type="button"
+              onClick={() => onClose(false)}
+              className="admin-close-button"
+            >
+              Close
+            </button>
+          </div>
         </>
       ) : (
         <b>Please wait ...</b>

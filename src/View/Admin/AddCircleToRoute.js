@@ -12,11 +12,11 @@ const style = {
   top: "40%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "100%",
+  width: "90%",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
-  p: 4,
+  p: 2,
 };
 
 const AddCircleToRoutsView = ({
@@ -76,6 +76,13 @@ const AddCircleToRoutsView = ({
             className="admin-button"
           >
             Add Circle
+          </button>
+          <button
+            type="button"
+            onClick={handleClose}
+            className="admin-close-button"
+          >
+            Close
           </button>
         </Box>
       </Modal>

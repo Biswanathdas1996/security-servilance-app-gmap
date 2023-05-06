@@ -30,7 +30,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "100%",
+  width: "90%",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -77,7 +77,7 @@ const ListOfRoutsView = ({
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <AddNewRoutes />
+          <AddNewRoutes onClose={handleClose} />
         </Modal>
         <Modal
           open={openUserModal}
@@ -89,6 +89,7 @@ const ListOfRoutsView = ({
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Assign user to routes
             </Typography>
+
             <br />
             <Box
               component="form"
@@ -98,7 +99,10 @@ const ListOfRoutsView = ({
               noValidate
               autoComplete="off"
             >
-              <AssignUserToRouts routeId={selectedRouteForAssign} />
+              <AssignUserToRouts
+                routeId={selectedRouteForAssign}
+                onClose={setOpenUserModal}
+              />
             </Box>
           </Box>
         </Modal>

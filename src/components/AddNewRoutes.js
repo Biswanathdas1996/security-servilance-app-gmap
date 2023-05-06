@@ -21,14 +21,14 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "100%",
+  width: "90%",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
 
-const AddNewRouter = () => {
+const AddNewRouter = ({ onClose }) => {
   const [selectLocation, setSelectLocation] = React.useState(null);
 
   const formik = useFormik({
@@ -127,13 +127,23 @@ const AddNewRouter = () => {
           helperText={formik.touched.centerLong && formik.errors.centerLong}
           style={{ marginTop: 20 }}
         />
-        <button
-          type="submit"
-          style={{ marginTop: 20, width: 150 }}
-          className="admin-button"
-        >
-          Add
-        </button>
+        <div style={{ display: "flex" }}>
+          <button
+            type="submit"
+            style={{ marginTop: 20, width: 150 }}
+            className="admin-button"
+          >
+            Add
+          </button>
+          <button
+            type="button"
+            style={{ marginTop: 20, width: 150 }}
+            className="admin-close-button"
+            onClick={() => onClose()}
+          >
+            Close
+          </button>
+        </div>
       </form>
     </Box>
   );
