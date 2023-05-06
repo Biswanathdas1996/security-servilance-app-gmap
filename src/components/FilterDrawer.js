@@ -64,7 +64,7 @@ export default function TemporaryDrawer({
             onClose={toggleDrawer(anchor, false)}
             style={{ overflowX: "hidden" }}
           >
-            <div className="container find-duty-hldr mb-4">
+            <div className="container p-4 mb-4">
               <div className="datepicker">
                 <div className="mb-3 mt-3">
                   <TextField

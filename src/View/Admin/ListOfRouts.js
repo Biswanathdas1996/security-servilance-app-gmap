@@ -107,133 +107,102 @@ const ListOfRoutsView = ({
           </Box>
         </Modal>
       </div>
-      {routsData ? (
-        <Card style={{ margin: "10px" }}>
-          <div
-            style={{
-              margin: "1rem",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
+
+      {/* <button
+            type="button"
+            onClick={handleOpen}
+            className="admin-green-button"
+            style={{ margin: 0 }}
           >
-            <h4>Route List</h4>
-            <button
-              type="button"
-              onClick={handleOpen}
-              className="admin-green-button"
-              style={{ margin: 0 }}
-            >
-              <SignpostIcon /> Add New Routs
-            </button>
+            <SignpostIcon /> Add New Routs
+          </button> */}
+      <div
+        class="container p-4 mb-4"
+        style={{
+          background: "white",
+          borderRadius: 16,
+          boxShadow: "-1px 2px 7px rgba(46, 49, 118, 0.1)",
+        }}
+      >
+        {/* <div class="datepicker">
+          <div class="mb-3 mt-2">
+            <input
+              type="text"
+              class="form-control"
+              id="search"
+              placeholder="Search name / Employee ID"
+              name=""
+              onChange={(e) => search(e.target.value)}
+            />
           </div>
+        </div> */}
 
-          <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-            {routsData?.map((row) => (
-              <ListItem
-                key={row?.name + row?.id}
-                disableGutters
-                secondaryAction={
-                  <IconButton aria-label="comment">
-                    <PersonAddAlt1Icon
-                      onClick={() => assignUser(row?.id)}
-                      style={{ fontSize: 30, marginRight: 10 }}
-                    />
-                    <a href={`/#/add-routs/${row?.id}`}>
-                      <AddLocationAltIcon
-                        style={{ fontSize: 30, marginRight: 10 }}
-                      />
-                    </a>
-                    <DeleteIcon
-                      onClick={() => deleteRoute(row?.id)}
-                      style={{ fontSize: 30, color: "#ad0004" }}
-                    />
-                  </IconButton>
-                }
-                style={{ padding: 12 }}
-              >
-                <ListItemText
-                  primary={row?.name}
-                  secondary={`Created At: ${dayjs(
-                    new Date(row?.createdAt)
-                  ).format("YYYY-MM-DD")}`}
-                />
-              </ListItem>
-            ))}
-          </List>
+        <button class="find-btn search-btn" onClick={handleOpen}>
+          <div class="txt-hldr pl-3">Add new route</div>
+          <span>+</span>
+        </button>
+      </div>
 
-          {/* <TableContainer>
-            <center>
-              <Card>
-                <Table sx={{ margin: 0 }} aria-label="customized table">
-                  <TableHead>
-                    <TableRow>
-                      <StyledTableCell>Rout Name</StyledTableCell>
-                      <StyledTableCell align="left">Created at</StyledTableCell>
-                      <StyledTableCell align="left">Add</StyledTableCell>
-                      <StyledTableCell align="left">Action</StyledTableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {routsData?.map((row) => (
-                      <StyledTableRow key={row.name}>
-                        <StyledTableCell component="th" scope="row">
-                          {row?.name}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {row?.createdAt}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                          {row?.assign ? (
-                            <b>User Assigned</b>
-                          ) : (
-                            <>
-                              <Button
-                                variant="contained"
-                                color="warning"
-                                onClick={() => assignUser(row?.id)}
-                                className="black-button"
-                                startIcon={<PersonAddAlt1Icon />}
-                              >
-                                Assign user
-                              </Button>
-                            </>
-                          )}
-                        </StyledTableCell>
+      {routsData ? (
+        <div class="container">
+          {routsData?.map((row) => (
+            <div
+              class="list-hldr n-route mt-3"
+              style={{ justifyContent: "space-between" }}
+            >
+              <div class="desc-hldr">
+                <div>
+                  <div class="img-hldr">
+                    <img src="../images/icon-profile-circled.svg" alt="" />
+                  </div>
+                  <div class="text-hldr">
+                    <p>
+                      <strong>{row?.name}</strong>
+                    </p>
+                    <p>Centered at {row?.center}</p>
+                  </div>
+                </div>
 
-                        <StyledTableCell
-                          align="right"
-                          component="th"
-                          scope="row"
-                        >
-                          <Stack direction="row" spacing={1}>
-                            <Button
-                              variant="contained"
-                              href={`/#/add-routs/${row?.id}`}
-                              style={{ float: "right" }}
-                              className="yellow-button"
-                              startIcon={<AddLocationAltIcon />}
-                            >
-                              Add Circle
-                            </Button>
-
-                            <Button
-                              variant="contained"
-                              className="rufous-button"
-                              onClick={() => deleteRoute(row?.id)}
-                              startIcon={<DeleteIcon />}
-                            >
-                              Delete
-                            </Button>
-                          </Stack>
-                        </StyledTableCell>
-                      </StyledTableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </Card>
-            </center>
-          </TableContainer> */}
-        </Card>
+                <div>
+                  <div class="img-hldr">
+                    <img src="../images/icon-bookmark-circled.svg" alt="" />
+                  </div>
+                  <div class="text-hldr">
+                    <p>
+                      <strong>Created On</strong>
+                    </p>
+                    <p>
+                      {`${dayjs(new Date(row?.createdAt)).format(
+                        "YYYY-MM-DD"
+                      )}`}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="lst-btn-hldr">
+                <button>
+                  <img
+                    src="../images/icon-trash.png"
+                    alt=""
+                    onClick={() => deleteRoute(row?.id)}
+                  />
+                </button>
+                <a href={`/#/add-routs/${row?.id}`}>
+                  <button>
+                    <img src="../images/icon-add.png" alt="" />
+                  </button>
+                </a>
+                <button>
+                  <img
+                    src="../images/icon-add-user.png"
+                    alt=""
+                    onClick={() => assignUser(row?.id)}
+                  />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       ) : (
         <center>
           <div className="loader" style={{ margin: "5rem" }}></div>

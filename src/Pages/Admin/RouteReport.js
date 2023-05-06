@@ -79,10 +79,9 @@ const MyForm = () => {
         className="container mb-2 p-0 mt-2"
         style={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "end",
         }}
       >
-        <b style={{ marginTop: "1.5rem", fontSize: "1rem" }}>Route </b>
         <FilterDrawer
           selectedOption={selectedOption}
           handleOptionChange={handleOptionChange}

@@ -38,28 +38,29 @@ export default function TemporaryDrawer() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <div className="row profile-dtl">
+      {/* <div className="row profile-dtl">
         <div className="col-2"></div>
         <div className="col-8">
           <div className="desc-hldr">
             <h2>
-              <strong style={{ color: "black" }}>Admin Portal</strong>
+              <strong style={{ color: "#ad0004" }}>Menu</strong>
             </h2>
-            <p style={{ color: "black" }}>Superintendent of police</p>
+            <small style={{ color: "black" }}>Superintendent of police</small>
           </div>
         </div>
         <div className="col-2"></div>
-      </div>
+      </div> */}
 
       <List style={{ marginTop: "2rem" }}>
         <ListItem
           key={1}
           onClick={() => (window.location.href = "#/users")}
+          style={{ color: "#ad0004" }}
           disablePadding
         >
           <ListItemButton>
             <ListItemIcon>
-              <PeopleIcon />
+              <PeopleIcon style={{ color: "#ad0004" }} />
             </ListItemIcon>
             <ListItemText primary={`Users`} />
           </ListItemButton>
@@ -70,23 +71,25 @@ export default function TemporaryDrawer() {
         <ListItem
           key={2}
           onClick={() => (window.location.href = "#/list-of_routs")}
+          style={{ color: "#ad0004" }}
           disablePadding
         >
           <ListItemButton>
             <ListItemIcon>
-              <MapIcon />
+              <MapIcon style={{ color: "#ad0004" }} />
             </ListItemIcon>
             <ListItemText primary={`Routes`} />
           </ListItemButton>
         </ListItem>
         <ListItem
           key={2}
+          style={{ color: "#ad0004" }}
           onClick={() => (window.location.href = "#/route-report")}
           disablePadding
         >
           <ListItemButton>
             <ListItemIcon>
-              <InboxIcon />
+              <InboxIcon style={{ color: "#ad0004" }} />
             </ListItemIcon>
             <ListItemText primary={`Reports`} />
           </ListItemButton>
@@ -100,11 +103,12 @@ export default function TemporaryDrawer() {
             localStorage.clear();
             window.location.replace("#/admin/login");
           }}
+          style={{ color: "#ad0004" }}
           disablePadding
         >
           <ListItemButton>
             <ListItemIcon>
-              <LogoutIcon />
+              <LogoutIcon style={{ color: "#ad0004" }} />
             </ListItemIcon>
             <ListItemText primary={`Log out`} />
           </ListItemButton>
@@ -117,7 +121,7 @@ export default function TemporaryDrawer() {
     <div>
       {["left"].map((anchor) => (
         <React.Fragment key={anchor}>
-          <MenuIcon
+          {/* <MenuIcon
             onClick={toggleDrawer(anchor, true)}
             style={{
               fontSize: "2rem",
@@ -125,8 +129,12 @@ export default function TemporaryDrawer() {
               float: "right",
               color: "white",
             }}
+          /> */}
+          <img
+            src="../images/icon_more.svg"
+            alt="More"
+            onClick={toggleDrawer(anchor, true)}
           />
-
           <Drawer
             anchor={anchor}
             open={state[anchor]}

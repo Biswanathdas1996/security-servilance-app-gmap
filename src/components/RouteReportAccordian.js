@@ -60,7 +60,9 @@ export default function CustomizedAccordions({ data, index, routsData }) {
   return (
     <div style={{ marginTop: 20 }}>
       <Typography>
-        <b style={{ fontSize: 13 }}>{routsData?.name}</b>
+        <b style={{ fontSize: 14, color: "#ad0004", fontWeight: 600 }}>
+          {routsData?.name}
+        </b>
       </Typography>
       <br />
       {data?.map((user, index) => {

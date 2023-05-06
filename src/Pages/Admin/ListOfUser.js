@@ -113,28 +113,35 @@ export default function ListOfUser() {
 
   return (
     <>
-      <h4 style={{ margin: "1rem", marginBottom: 10 }}>User List</h4>
-      <center>
-        <Paper
-          component="form"
-          sx={{
-            p: "2px 4px",
-            display: "flex",
-            alignItems: "center",
-            width: "90%",
-          }}
-        >
-          <InputBase
-            sx={{ ml: 1, flex: 1 }}
-            placeholder="Search name / Employee ID"
-            inputProps={{ "aria-label": "search google maps" }}
-            onChange={(e) => search(e.target.value)}
-          />
-          <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+      <div
+        class="container p-4 mb-4"
+        style={{
+          background: "white",
+          borderRadius: 16,
+          boxShadow: "-1px 2px 7px rgba(46, 49, 118, 0.1)",
+        }}
+      >
+        <div class="datepicker">
+          <div class="mb-3 mt-2">
+            <input
+              type="text"
+              class="form-control"
+              id="search"
+              placeholder="Search name / Employee ID"
+              name=""
+              onChange={(e) => search(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <button class="find-btn search-btn">
+          <div class="txt-hldr pl-3">Find user</div>
+          <span>
+            {" "}
             <SearchIcon />
-          </IconButton>
-        </Paper>
-      </center>
+          </span>
+        </button>
+      </div>
 
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
