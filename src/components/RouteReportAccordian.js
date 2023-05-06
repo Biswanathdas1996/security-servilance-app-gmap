@@ -60,7 +60,7 @@ export default function CustomizedAccordions({ data, index, routsData }) {
   return (
     <div style={{ marginTop: 20 }}>
       <Typography>
-        <b>{routsData?.name}</b>
+        <b style={{ fontSize: 13 }}>{routsData?.name}</b>
       </Typography>
       <br />
       {data?.map((user, index) => {
@@ -91,7 +91,7 @@ export default function CustomizedAccordions({ data, index, routsData }) {
                             ? "red"
                             : complitionPercentage < 100
                             ? "orange"
-                            : "black",
+                            : "green",
                       }}
                     >
                       Progress : {parseFloat(complitionPercentage).toFixed(0)}%

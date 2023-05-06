@@ -37,7 +37,11 @@ class Routing extends React.Component {
           path="/add-routs/:id"
           element={AdminLayout(AddCircleToRoute)}
         />
-        <Route exact path="/admin/login" element={AdminLayout(AdminLogin)} />
+        <Route
+          exact
+          path="/admin/login"
+          element={UserHeaderlessLayout(AdminLogin)}
+        />
         <Route exact path="/login" element={UserHeaderlessLayout(UserLogin)} />
         <Route exact path="/route-report" element={AdminLayout(RouteReport)} />
         <Route

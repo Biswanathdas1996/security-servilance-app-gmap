@@ -13,6 +13,9 @@ import RouteReportAccordian from "../../components/RouteReportAccordian";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AdminImg from "../../images/img_profile.png";
 import FilterDrawer from "../../components/FilterDrawer";
+import MenuDrawer from "../../LayOut/MenuDrawer";
+
+import Header from "../../LayOut/Header";
 
 const MyForm = () => {
   const [selectedOption, setSelectedOption] = useState("");
@@ -72,95 +75,53 @@ const MyForm = () => {
   const filter = createFilterOptions();
   return (
     <>
-      <body className="d-flex flex-column h-100">
-        <div
-          className="bg-default"
-          style={{ zIndex: 0, height: "10.5rem" }}
-        ></div>
+      <div
+        className="container mb-2 p-0 mt-2"
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <b style={{ marginTop: "1.5rem", fontSize: "1rem" }}>Route </b>
+        <FilterDrawer
+          selectedOption={selectedOption}
+          handleOptionChange={handleOptionChange}
+          routsData={routsData}
+          users={users}
+          value={value}
+          setValue={setValue}
+          filter={filter}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+          search={search}
+        />
+      </div>
 
-        <main className="flex-shrink-0 main-foot-adjust" style={{ zIndex: 1 }}>
-          <div className="container pt-5">
-            <div className="row profile-dtl">
-              <div className="col-2">
-                <div className="img-hldr">
-                  <img
-                    src={AdminImg}
-                    alt=""
-                    height={50}
-                    width={50}
-                    style={{ borderRadius: "50%" }}
+      {!loadding ? (
+        <Grid container spacing={1}>
+          <Grid item xs={12} style={{ padding: 10 }}>
+            {searchRoutsData &&
+              searchRoutsData?.map((data, index) => {
+                return (
+                  <RouteReportAccordian
+                    data={data?.data}
+                    index={index}
+                    routsData={data?.route}
                   />
-                </div>
-              </div>
-              <div className="col-8">
-                <div className="desc-hldr">
-                  <h2>
-                    <strong>Admin Portal</strong>
-                  </h2>
-                  <p>Superintendent of police</p>
-                </div>
-              </div>
-              <div className="col-2">
-                <LogoutIcon
-                  style={{ fontSize: "1.6rem", color: "white" }}
-                  onClick={() => window.location.replace("#/admin/login")}
-                />
-                {/* <img src="../images/icon_more.svg" alt="More" /> */}
-              </div>
-            </div>
-
-            <div
-              className="container mb-2 p-0"
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <b style={{ marginTop: "1.5rem", fontSize: "1.2rem" }}>
-                Route Report
-              </b>
-              <FilterDrawer
-                selectedOption={selectedOption}
-                handleOptionChange={handleOptionChange}
-                routsData={routsData}
-                users={users}
-                value={value}
-                setValue={setValue}
-                filter={filter}
-                selectedDate={selectedDate}
-                setSelectedDate={setSelectedDate}
-                search={search}
-              />
-            </div>
-
-            {!loadding ? (
-              <Grid container spacing={1}>
-                <Grid item xs={12} style={{ padding: 10 }}>
-                  {searchRoutsData &&
-                    searchRoutsData?.map((data, index) => {
-                      return (
-                        <RouteReportAccordian
-                          data={data?.data}
-                          index={index}
-                          routsData={data?.route}
-                        />
-                      );
-                    })}
-                </Grid>
-              </Grid>
-            ) : (
-              <center>
-                <div className="loader" style={{ marginTop: "4rem" }}></div>
-              </center>
-            )}
-            {searchRoutsData?.length === 0 && (
-              <div className="desc-hldr">
-                <p>No data found</p>
-              </div>
-            )}
-          </div>
-        </main>
-      </body>
+                );
+              })}
+          </Grid>
+        </Grid>
+      ) : (
+        <center>
+          <div className="loader" style={{ marginTop: "4rem" }}></div>
+        </center>
+      )}
+      {searchRoutsData?.length === 0 && (
+        <div className="desc-hldr">
+          <p>No data found</p>
+        </div>
+      )}
     </>
   );
 };

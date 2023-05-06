@@ -62,6 +62,7 @@ export default function TemporaryDrawer({
             anchor={anchor}
             open={state[anchor]}
             onClose={toggleDrawer(anchor, false)}
+            style={{ overflowX: "hidden" }}
           >
             <div className="container find-duty-hldr mb-4">
               <div className="datepicker">
