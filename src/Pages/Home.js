@@ -15,7 +15,7 @@ import dayjs from "dayjs";
 import DutyListData from "../components/DutyListData";
 import DatePicker from "../components/DatePicker";
 import img_profile from "../images/img_profile.jpg";
-import icon_more from "../images/icon_more.svg";
+import LogoutIcon from "@mui/icons-material/Logout";
 import "../css/dashboard.css";
 
 const timeStampToTime = (timestamp) => {
@@ -97,7 +97,11 @@ export default function FolderList() {
               </div>
             </div>
             <div className="col-2">
-              <img src="../images/icon_more.svg" alt="More" />
+              <LogoutIcon
+                style={{ fontSize: "1.6rem", color: "white" }}
+                onClick={() => window.location.replace("#/login")}
+              />
+              {/* <img src="../images/icon_more.svg" alt="More" /> */}
             </div>
           </div>
 

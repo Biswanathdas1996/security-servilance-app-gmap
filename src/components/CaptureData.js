@@ -16,7 +16,6 @@ const style = {
 };
 
 export default function Map({ open, onCloseModal, liveCenter, ...props }) {
-  console.log("--props-->>>>>>-", liveCenter);
   return (
     <>
       <div>

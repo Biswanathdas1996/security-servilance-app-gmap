@@ -100,6 +100,17 @@ export default function Map({ open, onClose, ...props }) {
             ) : (
               <small>Not visited yet</small>
             )}
+
+            <button
+              type="button"
+              onClick={(e) => onClose()}
+              className="admin-close-button"
+              style={{ float: "right", margin: 0 }}
+            >
+              <div className="text">
+                <h6>Close</h6>
+              </div>
+            </button>
           </Box>
         </Modal>
       </div>

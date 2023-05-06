@@ -45,14 +45,18 @@ export function FolderList({ routes }) {
                 </p>
                 <p>
                   <small style={{ fontWeight: 200, color: "#3c3c3c" }}>
-                    Date & Time
+                    {route?.completedAt ? `Completed at` : `Start time`}
                   </small>
                   {/* {route?.date} */}
                   <br />
 
-                  {dayjs(new Date(route?.startTime * 1000)).format(
-                    "YYYY-MM-DD hh:mm A"
-                  )}
+                  {route?.completedAt
+                    ? dayjs(new Date(route?.completedAt)).format(
+                        "YYYY-MM-DD hh:mm A"
+                      )
+                    : dayjs(new Date(route?.startTime * 1000)).format(
+                        "YYYY-MM-DD hh:mm A"
+                      )}
                 </p>
               </div>
               <div
