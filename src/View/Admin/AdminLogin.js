@@ -21,7 +21,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const AdminLoginView = ({ handleSubmit }) => {
+const AdminLoginView = ({ handleSubmit, loading }) => {
   return (
     <Box sx={{ flexGrow: 1 }} style={{ marginTop: 20 }}>
       <Grid container spacing={2}>
@@ -66,7 +66,7 @@ const AdminLoginView = ({ handleSubmit }) => {
                     <div className="login-button" style={{ marginTop: "2rem" }}>
                       <button className="btn" type="submit">
                         <div className="text">
-                          <h6>{isSubmitting ? "Submitting" : "Login"}</h6>
+                          <h6>{loading ? "Authenticating.." : "Login"}</h6>
                         </div>
                       </button>
                     </div>
