@@ -52,29 +52,26 @@ export default function ListOfUser() {
     setValue(newValue);
   };
 
-  const fetchUserList = async (filterText = null, searchText = null) => {
+  const fetchUserList = async (filterText = value, searchText = null) => {
+    setUsers(null);
     const response = await get(
       `/admin/user?search=${searchText ? searchText : ""}&page&limit=1000`
     );
     if (validateResponseAdmin(response)) {
-      if (filterText) {
-        if (filterText === "Approved") {
-          const filterDate = response?.data?.rows?.filter((user) => {
-            if (user?.isApproved) {
-              return user;
-            }
-          });
-          setUsers(filterDate);
-        } else if (filterText === "Pending") {
-          const filterDate = response?.data?.rows?.filter((user) => {
-            if (!user?.isApproved) {
-              return user;
-            }
-          });
-          setUsers(filterDate);
-        } else {
-          setUsers(response?.data?.rows);
-        }
+      if (filterText === 1) {
+        const filterDate = response?.data?.rows?.filter((user) => {
+          if (user?.isApproved) {
+            return user;
+          }
+        });
+        setUsers(filterDate);
+      } else if (filterText === 0) {
+        const filterDate = response?.data?.rows?.filter((user) => {
+          if (!user?.isApproved) {
+            return user;
+          }
+        });
+        setUsers(filterDate);
       } else {
         setUsers(response?.data?.rows);
       }
@@ -105,13 +102,13 @@ export default function ListOfUser() {
   };
 
   React.useEffect(() => {
-    fetchUserList("Pending");
+    fetchUserList(0);
   }, []);
 
   const search = debounce((searchTerm) => {
     console.log(`Searching for: ${searchTerm}`);
     setValue(2);
-    fetchUserList("All", searchTerm);
+    fetchUserList(2, searchTerm);
   }, 600);
 
   return (
@@ -149,18 +146,18 @@ export default function ListOfUser() {
             <Tab
               label="Pending"
               {...a11yProps(0)}
-              onClick={() => fetchUserList("Pending")}
+              onClick={() => fetchUserList(0)}
             />
             <Tab
               label="Active"
               {...a11yProps(1)}
-              onClick={() => fetchUserList("Approved")}
+              onClick={() => fetchUserList(1)}
             />
 
             <Tab
               label="All"
               {...a11yProps(2)}
-              onClick={() => fetchUserList()}
+              onClick={() => fetchUserList(2)}
             />
           </Tabs>
         </Box>
