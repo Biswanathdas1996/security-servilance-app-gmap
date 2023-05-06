@@ -27,7 +27,7 @@ export default function AdminLogin() {
           window.location.href = "#/users";
         }
         setLoading(false);
-      }, 2000);
+      }, 1000);
     } else {
       alert("inavlid admin");
       setLoading(false);

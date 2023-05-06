@@ -64,26 +64,11 @@ function a11yProps(index) {
 }
 
 const Map = withScriptjs(
-  withGoogleMap(({ data, routsData }) => {
-    const [open, setOpen] = React.useState(false);
-    const [clickedPlace, setClickedPlace] = React.useState(false);
-
-    const handleOpen = (text) => {
-      setOpen(true);
-      setClickedPlace(text);
-    };
-    const handleClose = () => setOpen(false);
-
+  withGoogleMap(({ data, routsData, handleOpen }) => {
     console.log("--data--->", data);
 
     return (
       <>
-        <CircleViewDetailsModal
-          open={open}
-          onClose={handleClose}
-          clickedPlace={clickedPlace}
-        />
-
         <GoogleMap
           defaultCenter={{
             lat: routsData?.centerLat,
@@ -128,41 +113,56 @@ const Map = withScriptjs(
 );
 
 export default function App({ data, routsData }) {
+  const [open, setOpen] = React.useState(false);
+  const [clickedPlace, setClickedPlace] = React.useState(false);
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const handleOpen = (text) => {
+    setOpen(true);
+    setClickedPlace(text);
+  };
+  const handleClose = () => setOpen(false);
 
   return (
-    <Box sx={{ width: "100%", padding: 0 }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider", padding: 0 }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          <Tab label="Map View" {...a11yProps(0)} />
-          <Tab label="List View" {...a11yProps(1)} />
-        </Tabs>
+    <>
+      <CircleViewDetailsModal
+        open={open}
+        onClose={handleClose}
+        clickedPlace={clickedPlace}
+      />
+      <Box sx={{ width: "100%", padding: 0 }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider", padding: 0 }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+          >
+            <Tab label="Map View" {...a11yProps(0)} />
+            <Tab label="List View" {...a11yProps(1)} />
+          </Tabs>
+        </Box>
+        <TabPanel value={value} index={0} style={{ padding: 0 }}>
+          <div style={{ height: "60vh", width: "100%", padding: 0 }}>
+            <Map
+              googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}`}
+              loadingElement={<div style={{ height: "100%" }} />}
+              containerElement={<div style={{ height: "100%" }} />}
+              mapElement={<div style={{ height: "60vh" }} />}
+              data={data}
+              routsData={routsData}
+              handleOpen={handleOpen}
+            />
+          </div>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <div style={{ marginTop: "2rem", zIndex: 2 }}>
+            <VisitTable locations={data?.locations} handleOpen={handleOpen} />
+          </div>
+        </TabPanel>
       </Box>
-      <TabPanel value={value} index={0} style={{ padding: 0 }}>
-        <div style={{ height: "60vh", width: "100%", padding: 0 }}>
-          <Map
-            googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}`}
-            loadingElement={<div style={{ height: "100%" }} />}
-            containerElement={<div style={{ height: "100%" }} />}
-            mapElement={<div style={{ height: "60vh" }} />}
-            data={data}
-            routsData={routsData}
-          />
-        </div>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <div style={{ marginTop: "2rem", zIndex: 2 }}>
-          <VisitTable locations={data?.locations} />
-        </div>
-      </TabPanel>
-    </Box>
+    </>
   );
 }
