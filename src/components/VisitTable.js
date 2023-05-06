@@ -15,7 +15,7 @@ export default function VisitListTable({ locations, handleOpen }) {
           <tr>
             <th scope="col">Location</th>
             <th scope="col">Time</th>
-            <th scope="col">Status</th>
+            <th scope="col">Track</th>
           </tr>
         </thead>
         <tbody>

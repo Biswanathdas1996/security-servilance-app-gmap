@@ -14,9 +14,9 @@ const MapWrappedComponent = (WrappedComponent) => {
         // mapElement={<div style={{ height: `100%` }} />}
         loadingElement={<div style={{ height: "100%" }} />}
         containerElement={<div style={{ height: "100%" }} />}
-        mapElement={<div style={{ height: "70vh" }} />}
+        mapElement={<div style={{ height: "60vh" }} />}
         defaultCenter={{ lat: 22.571695590417033, lng: 88.50591509173454 }}
-        defaultZoom={13}
+        defaultZoom={14}
       />
     </div>
   );

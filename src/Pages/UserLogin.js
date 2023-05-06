@@ -66,7 +66,7 @@ const Login = () => {
           <h1>Security Surveillance System</h1>
         </div>
         <div className="lorem">
-          <h6>Lorem ipsum doller sit amet, orem ipsum doller sit amet</h6>
+          <h6>Next generation security surveillance...</h6>
         </div>
         <center>
           {errorTxt && (

@@ -10,15 +10,9 @@ import Button from "@mui/material/Button";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import dayjs from "dayjs";
 import RouteReportAccordian from "../../components/RouteReportAccordian";
-
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-import ImageIcon from "@mui/icons-material/Image";
-import WorkIcon from "@mui/icons-material/Work";
-import BeachAccessIcon from "@mui/icons-material/BeachAccess";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AdminImg from "../../images/img_profile.png";
+import FilterDrawer from "../../components/FilterDrawer";
 
 const MyForm = () => {
   const [selectedOption, setSelectedOption] = useState("");
@@ -29,6 +23,7 @@ const MyForm = () => {
   const [value, setValue] = React.useState(null);
   const [users, setUsers] = React.useState(null);
   const [searchRoutsData, setSearchRoutsData] = React.useState(null);
+  const [loadding, setLoadding] = React.useState(false);
 
   const fetchUserList = async () => {
     const response = await get("/admin/user?search=&page&limit=1000");
@@ -58,6 +53,7 @@ const MyForm = () => {
   };
 
   const search = async () => {
+    setLoadding(true);
     const response = await get(
       `/admin/route/getRoutesStatus?${
         selectedOption && `routeId=${selectedOption}`
@@ -68,129 +64,97 @@ const MyForm = () => {
 
     if (validateResponseAdmin(response)) {
       setSearchRoutsData(response?.data);
+      setLoadding(false);
+    } else {
+      setLoadding(false);
     }
   };
   const filter = createFilterOptions();
   return (
-    <Grid container spacing={1}>
-      <Grid item xs={12}>
-        {" "}
-        <Card style={{ padding: 20, margin: 20 }}>
-          <TextField
-            id="select-option"
-            select
-            label="Select Route"
-            value={selectedOption}
-            onChange={handleOptionChange}
-            variant="outlined"
-            style={{ width: "100%" }}
-          >
-            {routsData?.map((option) => (
-              <MenuItem key={option.id} value={option.id}>
-                {option.name}
-              </MenuItem>
-            ))}
-          </TextField>
+    <>
+      <body className="d-flex flex-column h-100">
+        <div
+          className="bg-default"
+          style={{ zIndex: 0, height: "10.5rem" }}
+        ></div>
 
-          {users && (
-            <Autocomplete
-              style={{ width: "100%", marginTop: 10 }}
-              value={value}
-              onChange={(event, newValue) => {
-                if (typeof newValue === "string") {
-                  setValue({
-                    empID: newValue,
-                  });
-                } else if (newValue && newValue.inputValue) {
-                  // Create a new value from the user input
-                  setValue({
-                    empID: newValue.inputValue,
-                  });
-                } else {
-                  setValue(newValue);
-                }
-              }}
-              filterOptions={(options, params) => {
-                const filtered = filter(options, params);
-
-                const { inputValue } = params;
-                // Suggest the creation of a new value
-                const isExisting = options.some(
-                  (option) => inputValue === option.empID
-                );
-                if (inputValue !== "" && !isExisting) {
-                  filtered.push({
-                    inputValue,
-                    title: `Add "${inputValue}"`,
-                  });
-                }
-
-                return filtered;
-              }}
-              selectOnFocus
-              clearOnBlur
-              handleHomeEndKeys
-              id="free-solo-with-text-demo"
-              options={users}
-              getOptionLabel={(option) => {
-                // Value selected with enter, right from the input
-                if (typeof option === "string") {
-                  return option;
-                }
-                // Add "xxx" option created dynamically
-                if (option.inputValue) {
-                  return option.inputValue;
-                }
-                // Regular option
-                return option.empID;
-              }}
-              renderOption={(props, option) => (
-                <li {...props}>{option.empID}</li>
-              )}
-              freeSolo
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Employee ID"
-                  style={{ width: "100%", marginTop: 10 }}
+        <main className="flex-shrink-0 main-foot-adjust" style={{ zIndex: 1 }}>
+          <div className="container pt-5">
+            <div className="row profile-dtl">
+              <div className="col-2">
+                <div className="img-hldr">
+                  <img
+                    src={AdminImg}
+                    alt=""
+                    height={50}
+                    width={50}
+                    style={{ borderRadius: "50%" }}
+                  />
+                </div>
+              </div>
+              <div className="col-8">
+                <div className="desc-hldr">
+                  <h2>
+                    <strong>Admin Portal</strong>
+                  </h2>
+                  <p>Superintendent of police</p>
+                </div>
+              </div>
+              <div className="col-2">
+                <LogoutIcon
+                  style={{ fontSize: "1.6rem", color: "white" }}
+                  onClick={() => window.location.replace("#/admin/login")}
                 />
-              )}
-            />
-          )}
+                {/* <img src="../images/icon_more.svg" alt="More" /> */}
+              </div>
+            </div>
 
-          <input
-            type="date"
-            id="date"
-            name="date"
-            value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
-            style={{ padding: 17, width: "100%", marginTop: 10 }}
-          />
-
-          <button
-            type="button"
-            onClick={() => search()}
-            className="admin-button"
-            style={{ width: "100%", marginTop: 10 }}
-          >
-            Search{" "}
-          </button>
-        </Card>
-      </Grid>
-
-      <Grid item xs={12} style={{ padding: 20 }}>
-        {searchRoutsData &&
-          searchRoutsData?.map((data, index) => {
-            return (
-              <RouteReportAccordian
-                data={data?.data}
-                index={index}
-                routsData={data?.route}
+            <div className="container mb-2">
+              <FilterDrawer
+                selectedOption={selectedOption}
+                handleOptionChange={handleOptionChange}
+                routsData={routsData}
+                users={users}
+                value={value}
+                setValue={setValue}
+                filter={filter}
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+                search={search}
               />
-            );
-          })}
-      </Grid>
-    </Grid>
+            </div>
+
+            <div className="container">
+              {!loadding ? (
+                <Grid container spacing={1}>
+                  <Grid item xs={12} style={{ padding: 20 }}>
+                    {searchRoutsData &&
+                      searchRoutsData?.map((data, index) => {
+                        return (
+                          <RouteReportAccordian
+                            data={data?.data}
+                            index={index}
+                            routsData={data?.route}
+                          />
+                        );
+                      })}
+                  </Grid>
+                </Grid>
+              ) : (
+                <center>
+                  <div className="loader" style={{ marginTop: "4rem" }}></div>
+                </center>
+              )}
+              {searchRoutsData?.length === 0 && (
+                <div className="desc-hldr">
+                  <p>No data found</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </main>
+      </body>
+    </>
   );
 };
 

@@ -99,7 +99,10 @@ export default function FolderList() {
             <div className="col-2">
               <LogoutIcon
                 style={{ fontSize: "1.6rem", color: "white" }}
-                onClick={() => window.location.replace("#/login")}
+                onClick={() => {
+                  localStorage.clear();
+                  window.location.replace("#/login");
+                }}
               />
               {/* <img src="../images/icon_more.svg" alt="More" /> */}
             </div>

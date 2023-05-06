@@ -152,7 +152,7 @@ export default function App({ data, routsData }) {
             googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}`}
             loadingElement={<div style={{ height: "100%" }} />}
             containerElement={<div style={{ height: "100%" }} />}
-            mapElement={<div style={{ height: "70vh" }} />}
+            mapElement={<div style={{ height: "60vh" }} />}
             data={data}
             routsData={routsData}
           />
