@@ -6,7 +6,7 @@ import UserBAckScreenHeader from "../LayOut/UserBackHeader";
 export function AdminLayout(Body) {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <Body />
     </>
   );
