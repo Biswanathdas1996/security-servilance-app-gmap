@@ -35,7 +35,6 @@ export default function TemporaryDrawer({
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
-    console.log("===anchor===>", anchor);
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
@@ -48,7 +47,7 @@ export default function TemporaryDrawer({
 
   const searchData = (anchor, event) => {
     toggleDrawer(anchor, false)(event);
-    applyFilter();
+    applyFilter(false);
   };
   return (
     <div>

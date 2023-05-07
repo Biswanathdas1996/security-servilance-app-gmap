@@ -99,10 +99,12 @@ const AddNewRouter = ({ onClose }) => {
           <div className="text-hldr mt-3">
             <p>
               <strong>Location: </strong>
-              <span>
-                {parseFloat(formik.values.centerLat).toFixed(3)},{" "}
-                {parseFloat(formik.values.centerLong).toFixed(3)}
-              </span>
+              {formik?.values?.centerLat && formik?.values?.centerLong && (
+                <span>
+                  {parseFloat(formik.values.centerLat).toFixed(3)},{" "}
+                  {parseFloat(formik.values.centerLong).toFixed(3)}
+                </span>
+              )}
             </p>
           </div>
         </div>

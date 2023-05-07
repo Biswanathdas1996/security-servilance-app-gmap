@@ -28,6 +28,7 @@ const MyForm = () => {
   const [users, setUsers] = React.useState(null);
   const [searchRoutsData, setSearchRoutsData] = React.useState(null);
   const [loadding, setLoadding] = React.useState(false);
+  const [filterApplied, setFilterApplied] = React.useState(false);
 
   const fetchUserList = async () => {
     const response = await get("/admin/user?search=&page&limit=1000");
@@ -85,6 +86,7 @@ const MyForm = () => {
 
   const applyFilter = () => {
     search(selectedOption, value, selectedDate);
+    setFilterApplied(true);
   };
 
   return (
@@ -98,7 +100,7 @@ const MyForm = () => {
       >
         <Stack direction="row" spacing={1} style={{ marginTop: "1.5rem" }}>
           <Chip label={selectedDate} onClick={handleClick} />
-          {selectedOption && (
+          {filterApplied && selectedOption && (
             <Chip
               label={selectedOption?.name}
               onClick={handleClick}
@@ -108,7 +110,7 @@ const MyForm = () => {
               }}
             />
           )}
-          {value && (
+          {filterApplied && value && (
             <Chip
               label={value?.empID}
               onClick={handleClick}

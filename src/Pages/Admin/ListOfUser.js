@@ -156,7 +156,7 @@ export default function ListOfUser() {
               onClick={() => fetchUserList(0)}
             />
             <Tab
-              label="Active"
+              label="Approved"
               {...a11yProps(1)}
               onClick={() => fetchUserList(1)}
             />

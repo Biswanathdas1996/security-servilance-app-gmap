@@ -111,8 +111,6 @@ export default function Filter({ routeId, onClose }) {
           <br />
           <div
             style={{
-              display: "flex",
-              justifyContent: "space-between",
               width: "100%",
             }}
           >
@@ -123,10 +121,12 @@ export default function Filter({ routeId, onClose }) {
                 type="date"
                 id="outlined-basic"
                 variant="outlined"
-                style={{ width: "80%" }}
+                style={{ width: "100%" }}
                 onChange={(e) => setStartDate(e.target.value)}
+                fullWidth
               />
             </div>
+            <br />
             <div>
               <label>End date</label>
               <br />
@@ -134,16 +134,15 @@ export default function Filter({ routeId, onClose }) {
                 type="date"
                 id="outlined-basic"
                 variant="outlined"
-                style={{ width: "80%" }}
+                style={{ width: "100%" }}
                 onChange={(e) => setEndDate(e.target.value)}
+                fullWidth
               />
             </div>
           </div>
           <br />
           <div
             style={{
-              display: "flex",
-              justifyContent: "space-between",
               width: "100%",
             }}
           >
@@ -158,7 +157,8 @@ export default function Filter({ routeId, onClose }) {
                 fullWidth
               />
             </div>
-            <div style={{ marginRight: "1.2rem" }}>
+            <br />
+            <div>
               <label>End time</label>
               <br />
 
