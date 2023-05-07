@@ -28,7 +28,7 @@ export default function TemporaryDrawer({
   filter,
   selectedDate,
   setSelectedDate,
-  search,
+  applyFilter,
 }) {
   const [state, setState] = React.useState({
     bottom: false,
@@ -48,7 +48,7 @@ export default function TemporaryDrawer({
 
   const searchData = (anchor, event) => {
     toggleDrawer(anchor, false)(event);
-    search();
+    applyFilter();
   };
   return (
     <div>
@@ -82,7 +82,7 @@ export default function TemporaryDrawer({
                     style={{ width: "100%" }}
                   >
                     {routsData?.map((option) => (
-                      <MenuItem key={option.id} value={option.id}>
+                      <MenuItem key={option.id} value={option}>
                         {option.name}
                       </MenuItem>
                     ))}

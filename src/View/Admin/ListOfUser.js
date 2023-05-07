@@ -55,6 +55,17 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
                     </p>
                   </div>
                 </div>
+                <div>
+                  <div class="img-hldr">
+                    <img src="../images/icon-profile-circled.svg" alt="" />
+                  </div>
+                  <div class="text-hldr">
+                    <p>
+                      <strong>Employee ID</strong>
+                    </p>
+                    <p>{user?.empID}</p>
+                  </div>
+                </div>
               </div>
               <div class="lst-btn-hldr">
                 <button
@@ -64,7 +75,7 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
                   {/* {user?.status ? "Deactive" : "Activate"} */}
                   <img
                     src={
-                      user?.status
+                      !user?.status
                         ? "../images/lock.png"
                         : "../images/unlock.png"
                     }

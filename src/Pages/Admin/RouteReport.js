@@ -19,7 +19,7 @@ import Header from "../../LayOut/Header";
 import Stack from "@mui/material/Stack";
 
 const MyForm = () => {
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState(null);
   const [selectedDate, setSelectedDate] = useState(
     dayjs(new Date()).format("YYYY-MM-DD")
   );
@@ -49,19 +49,19 @@ const MyForm = () => {
 
   React.useEffect(() => {
     fetchAllRouts();
-    search();
+    search(selectedOption, value, selectedDate);
   }, []);
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
 
-  const search = async () => {
+  const search = async (selectedOption, value, selectedDate) => {
     setLoadding(true);
     const response = await get(
-      `/admin/route/getRoutesStatus?${
-        selectedOption && `routeId=${selectedOption}`
-      }&${value?.id && `userId=${value?.id}`}&${
+      `/admin/route/getRoutesStatus?${`routeId=${
+        selectedOption?.id || ""
+      }`}&${`userId=${value?.id || ""}`}&${
         selectedDate && `date=${selectedDate}`
       }`
     );
@@ -83,6 +83,10 @@ const MyForm = () => {
     console.info("You clicked the delete icon.");
   };
 
+  const applyFilter = () => {
+    search(selectedOption, value, selectedDate);
+  };
+
   return (
     <>
       <div
@@ -93,11 +97,27 @@ const MyForm = () => {
         }}
       >
         <Stack direction="row" spacing={1} style={{ marginTop: "1.5rem" }}>
-          <Chip
-            label={selectedDate}
-            onClick={handleClick}
-            onDelete={handleDelete}
-          />
+          <Chip label={selectedDate} onClick={handleClick} />
+          {selectedOption && (
+            <Chip
+              label={selectedOption?.name}
+              onClick={handleClick}
+              onDelete={(e) => {
+                setSelectedOption(null);
+                search(null, value, selectedDate);
+              }}
+            />
+          )}
+          {value && (
+            <Chip
+              label={value?.empID}
+              onClick={handleClick}
+              onDelete={(e) => {
+                setValue(null);
+                search(selectedOption, null, selectedDate);
+              }}
+            />
+          )}
         </Stack>
         <FilterDrawer
           selectedOption={selectedOption}
@@ -109,7 +129,7 @@ const MyForm = () => {
           filter={filter}
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
-          search={search}
+          applyFilter={applyFilter}
         />
       </div>
 

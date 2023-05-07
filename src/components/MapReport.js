@@ -74,7 +74,7 @@ const Map = withScriptjs(
             lat: routsData?.centerLat,
             lng: routsData?.centerLong,
           }}
-          defaultZoom={13}
+          defaultZoom={14}
         >
           {data?.locations &&
             data?.locations?.map((val) => {
@@ -99,13 +99,13 @@ const Map = withScriptjs(
                 />
               );
             })}
-          <Polyline
+          {/* <Polyline
             path={data?.locations?.map((val) => ({
               lat: val?.lat,
               lng: val?.long,
             }))}
             options={options}
-          />
+          /> */}
         </GoogleMap>
       </>
     );
