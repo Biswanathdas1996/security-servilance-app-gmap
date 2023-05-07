@@ -12,10 +12,7 @@ export default function FolderList() {
           <h1>Security Surveillance System</h1>
         </div>
         <div className="lorem">
-          <h6>
-            Lorem ipsum doller sit amet, orem ipsum doller sit amet, orem ipsum
-            doller sit amet, orem ipsum doller
-          </h6>
+          <h6>Next generation security surveillance...</h6>
         </div>
         <div className="img_map">
           <img src="../images/image1.png" alt="" />

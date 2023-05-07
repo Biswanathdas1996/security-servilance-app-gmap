@@ -9,7 +9,7 @@ export default function VisitListTable({ locations, handleOpen }) {
     })
     .reverse();
   return (
-    <div className="container pb-3">
+    <div className="container p-0">
       <table className="table caption-top red-header">
         <thead>
           <tr>

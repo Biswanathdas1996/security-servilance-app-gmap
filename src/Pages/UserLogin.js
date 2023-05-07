@@ -80,7 +80,10 @@ const Login = () => {
             </b>
           )}
         </center>
-        <div className="form container px-0" style={{ boxShadow: "none" }}>
+        <div
+          className="form container px-0"
+          style={{ boxShadow: "none", background: "none" }}
+        >
           <Formik
             initialValues={{ email: "", password: "" }}
             validationSchema={validationSchema}

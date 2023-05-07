@@ -208,14 +208,19 @@ export default function Map({ defaultZoom }) {
             {currentLocation && (
               <Marker
                 position={currentLocation}
+                label={user?.name}
+                optimized={true}
+                draggable={false}
+                color="#3498DB"
                 icon={{
-                  url: `https://developers.google.com/maps/documentation/javascript/examples/full/images/parking_lot_maps.png`,
-                  // url: user?.image,
+                  url: `http://maps.google.com/mapfiles/kml/paddle/${
+                    isInsideCircle ? `grn-stars.png` : `purple-stars.png`
+                  }`,
                   scaledSize: { width: 50, height: 50 },
                 }}
               />
             )}
-
+            {/* green-dot.png */}
             {/* {VisitData &&
           VisitData.map((marker, index) => (
             <Marker
@@ -271,7 +276,7 @@ export default function Map({ defaultZoom }) {
             </div>
           </div>
 
-          <div className="container pb-5">
+          <div className="container pb-4">
             {isInsideCircle && completedAt === null && (
               <center>
                 <button

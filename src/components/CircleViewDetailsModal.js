@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import ImageCard from "./ImageCard";
+import dayjs from "dayjs";
 
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -34,14 +34,50 @@ export default function Map({ open, onClose, ...props }) {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <Typography
+            <div class="list-hldr n-route mt-3" style={{}}>
+              <div class="desc-hldr">
+                <div>
+                  <div class="img-hldr">
+                    <img src="../images/icon-profile-circled.svg" alt="" />
+                  </div>
+                  <div class="text-hldr">
+                    <p>
+                      <strong>Spot</strong>
+                    </p>
+                    <p>{props?.clickedPlace?.name}</p>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="img-hldr">
+                    <img src="../images/icon-bookmark-circled.svg" alt="" />
+                  </div>
+                  {props?.clickedPlace?.isVisited && (
+                    <div class="text-hldr" style={{ width: 150 }}>
+                      <p>
+                        <strong>Captured at</strong>
+                      </p>
+                      <p>
+                        {dayjs(
+                          props?.clickedPlace?.visitData?.createdAt
+                        ).format("YYYY-MM-DD hh:mm A")}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+            {/* <Typography
               id="modal-modal-title"
               variant="h6"
               component="h2"
               style={{ margin: 10 }}
             >
-              Spot name: <b>{props?.clickedPlace?.name}</b>
-            </Typography>
+              <b></b>
+              <p>
+                
+              </p>
+            </Typography> */}
 
             {props?.clickedPlace?.isVisited ? (
               <>
@@ -55,7 +91,6 @@ export default function Map({ open, onClose, ...props }) {
                     />
                     <ImageListItemBar
                       title={`Selfie`}
-                      subtitle={`${props?.clickedPlace?.visitData?.createdAt}`}
                       actionIcon={
                         <IconButton
                           sx={{ color: "rgba(255, 255, 255, 0.54)" }}
@@ -75,7 +110,6 @@ export default function Map({ open, onClose, ...props }) {
                     />
                     <ImageListItemBar
                       title={`Site image`}
-                      subtitle={`${props?.clickedPlace?.visitData?.createdAt}`}
                       actionIcon={
                         <IconButton
                           sx={{ color: "rgba(255, 255, 255, 0.54)" }}
