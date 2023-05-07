@@ -63,10 +63,11 @@ const AddCircleToRoutsView = ({
           <br />
           <TextField
             id="outlined-basic"
-            label="Circle Radius (Mitter)"
+            label="Circle Radius (in meters)"
             variant="outlined"
             style={{ marginTop: 10, width: "100%" }}
             onChange={(e) => setRadius(e.target.value)}
+            defaultValue={50}
           />
           <br />
           <br />

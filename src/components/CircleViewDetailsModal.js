@@ -52,7 +52,7 @@ export default function Map({ open, onClose, ...props }) {
                   <div class="img-hldr">
                     <img src="../images/icon-bookmark-circled.svg" alt="" />
                   </div>
-                  {props?.clickedPlace?.isVisited && (
+                  {props?.clickedPlace?.isVisited ? (
                     <div class="text-hldr" style={{ width: 150 }}>
                       <p>
                         <strong>Captured at</strong>
@@ -62,6 +62,17 @@ export default function Map({ open, onClose, ...props }) {
                           props?.clickedPlace?.visitData?.createdAt
                         ).format("YYYY-MM-DD hh:mm A")}
                       </p>
+                    </div>
+                  ) : (
+                    <div class="text-hldr" style={{ width: 150 }}>
+                      <p>
+                        <strong>Not visited yet</strong>
+                      </p>
+                      {/* <p>
+                        {dayjs(
+                          props?.clickedPlace?.visitData?.createdAt
+                        ).format("YYYY-MM-DD hh:mm A")}
+                      </p> */}
                     </div>
                   )}
                 </div>
@@ -79,7 +90,7 @@ export default function Map({ open, onClose, ...props }) {
               </p>
             </Typography> */}
 
-            {props?.clickedPlace?.isVisited ? (
+            {props?.clickedPlace?.isVisited && (
               <>
                 <ImageList sx={{ width: 300, height: 200 }}>
                   <ImageListItem style={{ borderRadius: 12 }}>
@@ -131,8 +142,6 @@ export default function Map({ open, onClose, ...props }) {
                   text="Site image"
                 /> */}
               </>
-            ) : (
-              <small>Not visited yet</small>
             )}
 
             <button
