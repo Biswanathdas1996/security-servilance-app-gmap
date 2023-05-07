@@ -25,7 +25,7 @@ const style = {
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
-  p: 4,
+  p: 2,
 };
 
 const AddNewRouter = ({ onClose }) => {
@@ -76,9 +76,9 @@ const AddNewRouter = ({ onClose }) => {
   return (
     <Box sx={style}>
       <Typography id="modal-modal-title" variant="h6" component="h2">
-        Add new routs
+        Pick a center of the route
       </Typography>
-
+      <br />
       <form onSubmit={formik.handleSubmit}>
         {selectLocation && (
           <MapForm markers={selectLocation} updatedPointer={updatedPointer} />
@@ -87,24 +87,28 @@ const AddNewRouter = ({ onClose }) => {
           fullWidth
           id="name"
           name="name"
-          label="Name"
+          label="Enter route name"
           value={formik.values.name}
           onChange={formik.handleChange}
           error={formik.touched.name && Boolean(formik.errors.name)}
           helperText={formik.touched.name && formik.errors.name}
           style={{ marginTop: 20 }}
         />
-        {/* <TextField
-          fullWidth
-          id="center"
-          name="center"
-          label="Center"
-          value={formik.values.center}
-          onChange={formik.handleChange}
-          error={formik.touched.center && Boolean(formik.errors.center)}
-          helperText={formik.touched.center && formik.errors.center}
-          style={{ marginTop: 20 }}
-        /> */}
+
+        <div>
+          <div className="text-hldr mt-3">
+            <p>
+              <strong>Location: </strong>
+              <span>
+                {parseFloat(formik.values.centerLat).toFixed(3)},{" "}
+                {parseFloat(formik.values.centerLong).toFixed(3)}
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <p></p>
+
         <TextField
           fullWidth
           id="centerLat"
@@ -114,7 +118,7 @@ const AddNewRouter = ({ onClose }) => {
           onChange={formik.handleChange}
           error={formik.touched.centerLat && Boolean(formik.errors.centerLat)}
           helperText={formik.touched.centerLat && formik.errors.centerLat}
-          style={{ marginTop: 20 }}
+          style={{ marginTop: 20, display: "none" }}
         />
         <TextField
           fullWidth
@@ -125,7 +129,7 @@ const AddNewRouter = ({ onClose }) => {
           onChange={formik.handleChange}
           error={formik.touched.centerLong && Boolean(formik.errors.centerLong)}
           helperText={formik.touched.centerLong && formik.errors.centerLong}
-          style={{ marginTop: 20 }}
+          style={{ marginTop: 20, display: "none" }}
         />
         <div style={{ display: "flex" }}>
           <button

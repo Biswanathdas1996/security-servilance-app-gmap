@@ -85,37 +85,21 @@ const ListOfRoutsView = ({
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={style}>
+          <Box sx={style} style={{ padding: 25 }}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Assign user to routes
             </Typography>
 
             <br />
-            <Box
-              component="form"
-              sx={{
-                "& > :not(style)": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <AssignUserToRouts
-                routeId={selectedRouteForAssign}
-                onClose={setOpenUserModal}
-              />
-            </Box>
+
+            <AssignUserToRouts
+              routeId={selectedRouteForAssign}
+              onClose={setOpenUserModal}
+            />
           </Box>
         </Modal>
       </div>
 
-      {/* <button
-            type="button"
-            onClick={handleOpen}
-            className="admin-green-button"
-            style={{ margin: 0 }}
-          >
-            <SignpostIcon /> Add New Routs
-          </button> */}
       <div
         class="container p-4 mb-4"
         style={{

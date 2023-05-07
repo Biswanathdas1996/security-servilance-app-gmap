@@ -56,7 +56,12 @@ export default function TemporaryDrawer({
         <React.Fragment key={anchor}>
           <TuneIcon
             onClick={toggleDrawer(anchor, true)}
-            style={{ fontSize: "2rem", marginTop: "1.5rem", float: "right" }}
+            style={{
+              fontSize: "2rem",
+              marginTop: "1.5rem",
+              float: "right",
+              marginRight: "1rem",
+            }}
           />
           <Drawer
             anchor={anchor}

@@ -108,44 +108,69 @@ export default function Filter({ routeId, onClose }) {
               )}
             />
           )}
-          <label>Start date</label>
           <br />
-          <TextField
-            type="date"
-            id="outlined-basic"
-            variant="outlined"
-            style={{ width: "100%" }}
-            onChange={(e) => setStartDate(e.target.value)}
-          />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <div>
+              <label>Start date</label>
+              <br />
+              <TextField
+                type="date"
+                id="outlined-basic"
+                variant="outlined"
+                style={{ width: "80%" }}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+            </div>
+            <div>
+              <label>End date</label>
+              <br />
+              <TextField
+                type="date"
+                id="outlined-basic"
+                variant="outlined"
+                style={{ width: "80%" }}
+                onChange={(e) => setEndDate(e.target.value)}
+              />
+            </div>
+          </div>
           <br />
-          <label>End date</label>
-          <br />
-          <TextField
-            type="date"
-            id="outlined-basic"
-            variant="outlined"
-            style={{ width: "100%" }}
-            onChange={(e) => setEndDate(e.target.value)}
-          />
-          <br />
-          <label>Start time</label>
-          <br />
-          <TextField
-            type="time"
-            variant="outlined"
-            style={{ width: "100%" }}
-            onChange={(e) => setStartTime(e.target.value)}
-          />
-          <br />
-          <label>End time</label>
-          <br />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <div>
+              <label>Start time</label>
+              <br />
+              <TextField
+                type="time"
+                variant="outlined"
+                style={{ width: "100%" }}
+                onChange={(e) => setStartTime(e.target.value)}
+                fullWidth
+              />
+            </div>
+            <div style={{ marginRight: "1.2rem" }}>
+              <label>End time</label>
+              <br />
 
-          <TextField
-            type="time"
-            variant="outlined"
-            style={{ width: "100%" }}
-            onChange={(e) => setEndTime(e.target.value)}
-          />
+              <TextField
+                type="time"
+                variant="outlined"
+                style={{ width: "100%" }}
+                onChange={(e) => setEndTime(e.target.value)}
+                fullWidth
+              />
+            </div>
+          </div>
           <br />
           <div style={{ display: "flex" }}>
             <button
@@ -153,7 +178,7 @@ export default function Filter({ routeId, onClose }) {
               onClick={() => handleSubmit()}
               className="admin-button"
             >
-              Assign
+              Assign User
             </button>
 
             <button

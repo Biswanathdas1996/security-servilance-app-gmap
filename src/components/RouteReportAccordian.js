@@ -6,7 +6,7 @@ import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import MapReport from "./MapReport";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import dayjs from "dayjs";
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -75,10 +75,16 @@ export default function CustomizedAccordions({ data, index, routsData }) {
           <>
             <div className="list-hldr" style={{ display: "block", padding: 0 }}>
               <div className="mb-2 p-2" style={{ display: "flex" }}>
-                <div>
-                  {/* <img src="../images/transport.png" alt="" /> */}
-                  <AccountCircleIcon
-                    style={{ marginRight: 10, fontSize: "2rem" }}
+                <div class="img-hldr">
+                  <img
+                    alt="Remy Sharp"
+                    src={user?.profileImage}
+                    style={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: "50%",
+                      margin: 10,
+                    }}
                   />
                 </div>
                 <div className="desc-hldr">
@@ -97,8 +103,25 @@ export default function CustomizedAccordions({ data, index, routsData }) {
                       }}
                     >
                       Progress : {parseFloat(complitionPercentage).toFixed(0)}%
+                      ({user?.locationsVisited}/{user?.totalLocationsCount})
                     </b>
                   </Typography>
+                  <p style={{ fontSize: 10, marginTop: 2 }}>
+                    Start :{" "}
+                    <strong>
+                      {dayjs(new Date(user?.startTime * 1000)).format(
+                        "YYYY-MM-DD hh:mm A"
+                      )}
+                    </strong>
+                  </p>
+                  <p style={{ fontSize: 10, marginTop: 2 }}>
+                    End :{" "}
+                    <strong>
+                      {dayjs(new Date(user?.endTime * 1000)).format(
+                        "YYYY-MM-DD hh:mm A"
+                      )}
+                    </strong>
+                  </p>
                 </div>
               </div>
               <Accordion

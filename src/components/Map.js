@@ -15,6 +15,7 @@ export default function Map({
   isInsideCircle,
   locations,
   handleOpen,
+  reCenterLoocation,
 }) {
   return (
     <body class="d-flex flex-column h-100">
@@ -22,14 +23,17 @@ export default function Map({
         <>
           <GoogleMap
             defaultZoom={defaultZoom}
-            defaultCenter={{ lat: route?.centerLat, lng: route?.centerLong }}
+            defaultCenter={currentLocation}
             defaultOptions={{ styles: mapStyles }}
             onClick={(e) => handleClick(e)}
           >
             {currentLocation && (
               <Marker
-                position={currentLocation}
-                label={user?.name}
+                position={reCenterLoocation}
+                // label={user?.name
+                //   .split(" ")
+                //   .map((word) => word[0])
+                //   .join("")}
                 optimized={true}
                 draggable={false}
                 color="#3498DB"

@@ -14,8 +14,9 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import AdminImg from "../../images/img_profile.png";
 import FilterDrawer from "../../components/FilterDrawer";
 import MenuDrawer from "../../LayOut/MenuDrawer";
-
+import Chip from "@mui/material/Chip";
 import Header from "../../LayOut/Header";
+import Stack from "@mui/material/Stack";
 
 const MyForm = () => {
   const [selectedOption, setSelectedOption] = useState("");
@@ -73,15 +74,31 @@ const MyForm = () => {
     }
   };
   const filter = createFilterOptions();
+
+  const handleClick = () => {
+    console.info("You clicked the Chip.");
+  };
+
+  const handleDelete = () => {
+    console.info("You clicked the delete icon.");
+  };
+
   return (
     <>
       <div
         className="container mb-2 p-0 mt-2"
         style={{
           display: "flex",
-          justifyContent: "end",
+          justifyContent: "space-between",
         }}
       >
+        <Stack direction="row" spacing={1} style={{ marginTop: "1.5rem" }}>
+          <Chip
+            label={selectedDate}
+            onClick={handleClick}
+            onDelete={handleDelete}
+          />
+        </Stack>
         <FilterDrawer
           selectedOption={selectedOption}
           handleOptionChange={handleOptionChange}

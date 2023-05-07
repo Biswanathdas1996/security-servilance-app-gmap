@@ -25,6 +25,7 @@ const AddCircleToRoutsView = ({
   selectLocation,
   updatedPointer,
   setName,
+  radius,
   setRadius,
   addPlace,
   routeData,
@@ -67,7 +68,7 @@ const AddCircleToRoutsView = ({
             variant="outlined"
             style={{ marginTop: 10, width: "100%" }}
             onChange={(e) => setRadius(e.target.value)}
-            defaultValue={50}
+            defaultValue={radius}
           />
           <br />
           <br />

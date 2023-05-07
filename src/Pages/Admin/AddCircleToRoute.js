@@ -8,7 +8,7 @@ import AddCircleToRoutsView from "../../View/Admin/AddCircleToRoute";
 function BasicModal() {
   const [open, setOpen] = React.useState(false);
   const [name, setName] = React.useState("");
-  const [radius, setRadius] = React.useState("");
+  const [radius, setRadius] = React.useState(50);
   const handleClose = () => setOpen(false);
   const { id } = useParams();
   const [routeData, setRouteData] = React.useState(null);
@@ -73,6 +73,7 @@ function BasicModal() {
       selectLocation={selectLocation}
       updatedPointer={updatedPointer}
       setName={setName}
+      radius={radius}
       setRadius={setRadius}
       addPlace={addPlace}
       routeData={routeData}

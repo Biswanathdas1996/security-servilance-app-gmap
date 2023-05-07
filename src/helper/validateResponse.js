@@ -24,6 +24,7 @@ export const validateResponseUser = (response) => {
     case SUCCESS_TRANSCTION:
       return true;
     case UNAUTH_TRANSCTION:
+      localStorage.clear();
       var returnLink = window.location.href;
       window.location.replace(
         "#/login?return=" + encodeURIComponent(returnLink)

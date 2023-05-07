@@ -78,25 +78,23 @@ function Home() {
   const [liveCenter, setLiveCenter] = React.useState(null);
   const [value, setValue] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
+  const [reCenterLoocation, setReCenterLoocation] = React.useState(null);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  React.useEffect(() => {
+  const fetchData = async () => {
+    setLoading(true);
     const user = localStorage.getItem("x-user-data");
     if (user) {
       setUser(JSON.parse(user));
     }
-  }, []);
-
-  const fetchData = async () => {
-    setLoading(true);
     const response = await post(`/user/getRouteLocations`, {
       routeId: Number(id),
       date: date,
     });
-    console.log("--response->", response);
+    // console.log("--response->", response);
     if (validateResponseUser(response)) {
       setLocations(response?.data?.locations);
       setRoute(response?.data?.route);
@@ -140,13 +138,29 @@ function Home() {
           setLiveCenter(circle);
         }
       });
+
+      const distances = circles.map((circle) => {
+        const center = { lat: circle?.lat, lng: circle?.long };
+        const radius = circle.radius;
+        const distanceInMeters =
+          window.google.maps.geometry.spherical.computeDistanceBetween(
+            new window.google.maps.LatLng(latitude, longitude),
+            center
+          );
+        return { distanceInMeters, radius };
+      });
+
+      // check is inside
+      const liveCenterData = distances?.filter(
+        (data) => data?.distanceInMeters <= data?.radius
+      );
+
+      if (liveCenterData?.length === 0) {
+        setIsInsideCircle(false);
+      }
+      console.log("----------------->", liveCenterData);
     }
   };
-
-  function handleClick(event) {
-    var lat = event.latLng.lat();
-    var lng = event.latLng.lng();
-  }
 
   const finishDuty = async () => {
     swal({
@@ -161,7 +175,7 @@ function Home() {
           const response = await post(`/user/finishDuty`, {
             refId: locations[0]["refId"],
           });
-          console.log("--response->", response);
+          // console.log("--response->", response);
           if (validateResponseUser(response)) {
             window.location.replace("#/home");
           }
@@ -177,6 +191,7 @@ function Home() {
       (position) => {
         const { latitude, longitude } = position.coords;
         const positionData = { lat: latitude, lng: longitude };
+        setReCenterLoocation(positionData);
         checkIfUserInCircle(locations, latitude, longitude);
         setCurrentLocation(positionData);
         setLoading(false);
@@ -201,11 +216,15 @@ function Home() {
     navigator.geolocation.getCurrentPosition((position) => {
       const { latitude, longitude } = position.coords;
       setCurrentLocation({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
+        lat: latitude,
+        lng: longitude,
+      });
+      setReCenterLoocation({
+        lat: latitude,
+        lng: longitude,
       });
       setLoading(false);
-      checkIfUserInCircle(locations, latitude, longitude);
+      // checkIfUserInCircle(locations, latitude, longitude);
     });
   };
 
@@ -235,8 +254,8 @@ function Home() {
   const findTotalVisitedCount = locations?.filter(
     (location) => location?.isVisited
   );
-  console.log("-locations", locations?.length);
-  console.log("-findTotalVisitedCount", findTotalVisitedCount?.length);
+  // console.log("-locations", locations?.length);
+  // console.log("-findTotalVisitedCount", findTotalVisitedCount?.length);
   return (
     <>
       <>
@@ -276,15 +295,15 @@ function Home() {
                 loadingElement={<div style={{ height: "100%" }} />}
                 containerElement={<div style={{ height: "100%" }} />}
                 mapElement={<div style={{ height: "60vh" }} />}
-                defaultCenter={currentLocation}
-                defaultZoom={15}
+                defaultCenter={reCenterLoocation}
+                defaultZoom={17}
                 route={route}
-                handleClick={handleClick}
                 currentLocation={currentLocation}
                 user={user}
                 isInsideCircle={isInsideCircle}
                 locations={locations}
                 handleOpen={handleOpen}
+                reCenterLoocation={reCenterLoocation}
               />
             ) : (
               <center
@@ -302,6 +321,9 @@ function Home() {
                   <p className="text-black-sm">
                     Current progress {findTotalVisitedCount?.length}/
                     {locations?.length}
+                  </p>
+                  <p className="text-black-sm text-bold">
+                    <b>Date: {date}</b>
                   </p>
                 </div>
                 <div
@@ -345,6 +367,7 @@ function Home() {
               {/* <img src="../images/Vector.png" alt="" /> */}
             </button>
           )}
+
           {completedAt === null && (
             <button
               type="button"

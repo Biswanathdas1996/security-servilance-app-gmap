@@ -171,7 +171,7 @@ export default function FolderList() {
             </div>
             <div className="container">
               <p className="routes-txt">
-                You Have <span>{routes?.length} Routes</span> Today
+                You Have <span>{routes?.length} Routes </span> for {date}
               </p>
               <button className="find-btn" onClick={() => findRoute()}>
                 <span>

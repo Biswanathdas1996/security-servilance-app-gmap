@@ -4,14 +4,17 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
+import HomeIcon from "@mui/icons-material/Home";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 export default function DenseAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" style={{ backgroundColor: "#AD0004" }}>
-        <Toolbar variant="dense" onClick={() => window.history.back()}>
+        <Toolbar
+          variant="dense"
+          onClick={() => window.location.replace("#/home")}
+        >
           <IconButton
             edge="start"
             color="inherit"
@@ -21,7 +24,7 @@ export default function DenseAppBar() {
             <ArrowBackIosNewIcon style={{ color: "white" }} />
           </IconButton>
           <Typography variant="h6" color="inherit" component="div">
-            Go Back
+            Home
           </Typography>
         </Toolbar>
       </AppBar>
