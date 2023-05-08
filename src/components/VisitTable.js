@@ -3,11 +3,10 @@ import dayjs from "dayjs";
 import "../css/dutylist.css";
 
 export default function VisitListTable({ locations, handleOpen }) {
-  const reversedArray = locations
-    ?.map((item) => {
-      return Object.assign({}, item, { id: locations?.length - item?.id + 1 });
-    })
-    .reverse();
+  const reversedArray = locations?.map((item) => {
+    return Object.assign({}, item, { id: locations?.length - item?.id + 1 });
+  });
+  // .reverse();
   return (
     <div className="container p-0">
       <table className="table caption-top red-header">

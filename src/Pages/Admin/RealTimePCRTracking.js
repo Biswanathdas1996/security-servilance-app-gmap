@@ -116,7 +116,7 @@ const MapContainer = () => {
         <Map
           googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${MAP_KEY}`}
           loadingElement={<div style={{ height: "100%" }} />}
-          containerElement={<div style={{ height: "90vh" }} />}
+          containerElement={<div style={{ height: "60vh" }} />}
           mapElement={<div style={{ height: "100%" }} />}
           center={currentPosition}
           zoom={16}
