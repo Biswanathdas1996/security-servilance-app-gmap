@@ -96,7 +96,7 @@ export default function CustomizedAccordions({ data, index, routsData }) {
                       style={{
                         color:
                           complitionPercentage === 0
-                            ? "red"
+                            ? "#ad0004"
                             : complitionPercentage < 100
                             ? "orange"
                             : "green",

@@ -41,10 +41,11 @@ const AddNewRouter = ({ onClose }) => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       console.log(values);
+      // return;
       const body = { ...values, center: "Barasat" };
       const response = await post("/admin/route", body);
       if (validateResponseAdmin(response)) {
-        window.location = `#/add-routs/${response?.data?.routeId}`;
+        window.location.replace(`#/add-routs/${response?.data?.routeId}`);
       } else {
         alert("error");
       }

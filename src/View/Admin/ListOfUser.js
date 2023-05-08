@@ -36,7 +36,7 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
                   </div>
                   <div class="text-hldr">
                     <p>
-                      <strong>{user?.name}</strong>
+                      <strong style={{ color: "#ad0004" }}>{user?.name}</strong>
                     </p>
                     <p> {user?.designation}</p>
                   </div>
@@ -48,7 +48,7 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
                   </div>
                   <div class="text-hldr">
                     <p>
-                      <strong>Created On</strong>
+                      <strong style={{ color: "#ad0004" }}>Created On</strong>
                     </p>
                     <p>
                       {dayjs(new Date(user?.createdAt)).format("YYYY-MM-DD")}
@@ -61,7 +61,7 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
                   </div>
                   <div class="text-hldr">
                     <p>
-                      <strong>Employee ID</strong>
+                      <strong style={{ color: "#ad0004" }}>Employee ID</strong>
                     </p>
                     <p>{user?.empID}</p>
                   </div>

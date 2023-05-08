@@ -137,13 +137,13 @@ const ListOfRoutsView = ({
               <div class="desc-hldr">
                 <div>
                   <div class="img-hldr">
-                    <img src="../images/icon-profile-circled.svg" alt="" />
+                    <img src="../images/placeholder.png" alt="" />
                   </div>
                   <div class="text-hldr">
                     <p>
-                      <strong>{row?.name}</strong>
+                      <strong style={{ color: "#ad0004" }}>Route name</strong>
                     </p>
-                    <p>Centered at {row?.center}</p>
+                    <p>{row?.name}</p>
                   </div>
                 </div>
 
@@ -153,7 +153,7 @@ const ListOfRoutsView = ({
                   </div>
                   <div class="text-hldr">
                     <p>
-                      <strong>Created On</strong>
+                      <strong style={{ color: "#ad0004" }}>Created On</strong>
                     </p>
                     <p>
                       {`${dayjs(new Date(row?.createdAt)).format(
