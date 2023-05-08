@@ -9,6 +9,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { get, post, put, del } from "../helper/apiHelper";
 import swal from "sweetalert";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 
 import "../css/registration.css";
 
@@ -263,14 +264,15 @@ export default function UserRegister({ faceData }) {
                   />
                   <label htmlFor="image-upload">
                     <div className="camera-icon">
-                      <img src="../images/camera.png" alt="camera" />
+                      <AddAPhotoIcon style={{ fontSize: "3rem" }} />
+                      {/* <img src="../images/camera.png" alt="camera" /> */}
                     </div>
                   </label>
                 </div>
 
                 <center>
                   {!formik?.isSubmitting ? (
-                    <div className="button" type="submit">
+                    <div className="button" type="submit" style={{ margin: 0 }}>
                       <button type="submit" className="btn">
                         {window.site_text("pages.register.button")}
                       </button>

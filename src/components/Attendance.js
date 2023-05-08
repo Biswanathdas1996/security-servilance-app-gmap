@@ -4,6 +4,12 @@ import Button from "@mui/material/Button";
 import Login from "../Pages/Login";
 import { post } from "../helper/apiHelper";
 import { validateResponseUser } from "../helper/validateResponse";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+import ImageListItemBar from "@mui/material/ImageListItemBar";
+import ListSubheader from "@mui/material/ListSubheader";
+import IconButton from "@mui/material/IconButton";
+import InfoIcon from "@mui/icons-material/Info";
 
 function App({ liveCenter }) {
   const [image, setImage] = useState(null);
@@ -67,19 +73,18 @@ function App({ liveCenter }) {
                   right: 0,
                   textAlign: "center",
                   zindex: 9,
-                  width: 300,
-                  height: 300,
+                  width: "100%",
+                  height: 250,
                 }}
               />
-              <center>
-                <button
-                  className="button"
-                  style={{ marginTop: "1rem", color: "white" }}
-                  onClick={capture}
-                >
-                  Capture Photo
-                </button>
-              </center>
+
+              <button
+                className="button"
+                style={{ marginTop: "1rem", color: "white" }}
+                onClick={capture}
+              >
+                Capture Photo
+              </button>
             </>
           ) : (
             <>
@@ -96,46 +101,94 @@ function App({ liveCenter }) {
                       right: 0,
                       textAlign: "center",
                       zindex: 9,
-                      width: 300,
-                      height: 300,
+                      width: "100%",
+                      height: 250,
                     }}
                   />
-                  <center>
-                    <button
-                      className="button"
-                      style={{ marginTop: "1rem", color: "white" }}
-                      onClick={captureSelfie}
-                    >
-                      Capture Selfie
-                    </button>
-                  </center>
-                </>
-              ) : (
-                <center>
-                  <b>Site Image</b>
-                  <br />
-                  <img
-                    src={image}
-                    alt="rrr"
-                    style={{ height: 200, width: 250 }}
-                  />
-                  <br />
-                  <b>Site Selfie</b>
-                  <br />
-                  <img
-                    src={selfImage}
-                    alt="rrr"
-                    style={{ height: 200, width: 250 }}
-                  />
-                  <br />
+
                   <button
                     className="button"
                     style={{ marginTop: "1rem", color: "white" }}
-                    onClick={() => handleImageUpload()}
+                    onClick={captureSelfie}
                   >
-                    Submit
+                    Capture Selfie
                   </button>
-                </center>
+                </>
+              ) : (
+                <>
+                  <h3>Submit Your Visit</h3>
+                  <br />
+                  <ImageList sx={{ width: 300, height: 200 }}>
+                    <ImageListItem style={{ borderRadius: 12 }}>
+                      <img
+                        src={image}
+                        srcSet={image}
+                        alt={`item.title`}
+                        loading="lazy"
+                      />
+                      <ImageListItemBar
+                        title={`Site Image`}
+                        actionIcon={
+                          <IconButton
+                            sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+                            aria-label={`info about `}
+                          >
+                            <InfoIcon />
+                          </IconButton>
+                        }
+                      />
+                    </ImageListItem>
+                    <ImageListItem>
+                      <img
+                        src={selfImage}
+                        srcSet={selfImage}
+                        alt={`item.title`}
+                        loading="lazy"
+                      />
+                      <ImageListItemBar
+                        title={`Selfie`}
+                        actionIcon={
+                          <IconButton
+                            sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+                            aria-label={`info about `}
+                          >
+                            <InfoIcon />
+                          </IconButton>
+                        }
+                      />
+                    </ImageListItem>
+                  </ImageList>
+
+                  <br />
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <button
+                      className="button"
+                      style={{
+                        marginTop: "1rem",
+                        color: "white",
+                        minWidth: 100,
+                      }}
+                      onClick={() => handleImageUpload()}
+                    >
+                      Submit
+                    </button>
+                    <button
+                      className="button"
+                      style={{
+                        marginTop: "1rem",
+                        color: "white",
+                        minWidth: 100,
+                        background: "#353131",
+                      }}
+                      onClick={() => {
+                        setSelfImage(null);
+                        setImage(null);
+                      }}
+                    >
+                      Retake
+                    </button>
+                  </div>
+                </>
               )}
             </>
           )}

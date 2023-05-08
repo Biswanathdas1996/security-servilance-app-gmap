@@ -25,7 +25,7 @@ export default function Map({
             defaultZoom={defaultZoom}
             defaultCenter={currentLocation}
             defaultOptions={{ styles: mapStyles }}
-            onClick={(e) => handleClick(e)}
+            // onClick={(e) => handleClick(e)}
           >
             {currentLocation && (
               <Marker
