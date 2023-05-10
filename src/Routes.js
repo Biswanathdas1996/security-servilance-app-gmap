@@ -13,6 +13,8 @@ import AdminLogin from "./Pages/Admin/AdminLogin";
 import UserLogin from "./Pages/UserLogin";
 import LandingPage from "./Pages/LandingPage";
 import RouteReport from "./Pages/Admin/RouteReport";
+import Dashboard from "./Pages/Admin/Dashboard";
+import TebleReport from "./Pages/Admin/TebleReport";
 import RealTimePCRTracking from "./Pages/Admin/RealTimePCRTracking";
 import { AdminLayout, UserLayout, UserHeaderlessLayout } from "./HOC/LayOutHOC";
 
@@ -44,6 +46,12 @@ class Routing extends React.Component {
         />
         <Route exact path="/login" element={UserHeaderlessLayout(UserLogin)} />
         <Route exact path="/route-report" element={AdminLayout(RouteReport)} />
+        <Route exact path="/dashboard" element={AdminLayout(Dashboard)} />
+        <Route
+          exact
+          path="/status-reports"
+          element={AdminLayout(TebleReport)}
+        />
         <Route
           exact
           path="/track-pcr-vans"

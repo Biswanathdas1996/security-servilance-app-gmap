@@ -8,7 +8,7 @@ import swal from "sweetalert";
 import "../css/start.css";
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("Required"),
+  contactNo: Yup.string().required("Required"),
   password: Yup.number().required("Required"),
 });
 
@@ -24,7 +24,7 @@ const Login = () => {
     setErrorTxt(null);
     SetLoading(true);
     const body = {
-      email: values?.email,
+      contactNo: values?.contactNo,
       password: Number(values?.password),
     };
     const response = await post("/auth/loginWithPassword", body);
@@ -85,7 +85,7 @@ const Login = () => {
           style={{ boxShadow: "none", background: "none" }}
         >
           <Formik
-            initialValues={{ email: "", password: "" }}
+            initialValues={{ contactNo: "", password: "" }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
@@ -101,26 +101,26 @@ const Login = () => {
               <Form>
                 <div className="form-group mb-4">
                   <input
-                    type="email"
-                    name="email"
+                    type="number"
+                    name="contactNo"
                     className="form-control icon-input input-email"
                     id="exampleInputEmail1"
                     aria-describedby="emailHelp"
-                    placeholder="Email"
+                    placeholder="Contact No"
                     as={TextField}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    value={values.email}
-                    error={touched.email && Boolean(errors.email)}
+                    value={values.contactNo}
+                    error={touched.contactNo && Boolean(errors.contactNo)}
                   />
-                  <ErrorMessage name="email" />
+                  <ErrorMessage name="contactNo" />
                 </div>
                 <div className="form-group mb-4">
                   <input
                     type="password"
                     className="form-control icon-input input-password"
                     id="exampleInputPassword1"
-                    placeholder="Password"
+                    placeholder="PIN"
                     as={TextField}
                     onChange={handleChange}
                     onBlur={handleBlur}

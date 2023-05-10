@@ -14,6 +14,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import PeopleIcon from "@mui/icons-material/People";
 import MapIcon from "@mui/icons-material/Map";
 import LogoutIcon from "@mui/icons-material/Logout";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 
 export default function TemporaryDrawer() {
   const [state, setState] = React.useState({
@@ -79,6 +80,19 @@ export default function TemporaryDrawer() {
               <MapIcon style={{ color: "#ad0004" }} />
             </ListItemIcon>
             <ListItemText primary={`Routes`} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem
+          key={2}
+          style={{ color: "#ad0004" }}
+          onClick={() => (window.location.href = "#/status-reports")}
+          disablePadding
+        >
+          <ListItemButton>
+            <ListItemIcon>
+              <FormatListBulletedIcon style={{ color: "#ad0004" }} />
+            </ListItemIcon>
+            <ListItemText primary={`Status Report`} />
           </ListItemButton>
         </ListItem>
         <ListItem

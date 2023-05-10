@@ -10,14 +10,19 @@ import Button from "@mui/material/Button";
 import { get, post, put, del } from "../helper/apiHelper";
 import swal from "sweetalert";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 import "../css/registration.css";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
+  policeStation: Yup.number().required("Police Station is required"),
   designation: Yup.string().required("Designation is required"),
-  empID: Yup.string().required("EmpID is required"),
-  email: Yup.string().email("Invalid email").required("Email is required"),
+  // empID: Yup.string().required("EmpID is required"),
+  // email: Yup.string().email("Invalid email").required("Email is required"),
   password: Yup.string()
     .matches(/^\d{6}$/, "Enter only 6 digits number")
     .required("Password is required"),
@@ -25,16 +30,26 @@ const validationSchema = Yup.object().shape({
     .oneOf([Yup.ref("password"), null], "Pin must match")
     .required("Confirm Pin is required"),
 });
-
+const policeStationList = [
+  {
+    name: "P1",
+    id: 1,
+  },
+  {
+    name: "P2",
+    id: 2,
+  },
+];
 const initialValues = {
-  empID: "",
+  // empID: "",
   faceID: "",
   name: "",
-  email: "",
+  // email: "",
   password: null,
   confirmPassword: "",
   contactNumber: "",
   designation: "",
+  policeStation: "",
 };
 
 export default function UserRegister({ faceData }) {
@@ -107,25 +122,78 @@ export default function UserRegister({ faceData }) {
             {(formik) => (
               <Form>
                 <div className="mb-3">
-                  <input
-                    type="text"
-                    className="form-control icon-input input-eid"
-                    id="exampleInputdesignation"
-                    placeholder={window.site_text("pages.register.designation")}
-                    name="designation"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.designation}
-                    error={
-                      formik.touched.designation && formik.errors.designation
-                    }
-                    helperText={
-                      formik.touched.designation && formik.errors.designation
-                    }
-                  />
-                  <ErrorMessage name="designation" />
+                  <FormControl size="small" fullWidth>
+                    <InputLabel
+                      id="demo-simple-select-label"
+                      style={{ marginLeft: "1.5rem", marginTop: 7 }}
+                    >
+                      Police Station
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      name="policeStation"
+                      className="form-control icon-input input-eid"
+                      value={formik.values.policeStation}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      error={
+                        formik.touched.policeStation &&
+                        formik.errors.policeStation
+                      }
+                      helperText={
+                        formik.touched.policeStation &&
+                        formik.errors.policeStation
+                      }
+                    >
+                      {policeStationList &&
+                        policeStationList?.map((policeStation, index) => (
+                          <MenuItem
+                            value={policeStation?.id}
+                            key={index + policeStation?.id}
+                          >
+                            {policeStation?.name}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </FormControl>
+
+                  <ErrorMessage name="policeStation" />
                 </div>
                 <div className="mb-3">
+                  <FormControl size="small" fullWidth>
+                    <InputLabel
+                      id="demo-simple-select-label"
+                      style={{ marginLeft: "1.5rem", marginTop: 7 }}
+                    >
+                      {window.site_text("pages.register.designation")}
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      name="designation"
+                      className="form-control icon-input input-eid"
+                      value={formik.values.designation}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
+                      error={
+                        formik.touched.designation && formik.errors.designation
+                      }
+                      helperText={
+                        formik.touched.designation && formik.errors.designation
+                      }
+                    >
+                      <MenuItem value={"DSP"}>DSP</MenuItem>
+                      <MenuItem value={"IIc"}>IIc</MenuItem>
+                      <MenuItem value={"SI"}>SI</MenuItem>
+                      <MenuItem value={"ASI"}>ASI</MenuItem>
+                      <MenuItem value={"Others"}>Others</MenuItem>
+                    </Select>
+                  </FormControl>
+
+                  <ErrorMessage name="designation" />
+                </div>
+                {/* <div className="mb-3">
                   <input
                     type="text"
                     className="form-control icon-input input-eid"
@@ -139,7 +207,7 @@ export default function UserRegister({ faceData }) {
                     helperText={formik.touched.empID && formik.errors.empID}
                   />
                   <ErrorMessage name="empID" />
-                </div>
+                </div> */}
 
                 <div className="mb-3">
                   <input
@@ -156,7 +224,7 @@ export default function UserRegister({ faceData }) {
                   />
                   <ErrorMessage name="name" />
                 </div>
-                <div className="mb-3">
+                {/* <div className="mb-3">
                   <input
                     type="email"
                     className="form-control icon-input input-ctno"
@@ -172,7 +240,7 @@ export default function UserRegister({ faceData }) {
                     style={{ marginTop: 20 }}
                   />
                   <ErrorMessage name="email" />
-                </div>
+                </div> */}
                 <div className="mb-3">
                   <input
                     type="text"

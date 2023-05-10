@@ -75,7 +75,7 @@ export default function CustomizedAccordions({ data, index, routsData }) {
           <>
             <div className="list-hldr" style={{ display: "block", padding: 0 }}>
               <div className="mb-2 p-2" style={{ display: "flex" }}>
-                <div class="img-hldr">
+                {/* <div class="img-hldr">
                   <img
                     alt="Remy Sharp"
                     src={user?.profileImage}
@@ -86,8 +86,8 @@ export default function CustomizedAccordions({ data, index, routsData }) {
                       margin: 10,
                     }}
                   />
-                </div>
-                <div className="desc-hldr">
+                </div> */}
+                <div className="desc-hldr" style={{ padding: 10 }}>
                   <p>
                     <strong>{user?.name}</strong>
                   </p>

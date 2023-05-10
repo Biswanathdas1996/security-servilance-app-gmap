@@ -52,20 +52,27 @@ const AddNewRouter = ({ onClose }) => {
     },
   });
 
-  function getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-      console.log("Geolocation is not supported by this browser.");
-    }
-  }
-  getLocation();
+  React.useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+      setSelectLocation({ lat: latitude, lng: longitude });
+    });
+  }, []);
 
-  function showPosition(position) {
-    const lat = position.coords.latitude;
-    const long = position.coords.longitude;
-    setSelectLocation({ lat: lat, lng: long });
-  }
+  // function getLocation() {
+  //   if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(showPosition);
+  //   } else {
+  //     console.log("Geolocation is not supported by this browser.");
+  //   }
+  // }
+  // getLocation();
+
+  // function showPosition(position) {
+  //   const lat = position.coords.latitude;
+  //   const long = position.coords.longitude;
+  //   setSelectLocation({ lat: lat, lng: long });
+  // }
 
   const updatedPointer = (coordinate) => {
     setSelectLocation(coordinate);
