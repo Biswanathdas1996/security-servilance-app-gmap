@@ -24,7 +24,7 @@ import "jspdf-autotable";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: "#AD0004",
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
@@ -71,7 +71,7 @@ const CustomizedTables = () => {
         item.end_time || "",
         item.visited_vs_assigned,
         `${item.percentage}%`,
-        "NA",
+        item.completeComment,
       ];
       result.push(row);
     });
@@ -82,18 +82,18 @@ const CustomizedTables = () => {
   const exportToPDF = () => {
     const doc = new jsPDF();
     const data = formatDataForPDF(tableData);
+
     doc.autoTable({
       head: [headers],
       body: data,
     });
+    doc.setFillColor("#AD0004");
     doc.save(`Report-${selectedDate}.pdf`);
   };
 
-  const fetchAllRouts = async () => {
+  const fetchAllRouts = async (date = selectedDate) => {
     setLoadng(true);
-    const response = await get(
-      `/admin/user/getCompletedReport/${selectedDate}`
-    );
+    const response = await get(`/admin/user/getCompletedReport/${date}`);
     if (validateResponseAdmin(response)) {
       setReportData(response?.data);
     }
@@ -121,62 +121,58 @@ const CustomizedTables = () => {
       totalLocations += data[i].totalLocations || 0;
     }
     return (
-      <List
-        sx={{
-          width: "100%",
-          maxWidth: 360,
-          bgcolor: "background.paper",
-          marginTop: "2rem",
-          float: "right",
-          padding: "1rem",
-          boxShadow:
-            "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
-        }}
-      >
-        <ListItem
-          key={1}
-          disableGutters
-          secondaryAction={
-            <IconButton
-              aria-label="comment"
-              style={{ fontSize: 15, color: "#ad0004" }}
-            >
-              {totalCompletedLocations}
-            </IconButton>
-          }
-        >
-          <ListItemText primary={`Total completed locations`} />
-        </ListItem>
-        <ListItem
-          key={1}
-          disableGutters
-          secondaryAction={
-            <IconButton
-              aria-label="comment"
-              style={{ fontSize: 15, color: "#ad0004" }}
-            >
-              {totalLocations}
-            </IconButton>
-          }
-        >
-          <ListItemText primary={`Total  locations`} />
-        </ListItem>
-        <ListItem
-          key={1}
-          disableGutters
-          secondaryAction={
-            <IconButton
-              aria-label="comment"
-              style={{ fontSize: 15, color: "#ad0004" }}
-            >
+      <div className="container">
+        <div className="list-hldr report-hldr">
+          <div className="img-hldr">
+            <img src="../images/country-icon.png" alt="" />
+          </div>
+          <div className="desc-hldr">
+            <p>
+              <strong>Total Completed Location</strong>
+            </p>
+          </div>
+          <div className="lst-btn-hldr">
+            <div className="brown"> {totalCompletedLocations}</div>
+          </div>
+        </div>
+
+        <div className="list-hldr report-hldr active">
+          <div className="img-hldr">
+            <img src="../images/location-icon.png" alt="" />
+          </div>
+          <div className="desc-hldr">
+            <p>
+              <strong>Total Location</strong>
+            </p>
+          </div>
+          <div className="lst-btn-hldr">
+            <div className="brown"> {totalLocations}</div>
+          </div>
+        </div>
+
+        <div className="list-hldr report-hldr">
+          <div className="img-hldr">
+            <img src="../images/country-icon.png" alt="" />
+          </div>
+          <div className="desc-hldr">
+            <p>
+              <strong>Progress</strong>
+            </p>
+          </div>
+          <div className="lst-btn-hldr">
+            <div className="green">
+              {" "}
               {calculatePercentage(totalLocations, totalCompletedLocations)}%
-            </IconButton>
-          }
-        >
-          <ListItemText primary={`Progress`} />
-        </ListItem>
-      </List>
+            </div>
+          </div>
+        </div>
+      </div>
     );
+  };
+
+  const updateDateOnButtonClick = (date) => {
+    setSelectedDate(date);
+    fetchAllRouts(date);
   };
 
   React.useEffect(() => {
@@ -195,7 +191,7 @@ const CustomizedTables = () => {
           val?.totalLocations,
           val?.completedLocations
         ),
-        remarks: val?.remarks,
+        completeComment: val?.completeComment,
       };
     });
     setTableData(tableData);
@@ -204,55 +200,78 @@ const CustomizedTables = () => {
   console.log("tableData", tableData);
   return (
     <div>
-      <Box
-        component="form"
-        sx={{
-          "& > :not(style)": { m: 1, width: "25ch" },
-        }}
-        style={{ marginTop: "2rem" }}
-        noValidate
-        autoComplete="off"
-      >
-        {/* <CSVLink
-          data={tableData}
-          headers={headers}
-          style={{ float: "right", width: "auto" }}
-        >
-          <Button
-            variant="outlined"
-            style={{ padding: 17 }}
-            endIcon={<InsertDriveFileIcon />}
-          >
-            {" "}
-            Export to CSV
-          </Button>
-        </CSVLink> */}
-        <div style={{ display: "flex", width: "100%" }}>
-          <Button
-            variant="outlined"
-            style={{ padding: 17, float: "right" }}
-            endIcon={<PictureAsPdfIcon />}
-            onClick={exportToPDF}
-          >
-            {" "}
-            Export to PDF
-          </Button>
-
-          <TextField
-            id="outlined-basic"
-            variant="outlined"
-            type="date"
-            value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
-            style={{ float: "right", width: "53%" }}
-          />
+      <div className="container find-duty-hldr mb-4">
+        <div className="datepicker">
+          <div className="mb-3 mt-3">
+            <TextField
+              id="outlined-basic"
+              className="form-control"
+              variant="outlined"
+              type="date"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              style={{ width: "100%" }}
+            />
+          </div>
         </div>
-      </Box>
-      <TableContainer component={Paper} style={{ marginTop: "1rem" }}>
-        {reportData && totalCalculatuin(reportData)}
-      </TableContainer>
+        <div className="time-picker-hldr">
+          <div
+            className="time-hldr"
+            onClick={() =>
+              updateDateOnButtonClick(
+                dayjs().subtract(1, "day").format("YYYY-MM-DD")
+              )
+            }
+          >
+            <div className="time">
+              {dayjs().subtract(1, "day").format("MMM DD YYYY")}
+            </div>
+            <div className="time-icon">
+              <img src="../images/icon-time.png" alt="" />
+            </div>
+          </div>
+          <div
+            className="time-hldr"
+            onClick={() =>
+              updateDateOnButtonClick(dayjs(new Date()).format("YYYY-MM-DD"))
+            }
+          >
+            <div className="time">
+              {dayjs(new Date()).format("MMM DD YYYY")}
+            </div>
+            <div className="time-icon">
+              <img src="../images/icon-time.png" alt="" />
+            </div>
+          </div>
+          <div
+            className="time-hldr"
+            onClick={() =>
+              updateDateOnButtonClick(
+                dayjs().add(1, "day").format("YYYY-MM-DD")
+              )
+            }
+          >
+            <div className="time">
+              {dayjs().add(1, "day").format("MMM DD YYYY")}
+            </div>
+            <div className="time-icon">
+              <img src="../images/icon-time.png" alt="" />
+            </div>
+          </div>
+        </div>
+        <div className="container">
+          <button className="find-btn" onClick={exportToPDF}>
+            <span>
+              <img src="../images/shield-download.png" alt="" />
+            </span>
+            <div className="txt-hldr pl-3" style={{ color: "white" }}>
+              Export PDF
+            </div>
+          </button>
+        </div>
+      </div>
+      {reportData && totalCalculatuin(reportData)}
       <br />
-
       <TableContainer component={Paper}>
         {loading ? (
           <center>
@@ -260,8 +279,8 @@ const CustomizedTables = () => {
           </center>
         ) : (
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            <TableHead>
-              <TableRow>
+            <TableHead style={{ borderRadius: "50px" }}>
+              <TableRow style={{ borderRadius: "50px" }}>
                 <StyledTableCell>Route</StyledTableCell>
                 <StyledTableCell>User</StyledTableCell>
                 <StyledTableCell align="right">Start Time</StyledTableCell>
@@ -297,7 +316,7 @@ const CustomizedTables = () => {
                   </StyledTableCell>
 
                   <StyledTableCell align="right">
-                    {row?.remarks}
+                    {row?.completeComment}
                   </StyledTableCell>
                 </StyledTableRow>
               ))}
@@ -308,6 +327,9 @@ const CustomizedTables = () => {
           <center style={{ padding: "2rem" }}>No data found</center>
         )}
       </TableContainer>
+      <br />
+      <br />
+      <br />
     </div>
   );
 };

@@ -181,7 +181,7 @@ button:not(:disabled) {
   width: 42px;
   height: 42px;
   position: absolute;
-  background: url(./images/ellipse-left.png);
+  /* background: url(./images/ellipse-left.png); */
   background-size: cover;
   /* left: -28px; */
   left: -12px;
@@ -192,7 +192,7 @@ button:not(:disabled) {
   width: 42px;
   height: 42px;
   position: absolute;
-  background: url(./images/ellipse-right.png);
+  /* background: url(./images/ellipse-right.png); */
   background-size: cover;
   right: -12px;
   top: 43%;
@@ -663,4 +663,49 @@ body {
   box-shadow: 0px 4px 28px rgba(46, 49, 118, 0.1);
   border-radius: 16px;
   color: #BFC2C8;
+}
+
+
+.report-hldr.active {
+  background-color: #343E42;
+}
+.report-hldr.active .desc-hldr p {
+  color: #fff;
+}
+
+.report-hldr .lst-btn-hldr div.brown {
+  background-color: #AD0004;
+  color: #fff;
+}
+.report-hldr .lst-btn-hldr {
+  flex: 0 0 60px;
+}
+.report-hldr .lst-btn-hldr div {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border: 5px solid #E7E7E7; */
+  outline: 5px solid rgba(0, 0, 0, .1);
+}
+
+.report-hldr .lst-btn-hldr div.green {
+  background-color: #039F2F;
+  color: #fff;
+}
+.list-hldr {
+  background: #FFFFFF;
+  box-shadow: -1px 2px 7px rgba(46, 49, 118, 0.1);
+  border-radius: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.css-52llsg-MuiAutocomplete-root .MuiOutlinedInput-root {
+  padding: 3px !important;
 }

@@ -90,9 +90,9 @@ export default function TemporaryDrawer() {
         >
           <ListItemButton>
             <ListItemIcon>
-              <FormatListBulletedIcon style={{ color: "#ad0004" }} />
+              <InboxIcon style={{ color: "#ad0004" }} />
             </ListItemIcon>
-            <ListItemText primary={`Status Report`} />
+            <ListItemText primary={`PDF Report`} />
           </ListItemButton>
         </ListItem>
         <ListItem
@@ -103,9 +103,9 @@ export default function TemporaryDrawer() {
         >
           <ListItemButton>
             <ListItemIcon>
-              <InboxIcon style={{ color: "#ad0004" }} />
+              <FormatListBulletedIcon style={{ color: "#ad0004" }} />
             </ListItemIcon>
-            <ListItemText primary={`Reports`} />
+            <ListItemText primary={`Online Report`} />
           </ListItemButton>
         </ListItem>
       </List>

@@ -37,7 +37,15 @@ const Login = () => {
 
         setTimeout(() => {
           if (returnLink) {
-            window.location.href = returnLink;
+            // window.location.href = returnLink;
+            if (
+              response?.data?.roles[0] &&
+              response?.data?.roles[0] === "Admin"
+            ) {
+              window.location.href = "#/admin/users";
+            } else {
+              window.location.href = "#/home";
+            }
           } else {
             if (
               response?.data?.roles[0] &&

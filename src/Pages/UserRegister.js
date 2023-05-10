@@ -144,11 +144,14 @@ export default function UserRegister({ faceData }) {
               <Form>
                 {policeStations && (
                   <div className="mb-3">
-                    <label>Police Statuion</label>
+                    <label>Police Station</label>
                     <FormControl size="small" fullWidth>
                       <InputLabel
                         id="demo-simple-select-label"
-                        style={{ marginLeft: "1.5rem", marginTop: 7 }}
+                        style={{
+                          marginLeft: "1.5rem",
+                          marginTop: 7,
+                        }}
                       ></InputLabel>
                       <AutocompliteInput
                         data={policeStations}
