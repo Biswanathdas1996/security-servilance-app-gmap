@@ -171,7 +171,7 @@ const ListOfRoutsView = ({
                     onClick={() => deleteRoute(row?.id)}
                   />
                 </button>
-                <a href={`/#/add-routs/${row?.id}`}>
+                <a href={`/#/admin/add-routs/${row?.id}`}>
                   <button>
                     <img src="../images/icon-add.png" alt="" />
                   </button>

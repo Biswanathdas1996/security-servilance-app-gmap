@@ -45,7 +45,7 @@ const AddNewRouter = ({ onClose }) => {
       const body = { ...values, center: "Barasat" };
       const response = await post("/admin/route", body);
       if (validateResponseAdmin(response)) {
-        window.location.replace(`#/add-routs/${response?.data?.routeId}`);
+        window.location.replace(`#/admin/add-routs/${response?.data?.routeId}`);
       } else {
         alert("error");
       }

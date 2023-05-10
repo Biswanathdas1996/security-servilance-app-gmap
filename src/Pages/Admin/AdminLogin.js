@@ -24,7 +24,7 @@ export default function AdminLogin() {
         if (returnLink) {
           window.location.href = returnLink;
         } else {
-          window.location.href = "#/users";
+          window.location.href = "#/admin/users";
         }
         setLoading(false);
       }, 1000);

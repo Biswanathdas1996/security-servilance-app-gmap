@@ -29,27 +29,36 @@ class Routing extends React.Component {
           path="/register"
           element={UserHeaderlessLayout(Register)}
         />
-
+        <Route exact path="/login" element={UserHeaderlessLayout(UserLogin)} />
         <Route exact path="/map/:id/:date" element={UserLayout(Map)} />
         <Route exact path="/path" element={UserLayout(VisitedPath)} />
-        <Route exact path="/users" element={AdminLayout(ListOfUser)} />
-        <Route exact path="/list-of_routs" element={AdminLayout(ListOfRouts)} />
+
+        <Route exact path="/admin/users" element={AdminLayout(ListOfUser)} />
         <Route
           exact
-          path="/add-routs/:id"
-          element={AdminLayout(AddCircleToRoute)}
+          path="/admin/list-of_routs"
+          element={AdminLayout(ListOfRouts)}
         />
         <Route
+          exact
+          path="admin/add-routs/:id"
+          element={AdminLayout(AddCircleToRoute)}
+        />
+        {/* <Route
           exact
           path="/admin/login"
           element={UserHeaderlessLayout(AdminLogin)}
+        /> */}
+
+        <Route
+          exact
+          path="/admin/route-report"
+          element={AdminLayout(RouteReport)}
         />
-        <Route exact path="/login" element={UserHeaderlessLayout(UserLogin)} />
-        <Route exact path="/route-report" element={AdminLayout(RouteReport)} />
         <Route exact path="/dashboard" element={AdminLayout(Dashboard)} />
         <Route
           exact
-          path="/status-reports"
+          path="/admin/status-reports"
           element={AdminLayout(TebleReport)}
         />
         <Route
@@ -57,12 +66,7 @@ class Routing extends React.Component {
           path="/track-pcr-vans"
           element={AdminLayout(RealTimePCRTracking)}
         />
-
-        <Route
-          render={function () {
-            return <h1>Not Found</h1>;
-          }}
-        />
+        <Route element={<>Page Not found</>} />
       </Routes>
     );
   }

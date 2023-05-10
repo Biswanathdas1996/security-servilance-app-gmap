@@ -132,7 +132,7 @@ const AddCircleToRoutsView = ({
             <br />
             <div
               className="login-button"
-              onClick={() => window.location.replace("#/list-of_routs")}
+              onClick={() => window.location.replace("#/admin/list-of_routs")}
             >
               <button type="button" className="btn">
                 <div className="text">

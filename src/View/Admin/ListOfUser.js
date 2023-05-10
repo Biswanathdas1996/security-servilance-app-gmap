@@ -91,9 +91,9 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
               </div>
             </div>
           ))}
-
+          <br />
           {users?.length === 0 && (
-            <b style={{ margin: "2rem", textAlign: "center" }}>No user found</b>
+            <b style={{ textAlign: "center" }}>No user found</b>
           )}
         </div>
       ) : (

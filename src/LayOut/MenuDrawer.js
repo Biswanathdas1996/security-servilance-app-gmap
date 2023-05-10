@@ -55,7 +55,7 @@ export default function TemporaryDrawer() {
       <List style={{ marginTop: "2rem" }}>
         <ListItem
           key={1}
-          onClick={() => (window.location.href = "#/users")}
+          onClick={() => (window.location.href = "#/admin/users")}
           style={{ color: "#ad0004" }}
           disablePadding
         >
@@ -71,7 +71,7 @@ export default function TemporaryDrawer() {
       <List>
         <ListItem
           key={2}
-          onClick={() => (window.location.href = "#/list-of_routs")}
+          onClick={() => (window.location.href = "#/admin/list-of_routs")}
           style={{ color: "#ad0004" }}
           disablePadding
         >
@@ -85,7 +85,7 @@ export default function TemporaryDrawer() {
         <ListItem
           key={2}
           style={{ color: "#ad0004" }}
-          onClick={() => (window.location.href = "#/status-reports")}
+          onClick={() => (window.location.href = "#/admin/status-reports")}
           disablePadding
         >
           <ListItemButton>
@@ -98,7 +98,7 @@ export default function TemporaryDrawer() {
         <ListItem
           key={2}
           style={{ color: "#ad0004" }}
-          onClick={() => (window.location.href = "#/route-report")}
+          onClick={() => (window.location.href = "#/admin/route-report")}
           disablePadding
         >
           <ListItemButton>

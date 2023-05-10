@@ -23,11 +23,11 @@ const Login = () => {
     console.log(values);
     setErrorTxt(null);
     SetLoading(true);
-    const body = {
-      contactNo: values?.contactNo,
+    const div = {
+      contactNumber: values?.contactNo && values?.contactNo.toString(),
       password: Number(values?.password),
     };
-    const response = await post("/auth/loginWithPassword", body);
+    const response = await post("/auth/loginWithPassword", div);
     if (response) {
       if (response?.status === 200) {
         localStorage.setItem("x-service-token", response?.data?.token);
@@ -39,7 +39,14 @@ const Login = () => {
           if (returnLink) {
             window.location.href = returnLink;
           } else {
-            window.location.href = "#/home";
+            if (
+              response?.data?.roles[0] &&
+              response?.data?.roles[0] === "Admin"
+            ) {
+              window.location.href = "#/admin/users";
+            } else {
+              window.location.href = "#/home";
+            }
           }
           SetLoading(false);
         }, 2000);
@@ -57,7 +64,7 @@ const Login = () => {
   };
 
   return (
-    <body className="d-flex flex-column h-100">
+    <div className="d-flex flex-column h-100">
       <div className="main container">
         <div className="welcome">
           <h6>Welcome To</h6>
@@ -137,7 +144,7 @@ const Login = () => {
                     onClick={handleSubmit}
                     disabled={isSubmitting}
                   >
-                    <button type="button" className="btn">
+                    <button type="button" className="btn" style={{ margin: 0 }}>
                       <div className="text">
                         <h6>{window.site_text("pages.landing.sign_in")}</h6>
                       </div>
@@ -175,7 +182,7 @@ const Login = () => {
           <strong>CLICK HERE</strong> to register
         </div>
       </div>
-    </body>
+    </div>
   );
 };
 

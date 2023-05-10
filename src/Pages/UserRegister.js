@@ -14,13 +14,11 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-
+import AutocompliteInput from "../components/AutocompliteInput";
 import "../css/registration.css";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
-  policeStation: Yup.number().required("Police Station is required"),
-  designation: Yup.string().required("Designation is required"),
   // empID: Yup.string().required("EmpID is required"),
   // email: Yup.string().email("Invalid email").required("Email is required"),
   password: Yup.string()
@@ -30,16 +28,7 @@ const validationSchema = Yup.object().shape({
     .oneOf([Yup.ref("password"), null], "Pin must match")
     .required("Confirm Pin is required"),
 });
-const policeStationList = [
-  {
-    name: "P1",
-    id: 1,
-  },
-  {
-    name: "P2",
-    id: 2,
-  },
-];
+
 const initialValues = {
   // empID: "",
   faceID: "",
@@ -48,13 +37,15 @@ const initialValues = {
   password: null,
   confirmPassword: "",
   contactNumber: "",
-  designation: "",
-  policeStation: "",
+  designationId: "",
 };
 
 export default function UserRegister({ faceData }) {
   const [image, setImage] = React.useState(null);
-
+  const [selectedPoliceStation, setSelectedPoliceStation] =
+    React.useState(null);
+  const [designation, setDesignation] = React.useState(null);
+  const [policeStations, setPoliceStations] = React.useState(null);
   function handleImageUpload(event) {
     const file = event.target.files[0];
 
@@ -79,6 +70,35 @@ export default function UserRegister({ faceData }) {
       // Do something with the base64String, such as send it to the server
     };
   }
+
+  const getPoliceStations = async () => {
+    const response = await get("/policeStation");
+    if (response?.success) {
+      console.log("---response-->", response);
+      setPoliceStations(response?.data);
+    }
+  };
+
+  React.useEffect(() => {
+    getPoliceStations();
+  }, []);
+
+  const getDesignation = async () => {
+    const response = await get("/designation");
+    if (response?.success) {
+      console.log("---getDesignation-->", response?.data);
+      setDesignation(response?.data);
+    }
+  };
+
+  React.useEffect(() => {
+    getDesignation();
+  }, []);
+
+  const selectedPoliceStationCallback = (data) => {
+    console.log("---->", data);
+    setSelectedPoliceStation(data?.id);
+  };
 
   return (
     <body className="d-flex flex-column h-100">
@@ -107,6 +127,7 @@ export default function UserRegister({ faceData }) {
                 password: parseInt(values?.password),
                 faceID: JSON.stringify(faceData),
                 profileImage: image,
+                policeStationId: selectedPoliceStation,
               };
               delete body.confirmPassword;
               const response = await post("/auth/register", body);
@@ -121,78 +142,60 @@ export default function UserRegister({ faceData }) {
           >
             {(formik) => (
               <Form>
-                <div className="mb-3">
-                  <FormControl size="small" fullWidth>
-                    <InputLabel
-                      id="demo-simple-select-label"
-                      style={{ marginLeft: "1.5rem", marginTop: 7 }}
-                    >
-                      Police Station
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      name="policeStation"
-                      className="form-control icon-input input-eid"
-                      value={formik.values.policeStation}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      error={
-                        formik.touched.policeStation &&
-                        formik.errors.policeStation
-                      }
-                      helperText={
-                        formik.touched.policeStation &&
-                        formik.errors.policeStation
-                      }
-                    >
-                      {policeStationList &&
-                        policeStationList?.map((policeStation, index) => (
-                          <MenuItem
-                            value={policeStation?.id}
-                            key={index + policeStation?.id}
-                          >
-                            {policeStation?.name}
+                {policeStations && (
+                  <div className="mb-3">
+                    <label>Police Statuion</label>
+                    <FormControl size="small" fullWidth>
+                      <InputLabel
+                        id="demo-simple-select-label"
+                        style={{ marginLeft: "1.5rem", marginTop: 7 }}
+                      ></InputLabel>
+                      <AutocompliteInput
+                        data={policeStations}
+                        onchangeCallback={selectedPoliceStationCallback}
+                      />
+                    </FormControl>
+
+                    <ErrorMessage name="policeStation" />
+                  </div>
+                )}
+                {designation && (
+                  <div className="mb-3">
+                    <FormControl size="small" fullWidth>
+                      <InputLabel
+                        id="demo-simple-select-label"
+                        style={{ marginLeft: "1.5rem", marginTop: 7 }}
+                      >
+                        {window.site_text("pages.register.designation")}
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        name="designationId"
+                        className="form-control icon-input input-eid"
+                        value={formik.values.designationId}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                          formik.touched.designationId &&
+                          formik.errors.designationId
+                        }
+                        helperText={
+                          formik.touched.designationId &&
+                          formik.errors.designationId
+                        }
+                      >
+                        {designation?.map((data, index) => (
+                          <MenuItem value={data?.id} key={index}>
+                            {data?.name}
                           </MenuItem>
                         ))}
-                    </Select>
-                  </FormControl>
+                      </Select>
+                    </FormControl>
 
-                  <ErrorMessage name="policeStation" />
-                </div>
-                <div className="mb-3">
-                  <FormControl size="small" fullWidth>
-                    <InputLabel
-                      id="demo-simple-select-label"
-                      style={{ marginLeft: "1.5rem", marginTop: 7 }}
-                    >
-                      {window.site_text("pages.register.designation")}
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      name="designation"
-                      className="form-control icon-input input-eid"
-                      value={formik.values.designation}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      error={
-                        formik.touched.designation && formik.errors.designation
-                      }
-                      helperText={
-                        formik.touched.designation && formik.errors.designation
-                      }
-                    >
-                      <MenuItem value={"DSP"}>DSP</MenuItem>
-                      <MenuItem value={"IIc"}>IIc</MenuItem>
-                      <MenuItem value={"SI"}>SI</MenuItem>
-                      <MenuItem value={"ASI"}>ASI</MenuItem>
-                      <MenuItem value={"Others"}>Others</MenuItem>
-                    </Select>
-                  </FormControl>
-
-                  <ErrorMessage name="designation" />
-                </div>
+                    <ErrorMessage name="designationId" />
+                  </div>
+                )}
                 {/* <div className="mb-3">
                   <input
                     type="text"
