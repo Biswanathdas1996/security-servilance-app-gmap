@@ -3,6 +3,7 @@ import Map from "../components/Map";
 import { withGoogleMap, withScriptjs } from "react-google-maps";
 import { Google_Map_URL, MAP_KEY } from "../config";
 import { get, post } from "../helper/apiHelper";
+import TextField from "@mui/material/TextField";
 
 import mapStyles from "../css/mapStyles";
 import Button from "@mui/material/Button";
@@ -79,6 +80,7 @@ function Home() {
   const [value, setValue] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
   const [reCenterLoocation, setReCenterLoocation] = React.useState(null);
+  const [comment, setComment] = React.useState("");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -174,6 +176,7 @@ function Home() {
         if (locations[0]["refId"]) {
           const response = await post(`/user/finishDuty`, {
             refId: locations[0]["refId"],
+            comment: comment,
           });
           // console.log("--response->", response);
           if (validateResponseUser(response)) {
@@ -351,7 +354,7 @@ function Home() {
         <div
           className="container pb-4"
           style={{
-            display: isInsideCircle ? "flex" : "block",
+            display: "block",
             justifyContent: "space-arround",
             marginTop: "5rem",
           }}
@@ -369,16 +372,26 @@ function Home() {
           )}
 
           {completedAt === null && (
-            <button
-              type="button"
-              className="button"
-              style={{ color: "white", minWidth: "40%" }}
-              onClick={() => finishDuty()}
-            >
-              {window.site_text("pages.map.finish_now")}
-              {/* <img src="../images/Vector.png" alt="" /> */}
-              <HighlightOffIcon style={{ fontSize: "2rem" }} />
-            </button>
+            <>
+              <TextField
+                id="outlined-basic"
+                label="Enter Comment (if any)"
+                variant="outlined"
+                onChange={(e) => setComment(e.target.value)}
+                style={{ marginBottom: "1.5rem", marginTop: "1.5rem" }}
+                fullWidth
+              />
+              <button
+                type="button"
+                className="button"
+                style={{ color: "white", minWidth: "100%" }}
+                onClick={() => finishDuty()}
+              >
+                {window.site_text("pages.map.finish_now")}
+                {/* <img src="../images/Vector.png" alt="" /> */}
+                <HighlightOffIcon style={{ fontSize: "2rem" }} />
+              </button>
+            </>
           )}
         </div>
       </center>

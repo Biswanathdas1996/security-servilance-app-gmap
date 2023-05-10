@@ -1,32 +1,19 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import Card from "@mui/material/Card";
-import DeleteIcon from "@mui/icons-material/Delete";
-import OfflinePinIcon from "@mui/icons-material/OfflinePin";
-import SpellcheckIcon from "@mui/icons-material/Spellcheck";
-import dayjs from "dayjs";
 
 const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
   return (
     <>
       {users ? (
-        <div class="container">
+        <div className="container">
           {users?.map((user, index) => (
             <div
-              class="list-hldr n-route mt-3"
+              className="list-hldr n-route mt-3"
               style={{ justifyContent: "space-between" }}
+              key={index + user?.id}
             >
-              <div class="desc-hldr">
+              <div className="desc-hldr">
                 <div>
-                  <div class="img-hldr">
+                  <div className="img-hldr">
                     {/* <img src="../images/icon-profile-circled.svg" alt="" /> */}
                     <img
                       alt="Remy Sharp"
@@ -34,40 +21,42 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
                       style={{ width: 33, height: 33, borderRadius: "50%" }}
                     />
                   </div>
-                  <div class="text-hldr">
+                  <div className="text-hldr">
                     <p>
                       <strong style={{ color: "#ad0004" }}>{user?.name}</strong>
                     </p>
-                    <p> {user?.designation}</p>
+                    <p> {user?.designation?.name}</p>
                   </div>
                 </div>
 
                 <div>
-                  <div class="img-hldr">
+                  <div className="img-hldr">
                     <img src="../images/icon-bookmark-circled.svg" alt="" />
                   </div>
-                  <div class="text-hldr">
+                  <div className="text-hldr">
                     <p>
-                      <strong style={{ color: "#ad0004" }}>Created On</strong>
+                      <strong style={{ color: "#ad0004" }}>
+                        Police Station
+                      </strong>
                     </p>
-                    <p>
-                      {dayjs(new Date(user?.createdAt)).format("YYYY-MM-DD")}
-                    </p>
+                    <p>{user?.policeStation?.name}</p>
                   </div>
                 </div>
                 <div>
-                  <div class="img-hldr">
+                  <div className="img-hldr">
                     <img src="../images/icon-profile-circled.svg" alt="" />
                   </div>
-                  <div class="text-hldr">
+                  <div className="text-hldr">
                     <p>
-                      <strong style={{ color: "#ad0004" }}>Employee ID</strong>
+                      <strong style={{ color: "#ad0004" }}>
+                        Contact Number
+                      </strong>
                     </p>
-                    <p>{user?.empID}</p>
+                    <p>{user?.contactNumber}</p>
                   </div>
                 </div>
               </div>
-              <div class="lst-btn-hldr">
+              <div className="lst-btn-hldr">
                 <button
                   type="button"
                   onClick={() => updateUserStatus(user?.id)}

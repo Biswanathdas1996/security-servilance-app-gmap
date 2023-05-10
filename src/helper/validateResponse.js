@@ -9,7 +9,7 @@ export const validateResponseAdmin = (response) => {
     case UNAUTH_TRANSCTION:
       var returnLink = window.location.href;
       window.location.replace(
-        "#/admin/login?return=" + encodeURIComponent(returnLink)
+        "#/login?return=" + encodeURIComponent(returnLink)
       );
 
       return false;

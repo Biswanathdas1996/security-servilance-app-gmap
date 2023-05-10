@@ -117,8 +117,6 @@ const AddNewRouter = ({ onClose }) => {
           </div>
         </div>
 
-        <p></p>
-
         <TextField
           fullWidth
           id="centerLat"

@@ -602,7 +602,7 @@ body {
 .red-header tr.active td:first-child {
   border-left-color: #039F2F ;
 }
-.red-header tr.active td:first-child::before {
+/* .red-header tr.active td:first-child::before {
   content: "";
   width: 15px;
   height: 15px;
@@ -612,7 +612,7 @@ body {
   position: absolute;
   z-index: 10;
   left: 7px;
-}
+} */
 .red-circle {
   border-radius: 100%;
   background-color: #AD0004;

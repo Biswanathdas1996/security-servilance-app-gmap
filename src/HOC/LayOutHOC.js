@@ -6,7 +6,7 @@ import UserBAckScreenHeader from "../LayOut/UserBackHeader";
 export function AdminLayout(Body) {
   return (
     <>
-      <body className="d-flex flex-column h-100">
+      <div className="d-flex flex-column h-100">
         <div
           className="bg-default"
           style={{ zIndex: 0, height: "10.5rem" }}
@@ -17,7 +17,7 @@ export function AdminLayout(Body) {
             <Body />
           </div>
         </main>
-      </body>
+      </div>
     </>
   );
 }

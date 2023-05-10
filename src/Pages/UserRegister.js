@@ -101,7 +101,7 @@ export default function UserRegister({ faceData }) {
   };
 
   return (
-    <body className="d-flex flex-column h-100">
+    <div className="d-flex flex-column h-100">
       <div className="container main">
         <div className="bg-default" style={{ zIndex: 0 }}></div>
         <div className="container" style={{ zIndex: 1 }}>
@@ -366,6 +366,6 @@ export default function UserRegister({ faceData }) {
           </p>
         </div>
       </div>
-    </body>
+    </div>
   );
 }

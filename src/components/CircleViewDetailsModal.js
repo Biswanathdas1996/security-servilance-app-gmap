@@ -34,13 +34,13 @@ export default function Map({ open, onClose, ...props }) {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <div class="list-hldr n-route mt-3" style={{}}>
-              <div class="desc-hldr">
+            <div className="list-hldr n-route mt-3" style={{}}>
+              <div className="desc-hldr">
                 <div>
-                  <div class="img-hldr">
+                  <div className="img-hldr">
                     <img src="../images/icon-profile-circled.svg" alt="" />
                   </div>
-                  <div class="text-hldr">
+                  <div className="text-hldr">
                     <p>
                       <strong>Spot</strong>
                     </p>
@@ -49,11 +49,11 @@ export default function Map({ open, onClose, ...props }) {
                 </div>
 
                 <div>
-                  <div class="img-hldr">
+                  <div className="img-hldr">
                     <img src="../images/icon-bookmark-circled.svg" alt="" />
                   </div>
                   {props?.clickedPlace?.isVisited ? (
-                    <div class="text-hldr" style={{ width: 150 }}>
+                    <div className="text-hldr" style={{ width: 150 }}>
                       <p>
                         <strong>Captured at</strong>
                       </p>
@@ -64,7 +64,7 @@ export default function Map({ open, onClose, ...props }) {
                       </p>
                     </div>
                   ) : (
-                    <div class="text-hldr" style={{ width: 150 }}>
+                    <div className="text-hldr" style={{ width: 150 }}>
                       <p>
                         <strong>Not visited yet</strong>
                       </p>

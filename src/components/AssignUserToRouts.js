@@ -11,20 +11,9 @@ import Select from "@mui/material/Select";
 import FilterSelectBox from "./FilterSelectBox";
 import AutocompliteInput from "./AutocompliteInput";
 
-const policeStationList = [
-  {
-    name: "P1",
-    id: 1,
-  },
-  {
-    name: "P2",
-    id: 2,
-  },
-];
-
 export default function Filter({ routeId, onClose }) {
   const [users, setUsers] = React.useState(null);
-  const [value, setValue] = React.useState(null);
+  const [fetchUserListCalled, setFetchUserListCalled] = React.useState(false);
 
   const [startDate, setStartDate] = React.useState(null);
   const [endDate, setEndDate] = React.useState(null);
@@ -33,24 +22,62 @@ export default function Filter({ routeId, onClose }) {
 
   const [getUserID, setGetUserId] = React.useState(null);
 
+  const [designation, setDesignation] = React.useState(null);
+  const [policeStations, setPoliceStations] = React.useState(null);
+
   const [selectedPoliceStation, setSelectedPoliceStation] =
     React.useState(null);
+
   const [selectedDesignation, setSelectedDesignation] = React.useState(null);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchUserList = async () => {
-    const response = await get("/admin/user?search=&page&limit=1000");
+    const response = await post(
+      "/admin/user/getUsersByPoliceStationDesignation",
+      {
+        policeStationId: selectedPoliceStation,
+        designationId: selectedDesignation,
+      }
+    );
     if (validateResponseAdmin(response)) {
-      setUsers(response?.data?.rows);
+      setUsers(response?.data);
     }
   };
 
   React.useEffect(() => {
-    fetchUserList();
+    if (selectedPoliceStation && selectedDesignation && !fetchUserListCalled) {
+      fetchUserList();
+      setFetchUserListCalled(true);
+    }
+  }, [selectedPoliceStation, selectedDesignation, fetchUserList]);
+
+  const getPoliceStations = async () => {
+    const response = await get("/policeStation");
+    if (response?.success) {
+      console.log("---response-->", response);
+      setPoliceStations(response?.data);
+    }
+  };
+
+  React.useEffect(() => {
+    getPoliceStations();
+  }, []);
+
+  const getDesignation = async () => {
+    const response = await get("/designation");
+    if (response?.success) {
+      console.log("---getDesignation-->", response?.data);
+      setDesignation(response?.data);
+    }
+  };
+
+  React.useEffect(() => {
+    getDesignation();
   }, []);
 
   const handleSubmit = async () => {
     const data = {
-      userId: value?.id,
+      userId: Number(getUserID),
       routeId: routeId,
       startDate: startDate,
       startTime: startTime,
@@ -68,25 +95,6 @@ export default function Filter({ routeId, onClose }) {
     setGetUserId(data?.target?.value);
   };
 
-  const policeStations = [
-    {
-      id: 18,
-      name: "Arakhakuda Marine Police Station",
-    },
-    {
-      id: 7,
-      name: "Astaranga Marine Police Station ",
-    },
-    {
-      id: 1,
-      name: "Astaranga Police Station",
-    },
-    {
-      id: 10,
-      name: "Balanga Police Station",
-    },
-  ];
-
   const selectedPoliceStationCallback = (data) => {
     console.log("---->", data);
     setSelectedPoliceStation(data?.id);
@@ -94,7 +102,7 @@ export default function Filter({ routeId, onClose }) {
 
   return (
     <>
-      {users ? (
+      {policeStations && designation ? (
         <>
           <label>Police Station</label>
           <FormControl size="small" fullWidth>
@@ -125,31 +133,29 @@ export default function Filter({ routeId, onClose }) {
           </FormControl>
           <br />
           <br />
-          <label>Designation</label>
-          <FormControl size="small" fullWidth>
-            <InputLabel
-              id="demo-simple-select-label"
-              style={{ marginLeft: "1.5rem", marginTop: 7 }}
-            >
-              {window.site_text("pages.register.designation")}
-            </InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              name="designation"
-              size="small"
-              className="form-control icon-input input-eid"
-              value={selectedDesignation}
-              onChange={(e) => setSelectedDesignation(e.target.value)}
-              onBlur={(e) => setSelectedDesignation(e.target.value)}
-            >
-              <MenuItem value={"DSP"}>DSP</MenuItem>
-              <MenuItem value={"IIc"}>IIc</MenuItem>
-              <MenuItem value={"SI"}>SI</MenuItem>
-              <MenuItem value={"ASI"}>ASI</MenuItem>
-              <MenuItem value={"Others"}>Others</MenuItem>
-            </Select>
-          </FormControl>
+          {designation && (
+            <div className="mb-3">
+              <label>Designation</label>
+              <FormControl size="small" fullWidth>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  name="designationId"
+                  className="form-control icon-input input-eid"
+                  value={selectedDesignation}
+                  onChange={(e) => setSelectedDesignation(e.target.value)}
+                  onBlur={(e) => setSelectedDesignation(e.target.value)}
+                >
+                  {designation?.map((data, index) => (
+                    <MenuItem value={data?.id} key={index}>
+                      {data?.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
+          )}
+
           <br />
           <br />
 

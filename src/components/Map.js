@@ -18,7 +18,7 @@ export default function Map({
   reCenterLoocation,
 }) {
   return (
-    <body class="d-flex flex-column h-100">
+    <body className="d-flex flex-column h-100">
       {route && (
         <>
           <GoogleMap

@@ -26,7 +26,7 @@ const AdminLoginView = ({ handleSubmit, loading }) => {
 
   return (
     <>
-      <body className="d-flex flex-column h-100">
+      <div className="d-flex flex-column h-100">
         <div className="main container">
           <div className="welcome">
             <h6>Welcome To</h6>
@@ -144,7 +144,7 @@ const AdminLoginView = ({ handleSubmit, loading }) => {
             <strong>CLICK HERE</strong> to go to user portal
           </div>
         </div>
-      </body>
+      </div>
       {/* <Box sx={{ flexGrow: 1 }} style={{ marginTop: 20 }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>

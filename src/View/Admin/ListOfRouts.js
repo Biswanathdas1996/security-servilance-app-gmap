@@ -101,18 +101,18 @@ const ListOfRoutsView = ({
       </div>
 
       <div
-        class="container p-4 mb-4"
+        className="container p-4 mb-4"
         style={{
           background: "white",
           borderRadius: 16,
           boxShadow: "-1px 2px 7px rgba(46, 49, 118, 0.1)",
         }}
       >
-        {/* <div class="datepicker">
-          <div class="mb-3 mt-2">
+        {/* <div className="datepicker">
+          <div className="mb-3 mt-2">
             <input
               type="text"
-              class="form-control"
+              className="form-control"
               id="search"
               placeholder="Search name / Employee ID"
               name=""
@@ -121,25 +121,25 @@ const ListOfRoutsView = ({
           </div>
         </div> */}
 
-        <button class="find-btn search-btn" onClick={handleOpen}>
-          <div class="txt-hldr pl-3">Add new route</div>
+        <button className="find-btn search-btn" onClick={handleOpen}>
+          <div className="txt-hldr pl-3">Add new route</div>
           <span>+</span>
         </button>
       </div>
 
       {routsData ? (
-        <div class="container">
+        <div className="container">
           {routsData?.map((row) => (
             <div
-              class="list-hldr n-route mt-3"
+              className="list-hldr n-route mt-3"
               style={{ justifyContent: "space-between" }}
             >
-              <div class="desc-hldr">
+              <div className="desc-hldr">
                 <div>
-                  <div class="img-hldr">
+                  <div className="img-hldr">
                     <img src="../images/placeholder.png" alt="" />
                   </div>
-                  <div class="text-hldr">
+                  <div className="text-hldr">
                     <p>
                       <strong style={{ color: "#ad0004" }}>Route name</strong>
                     </p>
@@ -148,10 +148,10 @@ const ListOfRoutsView = ({
                 </div>
 
                 <div>
-                  <div class="img-hldr">
+                  <div className="img-hldr">
                     <img src="../images/icon-bookmark-circled.svg" alt="" />
                   </div>
-                  <div class="text-hldr">
+                  <div className="text-hldr">
                     <p>
                       <strong style={{ color: "#ad0004" }}>Created On</strong>
                     </p>
@@ -163,7 +163,7 @@ const ListOfRoutsView = ({
                   </div>
                 </div>
               </div>
-              <div class="lst-btn-hldr">
+              <div className="lst-btn-hldr">
                 <button>
                   <img
                     src="../images/icon-trash.png"

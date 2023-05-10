@@ -3,19 +3,11 @@ import swal from "sweetalert";
 import { get, put } from "../../helper/apiHelper";
 import { validateResponseAdmin } from "../../helper/validateResponse";
 import ListOfUserView from "../../View/Admin/ListOfUser";
-
-import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-
-import Paper from "@mui/material/Paper";
-import InputBase from "@mui/material/InputBase";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import DirectionsIcon from "@mui/icons-material/Directions";
 import { debounce } from "lodash";
 
 function TabPanel(props) {
@@ -114,28 +106,28 @@ export default function ListOfUser() {
   return (
     <>
       <div
-        class="container p-4 mb-4"
+        className="container p-4 mb-4"
         style={{
           background: "white",
           borderRadius: 16,
           boxShadow: "-1px 2px 7px rgba(46, 49, 118, 0.1)",
         }}
       >
-        <div class="datepicker">
-          <div class="mb-3 mt-2">
+        <div className="datepicker">
+          <div className="mb-3 mt-2">
             <input
               type="text"
-              class="form-control"
+              className="form-control"
               id="search"
-              placeholder="Search name / Employee ID"
+              placeholder="Search name"
               name=""
               onChange={(e) => search(e.target.value)}
             />
           </div>
         </div>
 
-        <button class="find-btn search-btn">
-          <div class="txt-hldr pl-3">Find user</div>
+        <button className="find-btn search-btn">
+          <div className="txt-hldr pl-3">Find user</div>
           <span>
             {" "}
             <SearchIcon />

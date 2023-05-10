@@ -3,7 +3,7 @@ import "../css/start.css";
 
 export default function FolderList() {
   return (
-    <body>
+    <div>
       <div className="main container">
         <div className="welcome">
           <h6>Welcome To</h6>
@@ -39,6 +39,6 @@ export default function FolderList() {
           </h6>
         </div>
       </div>
-    </body>
+    </div>
   );
 }
