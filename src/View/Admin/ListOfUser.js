@@ -1,6 +1,8 @@
 import * as React from "react";
+import Badge from "@mui/material/Badge";
 
 const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
+  console.log("---->users", users);
   return (
     <>
       {users ? (
@@ -25,23 +27,31 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
                     <p>
                       <strong style={{ color: "#ad0004" }}>{user?.name}</strong>
                     </p>
-                    <p> {user?.designation?.name}</p>
+
+                    <p>
+                      {" "}
+                      {user?.roles[0]?.name === "Admin"
+                        ? "Administrator"
+                        : user?.designation?.name}
+                    </p>
                   </div>
                 </div>
 
-                <div>
-                  <div className="img-hldr">
-                    <img src="../images/icon-bookmark-circled.svg" alt="" />
+                {user?.policeStation && (
+                  <div>
+                    <div className="img-hldr">
+                      <img src="../images/icon-bookmark-circled.svg" alt="" />
+                    </div>
+                    <div className="text-hldr">
+                      <p>
+                        <strong style={{ color: "#ad0004" }}>
+                          Police Station
+                        </strong>
+                      </p>
+                      <p>{user?.policeStation?.name}</p>
+                    </div>
                   </div>
-                  <div className="text-hldr">
-                    <p>
-                      <strong style={{ color: "#ad0004" }}>
-                        Police Station
-                      </strong>
-                    </p>
-                    <p>{user?.policeStation?.name}</p>
-                  </div>
-                </div>
+                )}
                 <div>
                   <div className="img-hldr">
                     <img src="../images/icon-profile-circled.svg" alt="" />

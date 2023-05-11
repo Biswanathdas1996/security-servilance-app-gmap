@@ -39,7 +39,7 @@ export default function TemporaryDrawer() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      {/* <div className="row profile-dtl">
+      {/* <div className="row profile-dtl" style={{ background: "#AD0004" }}>
         <div className="col-2"></div>
         <div className="col-8">
           <div className="desc-hldr">

@@ -222,7 +222,7 @@ body {
 .input-password {
   /* background: url(../images/icon-lock.svg); */
   padding-right: 30px;
-  background-image: url(../images/icon-lock.svg), url(../images/icon-eye.svg) !important;
+  background-image: url(../images/icon-lock.svg) !important;
   background-repeat: no-repeat, no-repeat !important;
   background-position: 10px center, 98% center !important;
 }
