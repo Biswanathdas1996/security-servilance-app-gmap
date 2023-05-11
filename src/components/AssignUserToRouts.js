@@ -14,21 +14,17 @@ import AutocompliteInput from "./AutocompliteInput";
 export default function Filter({ routeId, onClose }) {
   const [users, setUsers] = React.useState(null);
   const [fetchUserListCalled, setFetchUserListCalled] = React.useState(false);
-
   const [startDate, setStartDate] = React.useState(null);
   const [endDate, setEndDate] = React.useState(null);
   const [startTime, setStartTime] = React.useState(null);
   const [endTime, setEndTime] = React.useState(null);
-
   const [getUserID, setGetUserId] = React.useState(null);
-
   const [designation, setDesignation] = React.useState(null);
   const [policeStations, setPoliceStations] = React.useState(null);
-
   const [selectedPoliceStation, setSelectedPoliceStation] =
     React.useState(null);
-
   const [selectedDesignation, setSelectedDesignation] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchUserList = async () => {
@@ -45,11 +41,11 @@ export default function Filter({ routeId, onClose }) {
   };
 
   React.useEffect(() => {
-    if (selectedPoliceStation && selectedDesignation && !fetchUserListCalled) {
+    if (selectedPoliceStation && selectedDesignation) {
       fetchUserList();
       setFetchUserListCalled(true);
     }
-  }, [selectedPoliceStation, selectedDesignation, fetchUserList]);
+  }, [selectedPoliceStation, selectedDesignation]);
 
   const getPoliceStations = async () => {
     const response = await get("/policeStation");
@@ -76,6 +72,7 @@ export default function Filter({ routeId, onClose }) {
   }, []);
 
   const handleSubmit = async () => {
+    setLoading(true);
     const data = {
       userId: Number(getUserID),
       routeId: routeId,
@@ -90,6 +87,7 @@ export default function Filter({ routeId, onClose }) {
     if (validateResponseAdmin(response)) {
       window.location.reload();
     }
+    setLoading(false);
   };
 
   const selectedUser = (data) => {
@@ -100,6 +98,7 @@ export default function Filter({ routeId, onClose }) {
   const selectedPoliceStationCallback = (data) => {
     console.log("---->", data);
     setSelectedPoliceStation(data?.id);
+    setFetchUserListCalled(true);
   };
 
   return (
@@ -112,26 +111,6 @@ export default function Filter({ routeId, onClose }) {
               data={policeStations}
               onchangeCallback={selectedPoliceStationCallback}
             />
-            {/* <Select
-              size="small"
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              name="policeStation"
-              className="form-control icon-input input-eid"
-              value={selectedPoliceStation}
-              onChange={(e) => setSelectedPoliceStation(e.target.value)}
-              onBlur={(e) => setSelectedPoliceStation(e.target.value)}
-            >
-              {policeStationList &&
-                policeStationList?.map((policeStation, index) => (
-                  <MenuItem
-                    value={policeStation?.id}
-                    key={index + policeStation?.id}
-                  >
-                    {policeStation?.name}
-                  </MenuItem>
-                ))}
-            </Select> */}
           </FormControl>
           <br />
           <br />
@@ -145,8 +124,14 @@ export default function Filter({ routeId, onClose }) {
                   name="designationId"
                   className="form-control icon-input input-eid"
                   value={selectedDesignation}
-                  onChange={(e) => setSelectedDesignation(e.target.value)}
-                  onBlur={(e) => setSelectedDesignation(e.target.value)}
+                  onChange={(e) => {
+                    setSelectedDesignation(e.target.value);
+                    setFetchUserListCalled(true);
+                  }}
+                  onBlur={(e) => {
+                    setSelectedDesignation(e.target.value);
+                    setFetchUserListCalled(true);
+                  }}
                 >
                   {designation?.map((data, index) => (
                     <MenuItem value={data?.id} key={index}>
@@ -158,7 +143,7 @@ export default function Filter({ routeId, onClose }) {
             </div>
           )}
 
-          {users && (
+          {users && users?.length > 0 && (
             <>
               <label>Employee </label>
               <AutocompliteInput data={users} onchangeCallback={selectedUser} />
@@ -238,27 +223,33 @@ export default function Filter({ routeId, onClose }) {
               <br />
             </>
           )}
-          <div style={{ display: "flex" }}>
-            {getUserID && (
+          {!loading ? (
+            <div style={{ display: "flex" }}>
+              {getUserID && (
+                <button
+                  type="button"
+                  onClick={() => handleSubmit()}
+                  className="admin-button"
+                  disabled={getUserID ? false : true}
+                  style={{ marginRight: 10 }}
+                >
+                  Assign User
+                </button>
+              )}
+
               <button
                 type="button"
-                onClick={() => handleSubmit()}
-                className="admin-button"
-                disabled={getUserID ? false : true}
-                style={{ marginRight: 10 }}
+                onClick={() => onClose(false)}
+                className="admin-close-button"
               >
-                Assign User
+                Close
               </button>
-            )}
-
-            <button
-              type="button"
-              onClick={() => onClose(false)}
-              className="admin-close-button"
-            >
-              Close
-            </button>
-          </div>
+            </div>
+          ) : (
+            <center>
+              <div className="loader"></div>
+            </center>
+          )}
         </>
       ) : (
         <b>Please wait ...</b>

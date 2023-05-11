@@ -67,24 +67,25 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
                 </div>
               </div>
               <div className="lst-btn-hldr">
-                <button
-                  type="button"
-                  onClick={() => updateUserStatus(user?.id)}
-                >
-                  {/* {user?.status ? "Deactive" : "Activate"} */}
-                  <img
-                    src={
-                      !user?.status
-                        ? "../images/lock.png"
-                        : "../images/unlock.png"
-                    }
-                    alt=""
-                    height="28"
-                  />
-                </button>
-                {!user?.isApproved && (
+                {!user?.isApproved ? (
                   <button type="button" onClick={() => approveUser(user?.id)}>
                     <img src="../images/icon-add.png" alt="" />
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => updateUserStatus(user?.id)}
+                  >
+                    {/* {user?.status ? "Deactive" : "Activate"} */}
+                    <img
+                      src={
+                        !user?.status
+                          ? "../images/lock.png"
+                          : "../images/unlock.png"
+                      }
+                      alt=""
+                      height="28"
+                    />
                   </button>
                 )}
               </div>

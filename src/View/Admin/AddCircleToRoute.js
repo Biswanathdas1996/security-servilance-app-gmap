@@ -8,7 +8,7 @@ import ListOfRoutes from "../../components/ListOfRoutes";
 
 const style = {
   position: "absolute",
-  top: "40%",
+  top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "90%",
@@ -57,7 +57,7 @@ const AddCircleToRoutsView = ({
             label="Circle center"
             variant="outlined"
             value={JSON.stringify(selectLocation)}
-            style={{ marginTop: 10, width: "100%" }}
+            style={{ marginTop: 10, width: "100%", display: "none" }}
             disabled
           />
           <br />

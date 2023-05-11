@@ -120,7 +120,14 @@ export default function UserRegister({ faceData }) {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={async (values, { setSubmitting }) => {
-              console.log(values);
+              if (!image) {
+                swal(
+                  "Image is missing",
+                  "Please upload your picture",
+                  "warning"
+                );
+                return;
+              }
 
               const body = {
                 ...values,
@@ -146,14 +153,14 @@ export default function UserRegister({ faceData }) {
                   <div className="mb-3">
                     <label>Police Station</label>
                     <FormControl size="small" fullWidth>
-                      <InputLabel
+                      {/* <InputLabel
                         size="small"
                         id="demo-simple-select-label"
                         style={{
                           marginLeft: "1.5rem",
                           marginTop: 7,
                         }}
-                      ></InputLabel>
+                      ></InputLabel> */}
                       <AutocompliteInput
                         data={policeStations}
                         onchangeCallback={selectedPoliceStationCallback}

@@ -173,6 +173,7 @@ function Home() {
       dangerMode: true,
     }).then(async (willDelete) => {
       if (willDelete) {
+        setLoading(true);
         if (locations[0]["refId"]) {
           const response = await post(`/user/finishDuty`, {
             refId: locations[0]["refId"],
@@ -181,6 +182,9 @@ function Home() {
           // console.log("--response->", response);
           if (validateResponseUser(response)) {
             window.location.replace("#/home");
+            setLoading(false);
+          } else {
+            setLoading(false);
           }
         }
       }
@@ -373,24 +377,32 @@ function Home() {
 
           {completedAt === null && (
             <>
-              <TextField
-                id="outlined-basic"
-                label="Enter Comment (if any)"
-                variant="outlined"
-                onChange={(e) => setComment(e.target.value)}
-                style={{ marginBottom: "1.5rem", marginTop: "1.5rem" }}
-                fullWidth
-              />
-              <button
-                type="button"
-                className="button"
-                style={{ color: "white", minWidth: "100%" }}
-                onClick={() => finishDuty()}
-              >
-                {window.site_text("pages.map.finish_now")}
-                {/* <img src="../images/Vector.png" alt="" /> */}
-                <HighlightOffIcon style={{ fontSize: "2rem" }} />
-              </button>
+              {!loading ? (
+                <>
+                  <TextField
+                    id="outlined-basic"
+                    label="Enter Comment (if any)"
+                    variant="outlined"
+                    onChange={(e) => setComment(e.target.value)}
+                    style={{ marginBottom: "1.5rem", marginTop: "1.5rem" }}
+                    fullWidth
+                  />
+                  <button
+                    type="button"
+                    className="button"
+                    style={{ color: "white", minWidth: "100%" }}
+                    onClick={() => finishDuty()}
+                  >
+                    {window.site_text("pages.map.finish_now")}
+                    {/* <img src="../images/Vector.png" alt="" /> */}
+                    <HighlightOffIcon style={{ fontSize: "2rem" }} />
+                  </button>
+                </>
+              ) : (
+                <center>
+                  <div className="loader"></div>
+                </center>
+              )}
             </>
           )}
         </div>

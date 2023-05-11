@@ -15,7 +15,7 @@ function App({ liveCenter }) {
   const [image, setImage] = useState(null);
   const [selfImage, setSelfImage] = useState(null);
   const [faceAuth, setFaceauth] = useState(true); ///   skip the face auth
-
+  const [loading, setLoading] = React.useState(false);
   const webcamRef = useRef(null);
   const webcam2Ref = useRef(null);
 
@@ -34,6 +34,7 @@ function App({ liveCenter }) {
   };
 
   const handleImageUpload = async (event) => {
+    setLoading(true);
     const body = {
       routeId: liveCenter?.routeId,
       locationId: liveCenter?.id,
@@ -46,6 +47,9 @@ function App({ liveCenter }) {
     const response = await post("/user/visitLocation", body);
     if (validateResponseUser(response)) {
       window.location.reload();
+      setLoading(false);
+    } else {
+      setLoading(false);
     }
   };
   const videoConstraints = {
@@ -160,34 +164,40 @@ function App({ liveCenter }) {
                   </ImageList>
 
                   <br />
-                  <div style={{ display: "flex", justifyContent: "center" }}>
-                    <button
-                      className="button"
-                      style={{
-                        marginTop: "1rem",
-                        color: "white",
-                        minWidth: 100,
-                      }}
-                      onClick={() => handleImageUpload()}
-                    >
-                      Submit
-                    </button>
-                    <button
-                      className="button"
-                      style={{
-                        marginTop: "1rem",
-                        color: "white",
-                        minWidth: 100,
-                        background: "#353131",
-                      }}
-                      onClick={() => {
-                        setSelfImage(null);
-                        setImage(null);
-                      }}
-                    >
-                      Retake
-                    </button>
-                  </div>
+                  {!loading ? (
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                      <button
+                        className="button"
+                        style={{
+                          marginTop: "1rem",
+                          color: "white",
+                          minWidth: 100,
+                        }}
+                        onClick={() => handleImageUpload()}
+                      >
+                        Submit
+                      </button>
+                      <button
+                        className="button"
+                        style={{
+                          marginTop: "1rem",
+                          color: "white",
+                          minWidth: 100,
+                          background: "#353131",
+                        }}
+                        onClick={() => {
+                          setSelfImage(null);
+                          setImage(null);
+                        }}
+                      >
+                        Retake
+                      </button>
+                    </div>
+                  ) : (
+                    <center>
+                      <div className="loader"></div>
+                    </center>
+                  )}
                 </>
               )}
             </>
