@@ -37,7 +37,7 @@ export function FolderList({ routes }) {
               style={{ marginTop: 5 }}
             >
               <div className="img-hldr">
-                <img src="../images/your-location.png" alt="" />
+                <img src="../images/location.jpeg" alt="" />
               </div>
               <div className="desc-hldr">
                 <p>
