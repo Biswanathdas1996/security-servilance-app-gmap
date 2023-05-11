@@ -1,5 +1,5 @@
 import * as React from "react";
-import Badge from "@mui/material/Badge";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
 
 const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
   console.log("---->users", users);
@@ -16,12 +16,12 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
               <div className="desc-hldr">
                 <div>
                   <div className="img-hldr">
-                    {/* <img src="../images/icon-profile-circled.svg" alt="" /> */}
-                    <img
+                    <img src="../images/icon-profile-circled.svg" alt="" />
+                    {/* <img
                       alt="Remy Sharp"
                       src={user?.profileImage}
                       style={{ width: 33, height: 33, borderRadius: "50%" }}
-                    />
+                    /> */}
                   </div>
                   <div className="text-hldr">
                     <p>
@@ -68,8 +68,13 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
               </div>
               <div className="lst-btn-hldr">
                 {!user?.isApproved ? (
-                  <button type="button" onClick={() => approveUser(user?.id)}>
-                    <img src="../images/icon-add.png" alt="" />
+                  <button
+                    type="button"
+                    onClick={() => approveUser(user?.id)}
+                    style={{ background: "#039f2f", color: "white" }}
+                  >
+                    {/* <img src="../images/icon-add.png" alt="" /> */}
+                    <HowToRegIcon />
                   </button>
                 ) : (
                   <button
