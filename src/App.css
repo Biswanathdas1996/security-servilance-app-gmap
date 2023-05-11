@@ -765,3 +765,6 @@ body {
 
   padding: 1.5px 14px !important;
 }
+.MuiOutlinedInput-root .MuiAutocomplete-input {
+  padding: 0px 4px 7.5px 5px !important;
+}
