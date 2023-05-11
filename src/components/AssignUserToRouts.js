@@ -86,7 +86,7 @@ export default function Filter({ routeId, onClose }) {
     };
 
     const response = await post(`/admin/user/assignRoute`, data);
-    return;
+
     if (validateResponseAdmin(response)) {
       window.location.reload();
     }
@@ -236,25 +236,29 @@ export default function Filter({ routeId, onClose }) {
                 </div>
               </div>
               <br />
-              <div style={{ display: "flex" }}>
-                <button
-                  type="button"
-                  onClick={() => handleSubmit()}
-                  className="admin-button"
-                >
-                  Assign User
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => onClose(false)}
-                  className="admin-close-button"
-                >
-                  Close
-                </button>
-              </div>
             </>
           )}
+          <div style={{ display: "flex" }}>
+            {getUserID && (
+              <button
+                type="button"
+                onClick={() => handleSubmit()}
+                className="admin-button"
+                disabled={getUserID ? false : true}
+                style={{ marginRight: 10 }}
+              >
+                Assign User
+              </button>
+            )}
+
+            <button
+              type="button"
+              onClick={() => onClose(false)}
+              className="admin-close-button"
+            >
+              Close
+            </button>
+          </div>
         </>
       ) : (
         <b>Please wait ...</b>

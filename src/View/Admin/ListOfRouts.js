@@ -121,9 +121,11 @@ const ListOfRoutsView = ({
           </div>
         </div> */}
 
-        <button className="find-btn search-btn" onClick={handleOpen}>
-          <div className="txt-hldr pl-3">Add new route</div>
-          <span>+</span>
+        <button className="find-btn" onClick={handleOpen}>
+          <span style={{ color: "white", fontSize: "1.2rem" }}>+</span>
+          <div className="txt-hldr pl-3" style={{ color: "white" }}>
+            Add new route
+          </div>
         </button>
       </div>
 

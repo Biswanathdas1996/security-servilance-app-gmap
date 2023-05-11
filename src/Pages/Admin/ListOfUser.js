@@ -126,12 +126,13 @@ export default function ListOfUser() {
           </div>
         </div>
 
-        <button className="find-btn search-btn">
-          <div className="txt-hldr pl-3">Find user</div>
+        <button className="find-btn">
           <span>
-            {" "}
-            <SearchIcon />
+            <img src="../images/loupe.png" alt="" />
           </span>
+          <div className="txt-hldr pl-3" style={{ color: "white" }}>
+            Search User
+          </div>
         </button>
       </div>
 

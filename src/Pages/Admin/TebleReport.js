@@ -289,7 +289,7 @@ const CustomizedTables = () => {
                 <StyledTableCell align="right">Start </StyledTableCell>
                 <StyledTableCell align="right">End </StyledTableCell>
                 <StyledTableCell align="center">
-                  Location Status (Visited/ Assigned )
+                  Visited/ Assigned
                 </StyledTableCell>
                 <StyledTableCell align="right">Progress</StyledTableCell>
                 <StyledTableCell align="right">Remarks</StyledTableCell>
