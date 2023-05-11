@@ -147,6 +147,7 @@ export default function UserRegister({ faceData }) {
                     <label>Police Station</label>
                     <FormControl size="small" fullWidth>
                       <InputLabel
+                        size="small"
                         id="demo-simple-select-label"
                         style={{
                           marginLeft: "1.5rem",
@@ -164,13 +165,11 @@ export default function UserRegister({ faceData }) {
                 )}
                 {designation && (
                   <div className="mb-3">
+                    <label>
+                      {" "}
+                      {window.site_text("pages.register.designation")}
+                    </label>
                     <FormControl size="small" fullWidth>
-                      <InputLabel
-                        id="demo-simple-select-label"
-                        style={{ marginLeft: "1.5rem", marginTop: 7 }}
-                      >
-                        {window.site_text("pages.register.designation")}
-                      </InputLabel>
                       <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"

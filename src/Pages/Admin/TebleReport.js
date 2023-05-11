@@ -128,15 +128,18 @@ const CustomizedTables = () => {
           </div>
           <div className="desc-hldr">
             <p>
-              <strong>Total Completed Location</strong>
+              <strong>Visited / Assigned</strong>
             </p>
           </div>
           <div className="lst-btn-hldr">
-            <div className="brown"> {totalCompletedLocations}</div>
+            <div className="brown">
+              {" "}
+              {totalCompletedLocations}/{totalLocations}
+            </div>
           </div>
         </div>
 
-        <div className="list-hldr report-hldr active">
+        {/* <div className="list-hldr report-hldr active">
           <div className="img-hldr">
             <img src="../images/location-icon.png" alt="" />
           </div>
@@ -148,7 +151,7 @@ const CustomizedTables = () => {
           <div className="lst-btn-hldr">
             <div className="brown"> {totalLocations}</div>
           </div>
-        </div>
+        </div> */}
 
         <div className="list-hldr report-hldr">
           <div className="img-hldr">
@@ -283,13 +286,12 @@ const CustomizedTables = () => {
               <TableRow style={{ borderRadius: "50px" }}>
                 <StyledTableCell>Route</StyledTableCell>
                 <StyledTableCell>User</StyledTableCell>
-                <StyledTableCell align="right">Start Time</StyledTableCell>
-                <StyledTableCell align="right">End Time</StyledTableCell>
+                <StyledTableCell align="right">Start </StyledTableCell>
+                <StyledTableCell align="right">End </StyledTableCell>
                 <StyledTableCell align="center">
                   Location Status (Visited/ Assigned )
                 </StyledTableCell>
-                <StyledTableCell align="right">Percentage</StyledTableCell>
-
+                <StyledTableCell align="right">Progress</StyledTableCell>
                 <StyledTableCell align="right">Remarks</StyledTableCell>
               </TableRow>
             </TableHead>

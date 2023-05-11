@@ -101,7 +101,7 @@ export default function FolderList() {
                 style={{ fontSize: "1.6rem", color: "white" }}
                 onClick={() => {
                   localStorage.clear();
-                  window.location.replace("#/login");
+                  window.location.replace("#/");
                 }}
               />
               {/* <img src="../images/icon_more.svg" alt="More" /> */}

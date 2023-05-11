@@ -84,15 +84,17 @@ export default function Filter({ routeId, onClose }) {
       endDate: endDate,
       endTime: endTime,
     };
+
     const response = await post(`/admin/user/assignRoute`, data);
+    return;
     if (validateResponseAdmin(response)) {
       window.location.reload();
     }
   };
 
   const selectedUser = (data) => {
-    console.log("---data", data?.target?.value);
-    setGetUserId(data?.target?.value);
+    console.log("---data", data);
+    setGetUserId(data?.id);
   };
 
   const selectedPoliceStationCallback = (data) => {
@@ -156,12 +158,11 @@ export default function Filter({ routeId, onClose }) {
             </div>
           )}
 
-          <br />
-          <br />
-
-          <label>Employee </label>
           {users && (
-            <FilterSelectBox data={users} selectedUser={selectedUser} />
+            <>
+              <label>Employee </label>
+              <AutocompliteInput data={users} onchangeCallback={selectedUser} />
+            </>
           )}
 
           <br />

@@ -115,7 +115,7 @@ export default function TemporaryDrawer() {
           key={1}
           onClick={() => {
             localStorage.clear();
-            window.location.replace("#/login");
+            window.location.replace("#/");
           }}
           style={{ color: "#ad0004" }}
           disablePadding
