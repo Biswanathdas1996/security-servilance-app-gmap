@@ -127,6 +127,7 @@ const Login = () => {
                     onBlur={handleBlur}
                     value={values.contactNo}
                     error={touched.contactNo && Boolean(errors.contactNo)}
+                    inputMode="numeric"
                   />
                   <ErrorMessage name="contactNo" />
                 </div>
