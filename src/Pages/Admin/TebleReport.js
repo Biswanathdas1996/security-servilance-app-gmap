@@ -103,7 +103,7 @@ const CustomizedTables = () => {
   function calculatePercentage(total, currentCount) {
     const value = (currentCount / total) * 100;
     if (value) {
-      return parseFloat(value)?.toFixed(2);
+      return parseFloat(value)?.toFixed(0);
     } else {
       return 0;
     }

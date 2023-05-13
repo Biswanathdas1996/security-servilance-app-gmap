@@ -142,6 +142,7 @@ const Login = () => {
                     value={values.password}
                     error={touched.password && Boolean(errors.password)}
                     name="password"
+                    inputMode="numeric"
                   />
                   <ErrorMessage name="password" />
                 </div>
