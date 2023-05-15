@@ -48,7 +48,7 @@ const headers = [
   "Start Time",
   "End Time",
   "Visited/Assigned",
-  "Percentage",
+  "Progress",
   "Remark",
 ];
 
@@ -106,7 +106,9 @@ const CustomizedTables = () => {
 
   const fetchAllRouts = async (date = selectedDate) => {
     setLoadng(true);
-    const response = await get(`/admin/user/getCompletedReport/${date}`);
+    const response = await get(`/admin/user/getAllReport/${date}`);
+    // const response = await get(`/admin/user/getAllReport`);
+    console.log("---response-->", response);
     if (validateResponseAdmin(response)) {
       setReportData(response?.data);
     }
