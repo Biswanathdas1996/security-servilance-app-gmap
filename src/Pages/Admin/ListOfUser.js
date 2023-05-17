@@ -131,7 +131,7 @@ export default function ListOfUser() {
             <img src="../images/loupe.png" alt="" />
           </span>
           <div className="txt-hldr pl-3" style={{ color: "white" }}>
-            Search User
+            {window.site_text(`pages.admin.listOfUser.user_search_text`)}
           </div>
         </button>
       </div>

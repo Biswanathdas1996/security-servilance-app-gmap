@@ -84,6 +84,19 @@ export default function TemporaryDrawer() {
         </ListItem>
         <ListItem
           key={2}
+          onClick={() => (window.location.href = "#/admin/list-of_assets")}
+          style={{ color: "#ad0004" }}
+          disablePadding
+        >
+          <ListItemButton>
+            <ListItemIcon>
+              <MapIcon style={{ color: "#ad0004" }} />
+            </ListItemIcon>
+            <ListItemText primary={`Assets`} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem
+          key={2}
           style={{ color: "#ad0004" }}
           onClick={() => (window.location.href = "#/admin/status-reports")}
           disablePadding

@@ -10,6 +10,7 @@ import AddCircleToRoute from "./Pages/Admin/AddCircleToRoute";
 import ListOfRouts from "./Pages/Admin/ListOfRouts";
 import ListOfUser from "./Pages/Admin/ListOfUser";
 import AdminLogin from "./Pages/Admin/AdminLogin";
+import ListOfAssets from "./Pages/Admin/ListOfAssets";
 import UserLogin from "./Pages/UserLogin";
 import LandingPage from "./Pages/LandingPage";
 import RouteReport from "./Pages/Admin/RouteReport";
@@ -38,6 +39,11 @@ class Routing extends React.Component {
           exact
           path="/admin/list-of_routs"
           element={AdminLayout(ListOfRouts)}
+        />
+        <Route
+          exact
+          path="/admin/list-of_assets"
+          element={AdminLayout(ListOfAssets)}
         />
         <Route
           exact

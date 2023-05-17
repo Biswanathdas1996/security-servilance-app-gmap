@@ -21,6 +21,11 @@
         },
         "map": {
             "finish_now": "End Duty"
+        },
+        "admin":{
+            "listOfUser":{
+                "user_search_text":"Search User"
+            }
         }
     }
 }
