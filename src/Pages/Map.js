@@ -400,7 +400,8 @@ function Home() {
                 </>
               ) : (
                 <center>
-                  <div className="loader"></div>
+                  <div></div>
+                  {/* <div className="loader"></div> */}
                 </center>
               )}
             </>
