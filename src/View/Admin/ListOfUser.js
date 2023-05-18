@@ -1,7 +1,46 @@
 import * as React from "react";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
+import { styled } from '@mui/material/styles';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch, { SwitchProps } from '@mui/material/Switch';
+import Typography from '@mui/material/Typography';
 
-const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
+const MaterialUISwitch = styled(Switch)(({ theme }) => ({
+  // width: 45,
+  // height: 30,
+  // padding: 7,
+  '& .MuiSwitch-switchBase': {
+    // margin: 1,
+    // padding: 0,
+    color:'#fff',
+    '&.Mui-checked': {
+      '& + .MuiSwitch-track': {
+        opacity: 0.5,
+        backgroundColor: '#AD0004',
+      },
+      '& .MuiSwitch-thumb': {
+        backgroundColor: '#AD0004',
+        // marginTop: 4,
+        // width: 20,
+        // height: 20,
+      }
+    },
+  },
+  // '& .MuiSwitch-thumb': {
+  //   backgroundColor: '#AD0004',
+  //   marginTop: 4,
+  //   width: 20,
+  //   height: 20,
+  // },
+  '& .MuiSwitch-track': {
+    opacity: 1,
+    backgroundColor: '#BAB9B9',
+  },
+}));
+
+
+const ListOfUserView = ({ users, approveUser, updateUserStatus, updateUserLockedStatus }) => {
   console.log("---->users", users);
   return (
     <>
@@ -77,21 +116,30 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus }) => {
                     <HowToRegIcon />
                   </button>
                 ) : (
-                  <button
+                  <>
+                  {/* <Switch checked = {user?.status} 
+                  onChange={()=>updateUserStatus(user?.id)} /> */}
+                      <FormGroup>
+                        <FormControlLabel
+                          control={<MaterialUISwitch sx={{ m: 1 }} checked = {user?.status} 
+                          onChange={()=>updateUserStatus(user?.id)} />}
+                        />
+                      </FormGroup>
+                  {user?.isLocked && <button
                     type="button"
-                    onClick={() => updateUserStatus(user?.id)}
+                    onClick={() => updateUserLockedStatus(user?.id)}
                   >
                     {/* {user?.status ? "Deactive" : "Activate"} */}
                     <img
                       src={
-                        !user?.status
+                        user?.isLocked
                           ? "../images/lock.png"
                           : "../images/unlock.png"
                       }
                       alt=""
                       height="28"
                     />
-                  </button>
+                  </button>}</>
                 )}
               </div>
             </div>

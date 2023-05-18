@@ -57,7 +57,7 @@ const Login = () => {
             }
           }
           SetLoading(false);
-        }, 2000);
+        }, 1000);
       } else if (response?.status === 403 || response?.status === 404) {
         // swal("Sorry!", response?.message, "warning");
         setErrorTxt(response?.message);
