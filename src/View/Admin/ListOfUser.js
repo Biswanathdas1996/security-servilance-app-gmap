@@ -1,17 +1,26 @@
 import * as React from "react";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
-import { styled } from '@mui/material/styles';
+import { styled,createStyles } from '@mui/material/styles';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch, { SwitchProps } from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
+import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
+
+const styles= createStyles({
+  formControlLabel: { fontSize: '10px', color: '#BAB9B9',
+  '& label': { fontSize: '10px', color: '#BAB9B9' } }
+});
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   // width: 45,
   // height: 30,
   // padding: 7,
+  '&.MuiSwitch-root' : {
+    marginRight: 0
+  },
   '& .MuiSwitch-switchBase': {
-    // margin: 1,
+     margin: 0,
     // padding: 0,
     color:'#fff',
     '&.Mui-checked': {
@@ -93,7 +102,8 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus, updateUserLocked
                 )}
                 <div>
                   <div className="img-hldr">
-                    <img src="../images/icon-profile-circled.svg" alt="" />
+                    {/* <img src="../images/icon-profile-circled.svg" alt="" /> */}
+                    <LocalPhoneOutlinedIcon sx={{color: "#AD0004"}} />
                   </div>
                   <div className="text-hldr">
                     <p>
@@ -105,7 +115,7 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus, updateUserLocked
                   </div>
                 </div>
               </div>
-              <div className="lst-btn-hldr">
+              <div className={`lst-btn-hldr ${user?.isApproved ? 'status-lock-icon' : ''}`}>
                 {!user?.isApproved ? (
                   <button
                     type="button"
@@ -122,7 +132,10 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus, updateUserLocked
                       <FormGroup>
                         <FormControlLabel
                           control={<MaterialUISwitch sx={{ m: 1 }} checked = {user?.status} 
-                          onChange={()=>updateUserStatus(user?.id)} />}
+                          onChange={()=>updateUserStatus(user?.id)}  />}
+                          label={<Typography style={styles.formControlLabel}>
+                            {user?.status ? 'Active' : 'Inactive'}</Typography>
+                            }
                         />
                       </FormGroup>
                   {user?.isLocked && <button
