@@ -337,6 +337,12 @@ button:not(:disabled) {
   flex: 0 0 60px;
 }
 
+.lst-btn-hldr.status-lock-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .list-hldr .lst-btn-hldr button {
   background: #F0F0F0;
   border-radius: 5px;

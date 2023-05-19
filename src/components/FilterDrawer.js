@@ -172,7 +172,7 @@ export default function TemporaryDrawer({
                   /> */}
                 </div>
               </div>
-              <div className="time-picker-hldr">
+              {/* <div className="time-picker-hldr">
                 <div
                   className="time-hldr"
                   // onClick={() =>
@@ -212,7 +212,7 @@ export default function TemporaryDrawer({
                     <img src="../images/icon-time.png" alt="" />
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="container">
                 <button
                   className="find-btn"
