@@ -35,6 +35,12 @@ function BasicModal() {
     setSelectLocation({ lat: lat, lng: lng });
     setOpen(true);
   }
+  async function handleMapClick(event) {
+    var lat = event.lat;
+    var lng = event.lng;
+    setSelectLocation({ lat: lat, lng: lng });
+    setOpen(true);
+  }
 
   const updatedPointer = (coordinate) => {
     setSelectLocation(coordinate);
@@ -80,6 +86,7 @@ function BasicModal() {
       handleClick={handleClick}
       choosedLocation={choosedLocation}
       deletLocation={deletLocation}
+      handleMapClick={handleMapClick}
     />
   );
 }

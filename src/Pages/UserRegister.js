@@ -1,16 +1,9 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import { get, post, put, del } from "../helper/apiHelper";
+import { get, post } from "../helper/apiHelper";
 import swal from "sweetalert";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -136,7 +129,17 @@ export default function UserRegister({ faceData }) {
                 profileImage: image,
                 policeStationId: selectedPoliceStation,
               };
+
+              if (!selectedPoliceStation) {
+                swal("Error", "Please select proper police station", "warning");
+                return;
+              }
+              if (body?.designationId === "") {
+                swal("Error", "Please select proper designation", "warning");
+                return;
+              }
               delete body.confirmPassword;
+
               const response = await post("/auth/register", body);
               if (response?.success) {
                 window.location = "#/login";

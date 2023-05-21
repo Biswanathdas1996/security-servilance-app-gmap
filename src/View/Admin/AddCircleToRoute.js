@@ -31,6 +31,7 @@ const AddCircleToRoutsView = ({
   handleClick,
   choosedLocation,
   deletLocation,
+  handleMapClick,
 }) => {
   const [markerLocation, setSelectMarkerLocation] = React.useState(null);
   const getCurrentLocation = () => {
@@ -137,7 +138,7 @@ const AddCircleToRoutsView = ({
               lng: routeData?.centerLong,
             }}
             defaultZoom={13}
-            // onClick={(e) => handleClick(e)}
+            onClick={(e) => handleMapClick(markerLocation)}
           >
             <Marker
               key={10000}

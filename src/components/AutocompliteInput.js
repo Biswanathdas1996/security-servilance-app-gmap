@@ -36,13 +36,13 @@ export default function FreeSoloCreateOption({ data, onchangeCallback }) {
 
         const { inputValue } = params;
         // Suggest the creation of a new value
-        const isExisting = options.some((option) => inputValue === option.name);
-        if (inputValue !== "" && !isExisting) {
-          filtered.push({
-            inputValue,
-            name: `Add "${inputValue}"`,
-          });
-        }
+        // const isExisting = options.some((option) => inputValue === option.name);
+        // if (inputValue !== "" && !isExisting) {
+        //   filtered.push({
+        //     inputValue,
+        //     name: `Add "${inputValue}"`,
+        //   });
+        // }
 
         return filtered;
       }}
