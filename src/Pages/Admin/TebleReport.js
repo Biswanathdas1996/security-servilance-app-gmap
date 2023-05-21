@@ -229,132 +229,138 @@ const CustomizedTables = () => {
   console.log("tableData", tableData);
   return (
     <div>
-      <div className="container find-duty-hldr mb-4">
-        <div className="datepicker">
-          <div className="mb-3 mt-3">
-            <TextField
-              id="outlined-basic"
-              className="form-control"
-              variant="outlined"
-              type="date"
-              value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value)}
-              style={{ width: "100%" }}
-            />
+      {loading ? (
+        <center>
+          <div className="loader" style={{ margin: "2rem" }}></div>
+        </center>
+      ) : (
+        <>
+          {" "}
+          <div className="container find-duty-hldr mb-4">
+            <div className="datepicker">
+              <div className="mb-3 mt-3">
+                <TextField
+                  id="outlined-basic"
+                  className="form-control"
+                  variant="outlined"
+                  type="date"
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                  style={{ width: "100%" }}
+                />
+              </div>
+            </div>
+            <div className="time-picker-hldr">
+              <div
+                className="time-hldr"
+                onClick={() =>
+                  updateDateOnButtonClick(
+                    dayjs().subtract(1, "day").format("YYYY-MM-DD")
+                  )
+                }
+              >
+                <div className="time">
+                  {dayjs().subtract(1, "day").format("MMM DD YYYY")}
+                </div>
+                <div className="time-icon">
+                  <img src="../images/icon-time.png" alt="" />
+                </div>
+              </div>
+              <div
+                className="time-hldr"
+                onClick={() =>
+                  updateDateOnButtonClick(
+                    dayjs(new Date()).format("YYYY-MM-DD")
+                  )
+                }
+              >
+                <div className="time">
+                  {dayjs(new Date()).format("MMM DD YYYY")}
+                </div>
+                <div className="time-icon">
+                  <img src="../images/icon-time.png" alt="" />
+                </div>
+              </div>
+              <div
+                className="time-hldr"
+                onClick={() =>
+                  updateDateOnButtonClick(
+                    dayjs().add(1, "day").format("YYYY-MM-DD")
+                  )
+                }
+              >
+                <div className="time">
+                  {dayjs().add(1, "day").format("MMM DD YYYY")}
+                </div>
+                <div className="time-icon">
+                  <img src="../images/icon-time.png" alt="" />
+                </div>
+              </div>
+            </div>
+            <div className="container">
+              <button className="find-btn" onClick={exportToPDF}>
+                <span>
+                  <img src="../images/shield-download.png" alt="" />
+                </span>
+                <div className="txt-hldr pl-3" style={{ color: "white" }}>
+                  Export PDF
+                </div>
+              </button>
+            </div>
           </div>
-        </div>
-        <div className="time-picker-hldr">
-          <div
-            className="time-hldr"
-            onClick={() =>
-              updateDateOnButtonClick(
-                dayjs().subtract(1, "day").format("YYYY-MM-DD")
-              )
-            }
-          >
-            <div className="time">
-              {dayjs().subtract(1, "day").format("MMM DD YYYY")}
-            </div>
-            <div className="time-icon">
-              <img src="../images/icon-time.png" alt="" />
-            </div>
-          </div>
-          <div
-            className="time-hldr"
-            onClick={() =>
-              updateDateOnButtonClick(dayjs(new Date()).format("YYYY-MM-DD"))
-            }
-          >
-            <div className="time">
-              {dayjs(new Date()).format("MMM DD YYYY")}
-            </div>
-            <div className="time-icon">
-              <img src="../images/icon-time.png" alt="" />
-            </div>
-          </div>
-          <div
-            className="time-hldr"
-            onClick={() =>
-              updateDateOnButtonClick(
-                dayjs().add(1, "day").format("YYYY-MM-DD")
-              )
-            }
-          >
-            <div className="time">
-              {dayjs().add(1, "day").format("MMM DD YYYY")}
-            </div>
-            <div className="time-icon">
-              <img src="../images/icon-time.png" alt="" />
-            </div>
-          </div>
-        </div>
-        <div className="container">
-          <button className="find-btn" onClick={exportToPDF}>
-            <span>
-              <img src="../images/shield-download.png" alt="" />
-            </span>
-            <div className="txt-hldr pl-3" style={{ color: "white" }}>
-              Export PDF
-            </div>
-          </button>
-        </div>
-      </div>
-      {reportData && totalCalculatuin(reportData)}
-      <br />
-      <TableContainer component={Paper}>
-        {loading ? (
-          <center>
-            <div className="loader" style={{ margin: "2rem" }}></div>
-          </center>
-        ) : (
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            <TableHead style={{ borderRadius: "50px" }}>
-              <TableRow style={{ borderRadius: "50px" }}>
-                <StyledTableCell>Route</StyledTableCell>
-                <StyledTableCell>User</StyledTableCell>
-                <StyledTableCell align="right">Start </StyledTableCell>
-                <StyledTableCell align="right">End </StyledTableCell>
-                <StyledTableCell align="center">
-                  Visited/ Assigned
-                </StyledTableCell>
-                <StyledTableCell align="right">Progress</StyledTableCell>
-                <StyledTableCell align="right">Remarks</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {tableData?.map((row, index) => (
-                <StyledTableRow key={row.user?.name}>
-                  <StyledTableCell component="th" scope="row">
-                    {row.route}
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    {row.user}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {row?.start_timeime}
-                  </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {row?.end_time}
-                  </StyledTableCell>
+          {reportData && totalCalculatuin(reportData)}
+          <br />
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 700 }} aria-label="customized table">
+              <TableHead style={{ borderRadius: "50px" }}>
+                <TableRow style={{ borderRadius: "50px" }}>
+                  <StyledTableCell>Route</StyledTableCell>
+                  <StyledTableCell>User</StyledTableCell>
+                  <StyledTableCell align="right">Start </StyledTableCell>
+                  <StyledTableCell align="right">End </StyledTableCell>
                   <StyledTableCell align="center">
-                    {row?.visited_vs_assigned}
+                    Visited/ Assigned
                   </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {row?.percentage}%
-                  </StyledTableCell>
+                  <StyledTableCell align="right">Progress</StyledTableCell>
+                  <StyledTableCell align="right">Remarks</StyledTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {tableData?.map((row, index) => (
+                  <StyledTableRow key={row.user?.name}>
+                    <StyledTableCell component="th" scope="row">
+                      {row.route}
+                    </StyledTableCell>
+                    <StyledTableCell component="th" scope="row">
+                      {row.user}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {row?.start_timeime}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {row?.end_time}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row?.visited_vs_assigned}
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                      {row?.percentage}%
+                    </StyledTableCell>
 
-                  <StyledTableCell align="right">
-                    {row?.completeComment}
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        )}
-        {tableData?.length === 0 && (
-          <center style={{ padding: "2rem" }}>No data found</center>
-        )}
-      </TableContainer>
+                    <StyledTableCell align="right">
+                      {row?.completeComment}
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </>
+      )}
+      {tableData?.length === 0 && (
+        <center style={{ padding: "2rem" }}>No data found</center>
+      )}
+
       <br />
       <br />
       <br />
