@@ -61,10 +61,10 @@ export function FolderList({ routes }) {
 
                   {route?.completedAt
                     ? dayjs(new Date(route?.completedAt)).format(
-                        "YYYY-MM-DD hh:mm A"
+                        "DD-MM-YYYY hh:mm A"
                       )
                     : dayjs(new Date(route?.startTime * 1000)).format(
-                        "YYYY-MM-DD hh:mm A"
+                        "DD-MM-YYYY hh:mm A"
                       )}
                 </p>
                 <ProgressBar

@@ -21,7 +21,7 @@ import Stack from "@mui/material/Stack";
 const MyForm = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedDate, setSelectedDate] = useState(
-    dayjs(new Date()).format("YYYY-MM-DD")
+    dayjs(new Date()).format("DD-MM-YYYY")
   );
   const [routsData, setRoutsData] = React.useState(null);
   const [value, setValue] = React.useState(null);

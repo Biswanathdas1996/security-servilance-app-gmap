@@ -60,7 +60,7 @@ export default function Map({ open, onClose, ...props }) {
                       <p>
                         {dayjs(
                           props?.clickedPlace?.visitData?.createdAt
-                        ).format("YYYY-MM-DD hh:mm A")}
+                        ).format("DD-MM-YYYY hh:mm A")}
                       </p>
                     </div>
                   ) : (
@@ -71,7 +71,7 @@ export default function Map({ open, onClose, ...props }) {
                       {/* <p>
                         {dayjs(
                           props?.clickedPlace?.visitData?.createdAt
-                        ).format("YYYY-MM-DD hh:mm A")}
+                        ).format("DD-MM-YYYY hh:mm A")}
                       </p> */}
                     </div>
                   )}
