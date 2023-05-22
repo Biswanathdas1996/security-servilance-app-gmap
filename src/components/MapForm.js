@@ -10,10 +10,8 @@ import {
 import { Google_Map_URL, MAP_KEY } from "../config";
 
 export const MAP = ({ markers, updatedPointer }) => {
-  const [selectLocation, setSelectLocation] = React.useState({
-    lat: markers.lat,
-    lng: markers.lng,
-  });
+  const [selectLocation, setSelectLocation] = React.useState(null);
+  const [newLocationPicked, setNewLocationPicked] = React.useState(false);
 
   function handleClick(event) {
     var lat = event.latLng.lat();
@@ -26,16 +24,58 @@ export const MAP = ({ markers, updatedPointer }) => {
     };
     setSelectLocation(place);
     updatedPointer(place);
+    setNewLocationPicked(true);
   }
 
+  const getCurrentLocation = () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+      setSelectLocation({
+        lat: latitude,
+        lng: longitude,
+      });
+    });
+  };
+
+  React.useEffect(() => {
+    if (!markers) {
+      getCurrentLocation();
+    } else {
+      setSelectLocation({
+        lat: markers?.lat,
+        lng: markers?.lng,
+      });
+      updatedPointer({
+        lat: markers?.lat,
+        lng: markers?.lng,
+      });
+    }
+  }, []);
+
   return (
-    <GoogleMap
-      defaultCenter={selectLocation}
-      defaultZoom={15}
-      onClick={(e) => handleClick(e)}
-    >
-      <Marker key={12} position={selectLocation} />
-    </GoogleMap>
+    <>
+      {selectLocation && (
+        <GoogleMap
+          defaultCenter={selectLocation}
+          defaultZoom={15}
+          onClick={(e) => handleClick(e)}
+        >
+          <Marker
+            key={12}
+            position={selectLocation}
+            color="#3498DB"
+            icon={{
+              url: `https://maps.google.com/mapfiles/kml/paddle/${
+                newLocationPicked ? `red-stars.png` : `purple-stars.png`
+              }`,
+              scaledSize: { width: 50, height: 50 },
+            }}
+            title={newLocationPicked ? `` : `You are here`}
+            label={newLocationPicked ? `` : `You are here`}
+          />
+        </GoogleMap>
+      )}
+    </>
   );
 };
 

@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import SearchIcon from "@mui/icons-material/Search";
 import { debounce } from "lodash";
 
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -93,6 +94,19 @@ export default function ListOfUser() {
     }
   };
 
+  const updateUserLockedStatus = async (userId) => {
+    const response = await put("/admin/user/unlock", { userId });
+    if (validateResponseAdmin(response)) {
+      console.log(response);
+      swal("Success!", "User status successfully changed!", "success").then(
+        (value) => {
+          fetchUserList();
+        }
+      );
+    }
+  };
+  
+
   React.useEffect(() => {
     fetchUserList(0);
   }, []);
@@ -102,6 +116,17 @@ export default function ListOfUser() {
     setValue(2);
     fetchUserList(2, searchTerm);
   }, 600);
+
+  const listOfUserUI = () => {
+    return (
+      <ListOfUserView
+        users={users}
+        approveUser={approveUser}
+        updateUserStatus={updateUserStatus}
+        updateUserLockedStatus ={updateUserLockedStatus}
+      />
+    )
+  }
 
   return (
     <>
@@ -162,25 +187,13 @@ export default function ListOfUser() {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <ListOfUserView
-            users={users}
-            approveUser={approveUser}
-            updateUserStatus={updateUserStatus}
-          />
+          {listOfUserUI()}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <ListOfUserView
-            users={users}
-            approveUser={approveUser}
-            updateUserStatus={updateUserStatus}
-          />
+          {listOfUserUI()}
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <ListOfUserView
-            users={users}
-            approveUser={approveUser}
-            updateUserStatus={updateUserStatus}
-          />
+          {listOfUserUI()}
         </TabPanel>
       </Box>
     </>

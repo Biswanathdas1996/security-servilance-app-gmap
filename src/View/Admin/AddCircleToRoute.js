@@ -31,7 +31,47 @@ const AddCircleToRoutsView = ({
   handleClick,
   choosedLocation,
   deletLocation,
+  handleMapClick,
 }) => {
+  const [markerLocation, setSelectMarkerLocation] = React.useState(null);
+  const getCurrentLocation = () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+      setSelectMarkerLocation({
+        lat: latitude,
+        lng: longitude,
+      });
+    });
+  };
+
+  let watchId;
+
+  React.useEffect(() => {
+    getCurrentLocation();
+  }, []);
+
+  const trackFetchLocation = () => {
+    watchId = navigator.geolocation.watchPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        const positionData = { lat: latitude, lng: longitude };
+        setSelectMarkerLocation(positionData);
+      },
+      (error) => console.log(error),
+      { enableHighAccuracy: true, maximumAge: 20000, timeout: 10000 }
+    );
+  };
+
+  React.useEffect(() => {
+    const intervalId = setInterval(() => {
+      trackFetchLocation();
+    }, 3000);
+    return () => {
+      navigator.geolocation.clearWatch(watchId);
+      clearInterval(intervalId);
+    };
+  }, [trackFetchLocation]);
+
   return (
     <>
       <Modal
@@ -42,7 +82,7 @@ const AddCircleToRoutsView = ({
       >
         <Box sx={style}>
           {selectLocation && (
-            <MapForm markers={selectLocation} updatedPointer={updatedPointer} />
+            <MapForm markers={null} updatedPointer={updatedPointer} />
           )}
           <br />
           <TextField
@@ -98,8 +138,20 @@ const AddCircleToRoutsView = ({
               lng: routeData?.centerLong,
             }}
             defaultZoom={13}
-            onClick={(e) => handleClick(e)}
+            onClick={(e) => handleMapClick(markerLocation)}
           >
+            <Marker
+              key={10000}
+              position={markerLocation}
+              color="#3498DB"
+              title={"You are here"}
+              label={"You are here"}
+              icon={{
+                url: `https://maps.google.com/mapfiles/kml/paddle/purple-stars.png`,
+                scaledSize: { width: 50, height: 50 },
+              }}
+              onClick={(e) => handleClick(e)}
+            />
             {choosedLocation?.map((marker, index) => (
               <>
                 <Marker
