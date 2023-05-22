@@ -124,7 +124,7 @@ export default function UserRegister({ faceData }) {
 
               const body = {
                 ...values,
-                password: parseInt(values?.password),
+                password: values?.password,
                 faceID: JSON.stringify(faceData),
                 profileImage: image,
                 policeStationId: selectedPoliceStation,
@@ -260,7 +260,7 @@ export default function UserRegister({ faceData }) {
                   <input
                     type="text"
                     className="form-control icon-input input-email"
-                    id="exampleInputEmail1"
+                    id="exampleInputcontactNumber"
                     placeholder={window.site_text("pages.register.contact")}
                     name="contactNumber"
                     onChange={formik.handleChange}

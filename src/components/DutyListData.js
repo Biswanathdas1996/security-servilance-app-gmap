@@ -17,6 +17,15 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import ProgressBar from "./ProgressBar";
+
+function calculatePercentage(total, currentCount) {
+  const val = (currentCount / total) * 100;
+  if (val) {
+    return parseFloat(val).toFixed(0);
+  }
+  return 0;
+}
 
 export function FolderList({ routes }) {
   return (
@@ -58,6 +67,12 @@ export function FolderList({ routes }) {
                         "YYYY-MM-DD hh:mm A"
                       )}
                 </p>
+                <ProgressBar
+                  value={calculatePercentage(
+                    route?.totalLocations,
+                    route?.totalVisited
+                  )}
+                />
               </div>
               <div
                 className="lst-btn-hldr"

@@ -4,7 +4,6 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { post } from "../helper/apiHelper";
 import { useLocation } from "react-router-dom";
-import swal from "sweetalert";
 import "../css/start.css";
 
 const validationSchema = Yup.object().shape({
@@ -25,7 +24,7 @@ const Login = () => {
     SetLoading(true);
     const div = {
       contactNumber: values?.contactNo && values?.contactNo.toString(),
-      password: Number(values?.password),
+      password: values?.password,
     };
     const response = await post("/auth/loginWithPassword", div);
     if (response) {
