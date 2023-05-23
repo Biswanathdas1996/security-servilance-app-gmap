@@ -73,7 +73,10 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus, updateUserLocked
                   </div>
                   <div className="text-hldr">
                     <p>
-                      <strong style={{ color: "#ad0004" }}>{user?.name}</strong>
+                      {user?.roles[0]?.name === "Admin" ? <strong style={{ color: "#ad0004"}}>
+                        {user?.name}</strong> :
+                      <strong onClick={() => (window.location.href = `#/admin/user/${user.id}`)} 
+                      style={{ color: "#ad0004", cursor: "pointer" }}>{user?.name}</strong>}                        
                     </p>
 
                     <p>
