@@ -29,7 +29,7 @@ export default function VisitListTable({ locations, handleOpen }) {
                   <td>
                     {val?.isVisited
                       ? `${dayjs(new Date(val?.visitData?.createdAt)).format(
-                          "YYYY-MM-DD hh:mm A"
+                          "DD-MM-YYYY hh:mm A"
                         )}`
                       : "Not Visited"}
                   </td>
