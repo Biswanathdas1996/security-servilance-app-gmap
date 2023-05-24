@@ -18,6 +18,7 @@ import TebleReport from "./Pages/Admin/TebleReport";
 import RealTimePCRTracking from "./Pages/Admin/RealTimePCRTracking";
 import { AdminLayout, UserLayout, UserHeaderlessLayout } from "./HOC/LayOutHOC";
 import UserDetails from "./Pages/Admin/UserDetails";
+import ResetPassword from "./Pages/ResetPassword";
 
 class Routing extends React.Component {
   render() {
@@ -25,6 +26,7 @@ class Routing extends React.Component {
       <Routes>
         <Route exact path="/" element={UserHeaderlessLayout(LandingPage)} />
         <Route exact path="/home" element={UserHeaderlessLayout(Home)} />
+        <Route exact path="/resetPassword" element={UserHeaderlessLayout(ResetPassword)} />
         <Route
           exact
           path="/register"

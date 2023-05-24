@@ -280,7 +280,7 @@ export default function UserDetails() {
                     onClose={handleClose}
                     aria-labelledby="child-modal-title"
                 >
-                    <Box sx={{ ...style, width: 350 }}>
+                    <Box sx={{ ...style, width: 350, textAlign:"center" }}>
                         <p id="child-modal-title">
                             Are you sure, you want to change the PIN?
                         </p>

@@ -19,7 +19,10 @@
             "confirm_passowrd": "Confirm PIN",
             "button": "Register",
             "save_changes": "Save Changes",
-            "dummy_pin": "******"
+            "dummy_pin": "******",
+            "oldPassword": "Old PIN",
+            "newPassword": "New PIN",
+            "reset": "Reset PIN"
         },
         "map": {
             "finish_now": "End Duty"
