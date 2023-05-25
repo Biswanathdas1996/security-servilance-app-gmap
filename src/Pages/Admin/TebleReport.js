@@ -281,6 +281,21 @@ const CustomizedTables = () => {
                 className="time-hldr"
                 onClick={() =>
                   updateDateOnButtonClick(
+                    dayjs().subtract(2, "day").format("YYYY-MM-DD")
+                  )
+                }
+              >
+                <div className="time">
+                  {dayjs().subtract(2, "day").format("MMM DD YYYY")}
+                </div>
+                <div className="time-icon">
+                  <img src="../images/icon-time.png" alt="" />
+                </div>
+              </div>
+              <div
+                className="time-hldr"
+                onClick={() =>
+                  updateDateOnButtonClick(
                     dayjs().subtract(1, "day").format("YYYY-MM-DD")
                   )
                 }
@@ -302,21 +317,6 @@ const CustomizedTables = () => {
               >
                 <div className="time">
                   {dayjs(new Date()).format("MMM DD YYYY")}
-                </div>
-                <div className="time-icon">
-                  <img src="../images/icon-time.png" alt="" />
-                </div>
-              </div>
-              <div
-                className="time-hldr"
-                onClick={() =>
-                  updateDateOnButtonClick(
-                    dayjs().add(1, "day").format("YYYY-MM-DD")
-                  )
-                }
-              >
-                <div className="time">
-                  {dayjs().add(1, "day").format("MMM DD YYYY")}
                 </div>
                 <div className="time-icon">
                   <img src="../images/icon-time.png" alt="" />

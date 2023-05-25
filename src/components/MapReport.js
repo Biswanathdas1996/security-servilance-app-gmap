@@ -5,6 +5,7 @@ import {
   GoogleMap,
   Polyline,
   Circle,
+  Marker,
 } from "react-google-maps";
 
 import CircleViewDetailsModal from "../components/CircleViewDetailsModal";
@@ -85,18 +86,31 @@ const Map = withScriptjs(
                 color = "#FF0000";
               }
               return (
-                <Circle
-                  center={{ lat: val?.lat, lng: val?.long }}
-                  radius={val?.radius}
-                  onClick={() => handleOpen(val)}
-                  options={{
-                    strokeColor: "#FF0000",
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: color,
-                    fillOpacity: 0.35,
-                  }}
-                />
+                <>
+                  <Circle
+                    center={{ lat: val?.lat, lng: val?.long }}
+                    radius={val?.radius}
+                    onClick={() => handleOpen(val)}
+                    options={{
+                      strokeColor: "#FF0000",
+                      strokeOpacity: 0.8,
+                      strokeWeight: 2,
+                      fillColor: color,
+                      fillOpacity: 0.35,
+                    }}
+                  />
+                  <Marker
+                    position={{ lat: val?.lat, lng: val?.long }}
+                    optimized={true}
+                    draggable={false}
+                    label={`${val?.name}`}
+                    color="#3498DB"
+                    icon={{
+                      url: `https://maps.google.com/mapfiles/kml/paddle/red-stars.png`,
+                      scaledSize: { width: 1, height: 1 },
+                    }}
+                  />
+                </>
               );
             })}
           {/* <Polyline
