@@ -8,7 +8,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import AutocompliteInput from "../../components/AutocompliteInput";
-import { Box, Button, Modal } from '@mui/material';
+import { Box, Modal } from '@mui/material';
+import { validateResponseAdmin } from "../../helper/validateResponse";
 
 const style = {
     position: 'absolute',
@@ -50,7 +51,6 @@ export default function UserDetails() {
     const getPoliceStations = async () => {
         const response = await get("/policeStation");
         if (response?.success) {
-            console.log("---response-->", response);
             setPoliceStations(response?.data);
         }
     };
@@ -58,7 +58,6 @@ export default function UserDetails() {
     const getDesignation = async () => {
         const response = await get("/designation");
         if (response?.success) {
-            console.log("---getDesignation-->", response?.data);
             setDesignation(response?.data);
         }
     };
@@ -71,7 +70,6 @@ export default function UserDetails() {
     }
     const getUsrDetails = async () => {
         const { data } = await get(`/admin/user/${id}`);
-        console.log(data);
         setInitialVal(data);
         setLoading(false);
     }
@@ -92,7 +90,6 @@ export default function UserDetails() {
                     initialValues={initialVal}
                     validationSchema={readOnly ? validationSchemaName : validationSchema}
                     onSubmit={async (values, { setSubmitting }) => {
-                        console.log(values);
                         let data = {};
 
                         if(readOnly) {
@@ -123,12 +120,16 @@ export default function UserDetails() {
                         // }
                         // //delete body.confirmPassword;
 
-                        // const response = await put(`/admin/user/${id}`, data);
-                        // if (response?.success) {
-                        //     //window.location = "#/login";
-                        // } else {
-                        //     swal("Sorry!", "Some error occured!", "error");
-                        // }
+                        const response = await put(`/admin/user/${id}`, data);
+                        if (validateResponseAdmin(response)) {
+                            swal("Success!", "PIN changed successfully!", "success").then(
+                              (value) => {
+                                window.location = "#/admin/users";
+                              }
+                            );
+                        } else {
+                            swal("Sorry!", "Some error occured!", "error");
+                        }
                         setSubmitting(false);
                     }}
                     style={{ marginTop: 20 }}

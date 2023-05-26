@@ -31,7 +31,6 @@ const Login = () => {
       if (response?.status === 200) {
         localStorage.setItem("x-service-token", response?.data?.token);
         const userData = JSON.stringify(response?.data?.data);
-        console.log("userData---->", userData);
         localStorage.setItem("x-user-data", userData);
 
         setTimeout(() => {
@@ -43,7 +42,8 @@ const Login = () => {
             ) {
               window.location.href = "#/admin/users";
             } else {
-              window.location.href = "#/home";
+              response?.data?.data.isPasswordChangeRequired ? window.location.href= "#/resetPassword" :
+               window.location.href = "#/home";
             }
           } else {
             if (
@@ -52,7 +52,8 @@ const Login = () => {
             ) {
               window.location.href = "#/admin/users";
             } else {
-              window.location.href = "#/home";
+              response?.data?.data.isPasswordChangeRequired ? window.location.href= "#/resetPassword" :
+               window.location.href = "#/home";
             }
           }
           SetLoading(false);

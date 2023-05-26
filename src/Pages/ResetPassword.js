@@ -3,7 +3,7 @@ import { Formik, Form, ErrorMessage } from "formik";
 import { put } from "../helper/apiHelper";
 import * as Yup from "yup";
 import swal from "sweetalert";
-//import "../css/registration.css";
+import { validateResponseAdmin } from "../../src/helper/validateResponse";
 
 const initialValues = {
     oldPassword: '',
@@ -42,18 +42,21 @@ export default function ResetPassword() {
 
 
                         const body = {
-                            ...values,
-                            oldPassword: '',
-                            newPassword: ''
+                            oldPassword: values.oldPassword,
+                            newPassword: values.newPassword
                         };
                         //delete body.confirmPassword;
 
-                        // const response = await put("/profile/updatePassword", body);
-                        // if (response?.success) {
-                        //     window.location = "#/login";
-                        // } else {
-                        //     swal("Sorry!", "Some error occured!", "error");
-                        // }
+                        const response = await put(`/profile/updatePassword`, body);
+                        if (validateResponseAdmin(response)) {
+                            swal("Success!", "PIN changed successfully!", "success").then(
+                              (value) => {
+                                window.location = "#/login";
+                              }
+                            );
+                        } else {
+                            swal("Sorry!", "Some error occured!", "error");
+                        }
                         setSubmitting(false);
                     }}
                     style={{ marginTop: 20 }}
