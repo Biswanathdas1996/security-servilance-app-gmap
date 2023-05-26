@@ -17,7 +17,12 @@
             "contact": "Contact Number",
             "password": "PIN",
             "confirm_passowrd": "Confirm PIN",
-            "button": "Register"
+            "button": "Register",
+            "save_changes": "Save Changes",
+            "dummy_pin": "******",
+            "oldPassword": "Old PIN",
+            "newPassword": "New PIN",
+            "reset": "Reset PIN"
         },
         "map": {
             "finish_now": "End Duty"

@@ -177,7 +177,7 @@ export default function TemporaryDrawer({
                   className="time-hldr"
                   // onClick={() =>
                   //   updateDateOnButtonClick(
-                  //     dayjs().subtract(1, "day").format("YYYY-MM-DD")
+                  //     dayjs().subtract(1, "day").format("DD-MM-YYYY")
                   //   )
                   // }
                 >
@@ -190,7 +190,7 @@ export default function TemporaryDrawer({
                   className="time-hldr"
                   // onClick={() =>
                   //   updateDateOnButtonClick(
-                  //     dayjs(new Date()).format("YYYY-MM-DD")
+                  //     dayjs(new Date()).format("DD-MM-YYYY")
                   //   )
                   // }
                 >
@@ -203,7 +203,7 @@ export default function TemporaryDrawer({
                   className="time-hldr"
                   // onClick={() =>
                   //   updateDateOnButtonClick(
-                  //     dayjs().add(1, "day").format("YYYY-MM-DD")
+                  //     dayjs().add(1, "day").format("DD-MM-YYYY")
                   //   )
                   // }
                 >

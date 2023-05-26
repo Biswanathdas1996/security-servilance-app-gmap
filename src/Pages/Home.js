@@ -37,7 +37,7 @@ export default function FolderList() {
   const [user, setUser] = React.useState(null);
   const [loadding, setLoadding] = React.useState(false);
   const [date, setDate] = React.useState(
-    dayjs(new Date()).format("YYYY-MM-DD")
+    dayjs(new Date()).format("DD-MM-YYYY")
   );
 
   React.useEffect(() => {
@@ -127,7 +127,7 @@ export default function FolderList() {
                 className="time-hldr"
                 onClick={() =>
                   updateDateOnButtonClick(
-                    dayjs().subtract(1, "day").format("YYYY-MM-DD")
+                    dayjs().subtract(1, "day").format("DD-MM-YYYY")
                   )
                 }
               >
@@ -142,7 +142,7 @@ export default function FolderList() {
                 className="time-hldr"
                 onClick={() =>
                   updateDateOnButtonClick(
-                    dayjs(new Date()).format("YYYY-MM-DD")
+                    dayjs(new Date()).format("DD-MM-YYYY")
                   )
                 }
               >
@@ -157,7 +157,7 @@ export default function FolderList() {
                 className="time-hldr"
                 onClick={() =>
                   updateDateOnButtonClick(
-                    dayjs().add(1, "day").format("YYYY-MM-DD")
+                    dayjs().add(1, "day").format("DD-MM-YYYY")
                   )
                 }
               >

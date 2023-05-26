@@ -6,6 +6,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch, { SwitchProps } from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
+import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 
 const styles= createStyles({
   formControlLabel: { fontSize: '10px', color: '#BAB9B9',
@@ -73,7 +74,11 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus, updateUserLocked
                   </div>
                   <div className="text-hldr">
                     <p>
-                      <strong style={{ color: "#ad0004" }}>{user?.name}</strong>
+                    <strong style={{ color: "#ad0004"}}>{user?.name}</strong>
+                      {/* {user?.roles[0]?.name === "Admin" ? <strong style={{ color: "#ad0004"}}>
+                        {user?.name}</strong> :<strong 
+                      onClick={() => (window.location.href = `#/admin/user/${user.id}`)} 
+                      style={{ color: "#ad0004", cursor: "pointer" }}>{user?.name}</strong>}                         */}
                     </p>
 
                     <p>
@@ -127,17 +132,18 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus, updateUserLocked
                   </button>
                 ) : (
                   <>
-                  {/* <Switch checked = {user?.status} 
-                  onChange={()=>updateUserStatus(user?.id)} /> */}
-                      <FormGroup>
-                        <FormControlLabel
-                          control={<MaterialUISwitch sx={{ m: 1 }} checked = {user?.status} 
-                          onChange={()=>updateUserStatus(user?.id)}  />}
-                          label={<Typography style={styles.formControlLabel}>
-                            {user?.status ? 'Active' : 'Inactive'}</Typography>
-                            }
-                        />
-                      </FormGroup>
+                    {user?.roles[0]?.name !== "Admin" && 
+                    <ManageAccountsOutlinedIcon sx={{color: "#AD0004", cursor: "pointer"}}
+                    onClick={() => (window.location.href = `#/admin/user/${user.id}`)} />}
+                    <FormGroup>
+                      <FormControlLabel
+                        control={<MaterialUISwitch sx={{ m: 1 }} checked = {user?.status} 
+                        onChange={()=>updateUserStatus(user?.id)}  />}
+                        label={<Typography style={styles.formControlLabel}>
+                          {user?.status ? 'Active' : 'Inactive'}</Typography>
+                          }
+                      />
+                    </FormGroup>
                   {user?.isLocked && <button
                     type="button"
                     onClick={() => updateUserLockedStatus(user?.id)}

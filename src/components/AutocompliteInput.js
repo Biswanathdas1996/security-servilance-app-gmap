@@ -4,8 +4,8 @@ import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 
 const filter = createFilterOptions();
 
-export default function FreeSoloCreateOption({ data, onchangeCallback }) {
-  const [value, setValue] = React.useState(null);
+export default function FreeSoloCreateOption({ data, onchangeCallback, val }) {
+  const [value, setValue] = React.useState(val);
 
   return (
     <Autocomplete

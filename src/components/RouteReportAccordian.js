@@ -110,7 +110,7 @@ export default function CustomizedAccordions({ data, index, routsData }) {
                     Start :{" "}
                     <strong>
                       {dayjs(new Date(user?.startTime * 1000)).format(
-                        "YYYY-MM-DD hh:mm A"
+                        "DD-MM-YYYY hh:mm A"
                       )}
                     </strong>
                   </p>
@@ -118,7 +118,7 @@ export default function CustomizedAccordions({ data, index, routsData }) {
                     End :{" "}
                     <strong>
                       {dayjs(new Date(user?.endTime * 1000)).format(
-                        "YYYY-MM-DD hh:mm A"
+                        "DD-MM-YYYY hh:mm A"
                       )}
                     </strong>
                   </p>

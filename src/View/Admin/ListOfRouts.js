@@ -159,7 +159,7 @@ const ListOfRoutsView = ({
                     </p>
                     <p>
                       {`${dayjs(new Date(row?.createdAt)).format(
-                        "YYYY-MM-DD"
+                        "DD-MM-YYYY"
                       )}`}
                     </p>
                   </div>
