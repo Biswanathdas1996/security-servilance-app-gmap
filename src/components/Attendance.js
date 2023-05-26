@@ -10,12 +10,14 @@ import ImageListItemBar from "@mui/material/ImageListItemBar";
 import ListSubheader from "@mui/material/ListSubheader";
 import IconButton from "@mui/material/IconButton";
 import InfoIcon from "@mui/icons-material/Info";
+import TextField from "@mui/material/TextField";
 
 function App({ liveCenter }) {
   const [image, setImage] = useState(null);
   const [selfImage, setSelfImage] = useState(null);
   const [faceAuth, setFaceauth] = useState(true); ///   skip the face auth
   const [loading, setLoading] = React.useState(false);
+  const [comment, setComment] = React.useState("");
   const webcamRef = useRef(null);
   const webcam2Ref = useRef(null);
 
@@ -43,6 +45,7 @@ function App({ liveCenter }) {
       profileImage: selfImage,
       lat: 22.8796787,
       long: 88.875785,
+      comment: comment,
     };
     const response = await post("/user/visitLocation", body);
     if (validateResponseUser(response)) {
@@ -163,6 +166,15 @@ function App({ liveCenter }) {
                     </ImageListItem>
                   </ImageList>
 
+                  <br />
+                  <TextField
+                    id="outlined-basic"
+                    label="Enter Comment (if any)"
+                    variant="outlined"
+                    onChange={(e) => setComment(e.target.value)}
+                    style={{ marginBottom: "1.5rem", marginTop: "1.5rem" }}
+                    fullWidth
+                  />
                   <br />
                   {!loading ? (
                     <div style={{ display: "flex", justifyContent: "center" }}>
