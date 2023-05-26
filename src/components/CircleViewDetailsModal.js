@@ -48,9 +48,23 @@ export default function Map({ open, onClose, ...props }) {
                   </div>
                 </div>
 
+                {props?.clickedPlace?.isVisited && (
+                  <div>
+                    <div className="img-hldr">
+                      <img src="../images/icon-bookmark-circled.svg" alt="" />
+                    </div>
+                    <div className="text-hldr">
+                      <p>
+                        <strong>Comment</strong>
+                      </p>
+                      <p>{props?.clickedPlace?.visitData?.comment || ""}</p>
+                    </div>
+                  </div>
+                )}
+
                 <div>
                   <div className="img-hldr">
-                    <img src="../images/icon-bookmark-circled.svg" alt="" />
+                    <img src="../images/placeholder.png" alt="" />
                   </div>
                   {props?.clickedPlace?.isVisited ? (
                     <div className="text-hldr" style={{ width: 150 }}>
