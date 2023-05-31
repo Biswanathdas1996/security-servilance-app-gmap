@@ -27,18 +27,18 @@ const initialValues = {
   faceID: "",
   name: "",
   // email: "",
-  password: null,
+  password: "",
   confirmPassword: "",
   contactNumber: "",
   designationId: "",
 };
 
 export default function UserRegister({ faceData }) {
-  const [image, setImage] = React.useState(null);
+  const [image, setImage] = React.useState();
   const [selectedPoliceStation, setSelectedPoliceStation] =
-    React.useState(null);
-  const [designation, setDesignation] = React.useState(null);
-  const [policeStations, setPoliceStations] = React.useState(null);
+    React.useState({});
+  const [designation, setDesignation] = React.useState([]);
+  const [policeStations, setPoliceStations] = React.useState([]);
   function handleImageUpload(event) {
     const file = event.target.files[0];
 
@@ -192,7 +192,7 @@ export default function UserRegister({ faceData }) {
                           formik.touched.designationId &&
                           formik.errors.designationId
                         }
-                        helperText={
+                        helpertext={
                           formik.touched.designationId &&
                           formik.errors.designationId
                         }
@@ -235,7 +235,7 @@ export default function UserRegister({ faceData }) {
                     onBlur={formik.handleBlur}
                     value={formik.values.name}
                     error={formik.touched.name && formik.errors.name}
-                    helperText={formik.touched.name && formik.errors.name}
+                    helpertext={formik.touched.name && formik.errors.name}
                   />
                   <ErrorMessage name="name" />
                 </div>
@@ -270,7 +270,7 @@ export default function UserRegister({ faceData }) {
                       formik.touched.contactNumber &&
                       formik.errors.contactNumber
                     }
-                    helperText={
+                    helpertext={
                       formik.touched.contactNumber &&
                       formik.errors.contactNumber
                     }
@@ -288,7 +288,7 @@ export default function UserRegister({ faceData }) {
                     onBlur={formik.handleBlur}
                     value={formik.values.password}
                     error={formik.touched.password && formik.errors.password}
-                    helperText={
+                    helpertext={
                       formik.touched.password && formik.errors.password
                     }
                     inputMode="numeric"
@@ -312,7 +312,7 @@ export default function UserRegister({ faceData }) {
                       formik.touched.confirmPassword &&
                       formik.errors.confirmPassword
                     }
-                    helperText={
+                    helpertext={
                       formik.touched.confirmPassword &&
                       formik.errors.confirmPassword
                     }

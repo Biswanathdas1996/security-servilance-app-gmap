@@ -19,7 +19,6 @@ const Login = () => {
   const [loadding, SetLoading] = React.useState(false);
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    console.log(values);
     setErrorTxt(null);
     SetLoading(true);
     const div = {
@@ -68,7 +67,6 @@ const Login = () => {
         SetLoading(false);
       }
     }
-    console.log("response------->", response);
   };
 
   return (
@@ -126,7 +124,7 @@ const Login = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.contactNo}
-                    error={touched.contactNo && Boolean(errors.contactNo)}
+                    error={touched.contactNo && Boolean(errors.contactNo).toString()}
                     inputMode="numeric"
                   />
                   <ErrorMessage name="contactNo" />
@@ -141,7 +139,7 @@ const Login = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.password}
-                    error={touched.password && Boolean(errors.password)}
+                    error={touched.password && Boolean(errors.password).toString()}
                     name="password"
                     inputMode="numeric"
                   />

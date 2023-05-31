@@ -24,7 +24,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          {children}
         </Box>
       )}
     </div>
@@ -85,7 +85,6 @@ export default function ListOfUser() {
   const updateUserStatus = async (userId) => {
     const response = await put("/admin/user/toggleUserStatus", { userId });
     if (validateResponseAdmin(response)) {
-      console.log(response);
       swal("Success!", "User status successfully changed!", "success").then(
         (value) => {
           fetchUserList();
@@ -97,7 +96,6 @@ export default function ListOfUser() {
   const updateUserLockedStatus = async (userId) => {
     const response = await put("/admin/user/unlock", { userId });
     if (validateResponseAdmin(response)) {
-      console.log(response);
       swal("Success!", "User status successfully changed!", "success").then(
         (value) => {
           fetchUserList();
@@ -112,7 +110,6 @@ export default function ListOfUser() {
   }, []);
 
   const search = debounce((searchTerm) => {
-    console.log(`Searching for: ${searchTerm}`);
     setValue(2);
     fetchUserList(2, searchTerm);
   }, 600);

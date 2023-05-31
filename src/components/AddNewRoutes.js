@@ -29,19 +29,19 @@ const style = {
 };
 
 const AddNewRouter = ({ onClose }) => {
-  const [selectLocation, setSelectLocation] = React.useState(null);
+  const [selectLocation, setSelectLocation] = React.useState("");
+  let initialVal= {
+    name: "",
+    //   center: "",
+    centerLat: "",
+    centerLong: "",
+  }
 
   const formik = useFormik({
-    initialValues: {
-      name: "",
-      //   center: "",
-      centerLat: "",
-      centerLong: "",
-    },
+    initialValues: {initialVal},
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       console.log(values);
-      // return;
       const body = { ...values, center: "Barasat" };
       const response = await post("/admin/route", body);
       if (validateResponseAdmin(response)) {
@@ -55,31 +55,18 @@ const AddNewRouter = ({ onClose }) => {
   React.useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       const { latitude, longitude } = position.coords;
+      console.log("lat", latitude);
+      console.log("long",longitude);
       setSelectLocation({ lat: latitude, lng: longitude });
     });
   }, []);
-
-  // function getLocation() {
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(showPosition);
-  //   } else {
-  //     console.log("Geolocation is not supported by this browser.");
-  //   }
-  // }
-  // getLocation();
-
-  // function showPosition(position) {
-  //   const lat = position.coords.latitude;
-  //   const long = position.coords.longitude;
-  //   setSelectLocation({ lat: lat, lng: long });
-  // }
 
   const updatedPointer = (coordinate) => {
     setSelectLocation(coordinate);
   };
 
-  formik.values.centerLat = selectLocation?.lat;
-  formik.values.centerLong = selectLocation?.lng;
+  formik.values.centerLat = selectLocation?.lat ?? "";
+  formik.values.centerLong = selectLocation?.lng ?? "";
 
   return (
     <Box sx={style}>
@@ -96,7 +83,7 @@ const AddNewRouter = ({ onClose }) => {
           id="name"
           name="name"
           label="Enter route name"
-          value={formik.values.name}
+          value={formik.values?.name}
           onChange={formik.handleChange}
           error={formik.touched.name && Boolean(formik.errors.name)}
           helperText={formik.touched.name && formik.errors.name}

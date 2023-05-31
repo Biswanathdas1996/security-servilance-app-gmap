@@ -77,7 +77,7 @@ const ListOfRoutsView = ({
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <AddNewRoutes onClose={handleClose} />
+          <Box><AddNewRoutes onClose={handleClose} /></Box>
         </Modal>
         <Modal
           open={openUserModal}

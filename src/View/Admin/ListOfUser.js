@@ -51,7 +51,6 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 
 const ListOfUserView = ({ users, approveUser, updateUserStatus, updateUserLockedStatus }) => {
-  console.log("---->users", users);
   return (
     <>
       {users ? (
@@ -60,7 +59,7 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus, updateUserLocked
             <div
               className="list-hldr n-route mt-3"
               style={{ justifyContent: "space-between" }}
-              key={index + user?.id}
+              key={`userIndex${index}_${user?.id}`}
             >
               <div className="desc-hldr">
                 <div>

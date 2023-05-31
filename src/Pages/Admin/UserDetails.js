@@ -168,7 +168,7 @@ export default function UserDetails() {
                                                 formik.touched.designationId &&
                                                 formik.errors.designationId
                                             }
-                                            helperText={
+                                            helpertext={
                                                 formik.touched.designationId &&
                                                 formik.errors.designationId
                                             }
@@ -196,7 +196,7 @@ export default function UserDetails() {
                                     onBlur={formik.handleBlur}
                                     value={formik.values.name}
                                     error={formik.touched.name && formik.errors.name}
-                                    helperText={formik.touched.name && formik.errors.name}
+                                    helpertext={formik.touched.name && formik.errors.name}
                                 />
                                 <ErrorMessage name="name" />
                             </div>
@@ -214,7 +214,7 @@ export default function UserDetails() {
                                         formik.touched.contactNumber &&
                                         formik.errors.contactNumber
                                     }
-                                    helperText={
+                                    helpertext={
                                         formik.touched.contactNumber &&
                                         formik.errors.contactNumber
                                     }
@@ -234,7 +234,7 @@ export default function UserDetails() {
                                     onBlur={formik.handleBlur}
                                     value={formik.values.password}
                                     error={formik.touched.password && formik.errors.password}
-                                    helperText={
+                                    helpertext={
                                         formik.touched.password && formik.errors.password
                                     }
                                 />
