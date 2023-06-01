@@ -96,7 +96,6 @@ const AddNewRouter = ({ onClose }) => {
       <Typography id="modal-modal-title" variant="h6" component="h2">
         Pick a center of the route
       </Typography>
-      <br />
       <form onSubmit={formik.handleSubmit}>
         {selectLocation && (
           <MapForm markers={selectLocation} updatedPointer={updatedPointer} />
