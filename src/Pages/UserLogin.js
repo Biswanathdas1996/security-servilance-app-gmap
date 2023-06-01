@@ -1,6 +1,6 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { post } from "../helper/apiHelper";
 import { useLocation } from "react-router-dom";
@@ -19,7 +19,6 @@ const Login = () => {
   const [loadding, SetLoading] = React.useState(false);
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    console.log(values);
     setErrorTxt(null);
     SetLoading(true);
     const div = {
@@ -31,7 +30,6 @@ const Login = () => {
       if (response?.status === 200) {
         localStorage.setItem("x-service-token", response?.data?.token);
         const userData = JSON.stringify(response?.data?.data);
-        console.log("userData---->", userData);
         localStorage.setItem("x-user-data", userData);
 
         setTimeout(() => {
@@ -43,7 +41,8 @@ const Login = () => {
             ) {
               window.location.href = "#/admin/users";
             } else {
-              window.location.href = "#/home";
+              response?.data?.data.isPasswordChangeRequired ? window.location.href= "#/resetPassword" :
+               window.location.href = "#/home";
             }
           } else {
             if (
@@ -52,7 +51,8 @@ const Login = () => {
             ) {
               window.location.href = "#/admin/users";
             } else {
-              window.location.href = "#/home";
+              response?.data?.data.isPasswordChangeRequired ? window.location.href= "#/resetPassword" :
+               window.location.href = "#/home";
             }
           }
           SetLoading(false);
@@ -67,7 +67,6 @@ const Login = () => {
         SetLoading(false);
       }
     }
-    console.log("response------->", response);
   };
 
   return (
@@ -125,7 +124,7 @@ const Login = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.contactNo}
-                    error={touched.contactNo && Boolean(errors.contactNo)}
+                    error={touched.contactNo && Boolean(errors.contactNo).toString()}
                     inputMode="numeric"
                   />
                   <ErrorMessage name="contactNo" />
@@ -140,7 +139,7 @@ const Login = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.password}
-                    error={touched.password && Boolean(errors.password)}
+                    error={touched.password && Boolean(errors.password).toString()}
                     name="password"
                     inputMode="numeric"
                   />
