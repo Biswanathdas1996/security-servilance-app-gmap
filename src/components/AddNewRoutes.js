@@ -2,12 +2,14 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import AutocompliteInput from "./AutocompliteInput";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import MapForm from "./MapForm";
-import { post } from "../helper/apiHelper";
+import { get, post } from "../helper/apiHelper";
 import { validateResponseAdmin } from "../helper/validateResponse";
+import { useState } from "react";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("Required"),
@@ -30,19 +32,26 @@ const style = {
 
 const AddNewRouter = ({ onClose }) => {
   const [selectLocation, setSelectLocation] = React.useState("");
+  const loggedInUser = JSON.parse(localStorage.getItem("x-user-data"));
+  const [user,setUser] = useState(loggedInUser);
+  const [selectedPoliceStation, setSelectedPoliceStation] =
+        React.useState(null);
+  const [policeStations, setPoliceStations] = React.useState([]);
+
   let initialVal= {
     name: "",
     //   center: "",
     centerLat: "",
     centerLong: "",
+    policeStationId: loggedInUser.policeStationId ?? ""
   }
 
   const formik = useFormik({
     initialValues: {initialVal},
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      console.log(values);
-      const body = { ...values, center: "Barasat" };
+      delete values.initialVal;
+      const body = { ...values, center: "Barasat", policeStationId: selectedPoliceStation };
       const response = await post("/admin/route", body);
       if (validateResponseAdmin(response)) {
         window.location.replace(`#/admin/add-routs/${response?.data?.routeId}`);
@@ -52,6 +61,17 @@ const AddNewRouter = ({ onClose }) => {
     },
   });
 
+  const getPoliceStations = async () => {
+    const response = await get("/policeStation");
+    if (response?.success) {
+        setPoliceStations(response?.data);
+    }
+  };
+
+  const selectedPoliceStationCallback = (data) => {
+    setSelectedPoliceStation(data?.id);
+  };
+
   React.useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       const { latitude, longitude } = position.coords;
@@ -59,6 +79,10 @@ const AddNewRouter = ({ onClose }) => {
       console.log("long",longitude);
       setSelectLocation({ lat: latitude, lng: longitude });
     });
+    
+    if(user.policeStationId === null) {
+      getPoliceStations();
+    }
   }, []);
 
   const updatedPointer = (coordinate) => {
@@ -73,7 +97,6 @@ const AddNewRouter = ({ onClose }) => {
       <Typography id="modal-modal-title" variant="h6" component="h2">
         Pick a center of the route
       </Typography>
-      <br />
       <form onSubmit={formik.handleSubmit}>
         {selectLocation && (
           <MapForm markers={selectLocation} updatedPointer={updatedPointer} />
@@ -102,6 +125,19 @@ const AddNewRouter = ({ onClose }) => {
               )}
             </p>
           </div>
+
+          {user.policeStationId === null && policeStations && (
+            <div className="mb-3">
+              <label>Police Station</label>
+              <FormControl size="small" fullWidth>
+                <AutocompliteInput
+                  data={policeStations}
+                  onchangeCallback={selectedPoliceStationCallback}
+                />
+              </FormControl>
+              {/* <ErrorMessage name="policeStation" /> */}
+            </div>
+          )}
         </div>
 
         <TextField

@@ -3,8 +3,9 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import MapForm from "../../components/MapForm";
 import TextField from "@mui/material/TextField";
-import { GoogleMap, Circle, Marker } from "react-google-maps";
+import { GoogleMap, Circle, MarkerF, useLoadScript } from "@react-google-maps/api";
 import ListOfRoutes from "../../components/ListOfRoutes";
+import { MAP_KEY } from "../../config";
 
 const style = {
   position: "absolute",
@@ -43,6 +44,9 @@ const AddCircleToRoutsView = ({
       });
     });
   };
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: MAP_KEY,
+  });
 
   let watchId;
 
@@ -133,14 +137,15 @@ const AddCircleToRoutsView = ({
       {routeData && (
         <>
           <GoogleMap
-            defaultCenter={{
+            mapContainerClassName="map-container"
+            center={{
               lat: routeData?.centerLat,
               lng: routeData?.centerLong,
             }}
-            defaultZoom={13}
+            zoom={13}
             onClick={(e) => handleMapClick(markerLocation)}
           >
-            <Marker
+            <MarkerF
               key={10000}
               position={markerLocation}
               color="#3498DB"
@@ -154,7 +159,7 @@ const AddCircleToRoutsView = ({
             />
             {choosedLocation?.map((marker, index) => (
               <>
-                <Marker
+                <MarkerF
                   key={index}
                   position={{ lat: marker?.lat, lng: marker?.long }}
                   title={marker?.name}

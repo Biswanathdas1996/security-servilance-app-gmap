@@ -1,11 +1,11 @@
 import * as React from "react";
-import MapWrappedComponent from "../../HOC/Map";
+//import MapWrappedComponent from "../../HOC/Map";
 import { useParams } from "react-router-dom";
 import { get, post, del } from "../../helper/apiHelper";
 import { validateResponseAdmin } from "../../helper/validateResponse";
 import AddCircleToRoutsView from "../../View/Admin/AddCircleToRoute";
 
-function BasicModal() {
+export default function AddCircleToRoute() {
   const [open, setOpen] = React.useState(false);
   const [name, setName] = React.useState("");
   const [radius, setRadius] = React.useState(50);
@@ -91,6 +91,6 @@ function BasicModal() {
   );
 }
 
-export default function AddCircleToRoute() {
-  return MapWrappedComponent(BasicModal);
-}
+// export default function AddCircleToRoute() {
+//   return MapWrappedComponent(BasicModal);
+// }

@@ -13,8 +13,6 @@ function ResponsiveAppBar() {
     }
   }, []);
 
-  console.log("--user-->", user);
-
   return (
     <div className="row profile-dtl">
       <div className="col-2">

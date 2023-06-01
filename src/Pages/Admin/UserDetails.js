@@ -96,29 +96,18 @@ export default function UserDetails() {
                             data = {
                                 name: values.name,
                                 designationId: values.designation.id,
-                                policeStationId: values.policeStation.id,
+                                policeStationId: selectedPoliceStation ?? values.policeStation.id,
                                 contactNumber: values.contactNumber
                             }
                         } else {
                             data = {
                                 name: values.name,
                                 designationId: values.designation.id,
-                                policeStationId: values.policeStation.id,
+                                policeStationId: selectedPoliceStation ?? values.policeStation.id,
                                 contactNumber: values.contactNumber,
                                 password: values.password
                             }
                         }
-                        console.log('data',data);
-
-                        // if (!selectedPoliceStation) {
-                        //     swal("Error", "Please select proper police station", "warning");
-                        //     return;
-                        // }
-                        // if (body?.designationId === "") {
-                        //     swal("Error", "Please select proper designation", "warning");
-                        //     return;
-                        // }
-                        // //delete body.confirmPassword;
 
                         const response = await put(`/admin/user/${id}`, data);
                         if (validateResponseAdmin(response)) {

@@ -1,28 +1,12 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Card from "@mui/material/Card";
 import AssignUserToRouts from "../../components/AssignUserToRouts";
 import AddNewRoutes from "../../components/AddNewRoutes";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
-import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
-import SignpostIcon from "@mui/icons-material/Signpost";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import CommentIcon from "@mui/icons-material/Comment";
-import IconButton from "@mui/material/IconButton";
 import dayjs from "dayjs";
 
 const style = {
@@ -108,18 +92,6 @@ const ListOfRoutsView = ({
           boxShadow: "-1px 2px 7px rgba(46, 49, 118, 0.1)",
         }}
       >
-        {/* <div className="datepicker">
-          <div className="mb-3 mt-2">
-            <input
-              type="text"
-              className="form-control"
-              id="search"
-              placeholder="Search name / Employee ID"
-              name=""
-              onChange={(e) => search(e.target.value)}
-            />
-          </div>
-        </div> */}
 
         <button className="find-btn" onClick={handleOpen}>
           <span style={{ color: "white", fontSize: "1.2rem" }}>+</span>
@@ -131,8 +103,8 @@ const ListOfRoutsView = ({
 
       {routsData ? (
         <div className="container">
-          {routsData?.map((row) => (
-            <div
+          {routsData?.map((row,index) => (
+            <div key={`routes_${index}`}
               className="list-hldr n-route mt-3"
               style={{ justifyContent: "space-between" }}
             >
