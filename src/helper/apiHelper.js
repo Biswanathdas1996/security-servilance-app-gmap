@@ -24,7 +24,12 @@ export const get = async (url, params) => {
         .then((response) => {
           return response.json();
         })
-        .then((result) => result)
+        .then((result) => {
+          return {
+            ...result,
+            data: JSON.parse(Buffer.from(result.data, "base64").toString())
+          }
+        })
         .catch((error) => console.log("error", error));
       return response;
     } catch (error) {
@@ -50,11 +55,16 @@ export const post = async (url, data) => {
         credentials: "include",
         withCredentials: true,
         method: "POST",
-        body: JSON.stringify(data),
+        body: JSON.stringify({payload: Buffer.from(JSON.stringify(data)).toString("base64")}),
       };
       const response = await fetch(`${BASE_URL}${url}`, requestValues)
         .then((response) => response.json())
-        .then((result) => result)
+        .then((result) => {
+          return {
+            ...result,
+            data: JSON.parse(Buffer.from(result.data, "base64").toString())
+          }
+        })
         .catch((error) => console.log("error", error));
       return response;
     } catch (error) {
@@ -80,11 +90,16 @@ export const put = async (url, data) => {
         credentials: "include",
         withCredentials: true,
         method: "PUT",
-        body: JSON.stringify(data),
+        body: JSON.stringify({payload: Buffer.from(JSON.stringify(data)).toString("base64")}),
       };
       const response = await fetch(`${BASE_URL}${url}`, requestValues)
         .then((response) => response.json())
-        .then((result) => result)
+        .then((result) => {
+          return {
+            ...result,
+            data: JSON.parse(Buffer.from(result.data, "base64").toString())
+          }
+        })
         .catch((error) => console.log("error", error));
       return response;
     } catch (error) {

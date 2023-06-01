@@ -88,7 +88,7 @@ const MapData = withScriptjs(
 export default function App({ markers, updatedPointer }) {
   console.log("++++++", markers);
   return (
-    <div style={{ height: "300px", width: "100%" }}>
+    <div style={{ height: "255px", width: "100%" }}>
       <MapData
         googleMapURL={`${Google_Map_URL}?key=${MAP_KEY}`}
         loadingElement={<div style={{ height: "100%" }} />}
