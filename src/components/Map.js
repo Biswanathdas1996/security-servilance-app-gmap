@@ -20,6 +20,10 @@ export default function Map({
   reCenterLoocation,
 }) {
   const [markerPosition, setMarKerPostion] = React.useState(reCenterLoocation);
+
+  const [map, setMap] = React.useState(null);
+  const [marker, setMarker] = React.useState(null);
+
   useEffect(() => {
     // Load the Google Maps JavaScript API script dynamically
     const script = document.createElement("script");
@@ -40,7 +44,12 @@ export default function Map({
   }, [isInsideCircle]);
 
   useEffect(() => {
-    setMarKerPostion(reCenterLoocation);
+    if (map && marker) {
+      reCenterLoocation && marker && marker.setPosition(reCenterLoocation);
+      console.log("----reCenterLoocation", reCenterLoocation);
+      // Center the map on the updated marker position
+      reCenterLoocation && map && map.setCenter(reCenterLoocation);
+    }
   }, [reCenterLoocation]);
 
   const initMap = () => {
@@ -98,6 +107,8 @@ export default function Map({
           console.log("Circle clicked!");
         });
       });
+    setMap(map);
+    setMarker(marker);
   };
 
   return <div id="map" style={{ width: "100%", height: "500px" }} />;
