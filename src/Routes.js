@@ -16,6 +16,9 @@ import RouteReport from "./Pages/Admin/RouteReport";
 import Dashboard from "./Pages/Admin/Dashboard";
 import TebleReport from "./Pages/Admin/TebleReport";
 import RealTimePCRTracking from "./Pages/Admin/RealTimePCRTracking";
+
+import Sample_MAP from "./Sample_MAP";
+
 import { AdminLayout, UserLayout, UserHeaderlessLayout } from "./HOC/LayOutHOC";
 
 class Routing extends React.Component {
@@ -23,6 +26,11 @@ class Routing extends React.Component {
     return (
       <Routes>
         <Route exact path="/" element={UserHeaderlessLayout(LandingPage)} />
+        <Route
+          exact
+          path="/sample"
+          element={UserHeaderlessLayout(Sample_MAP)}
+        />
         <Route exact path="/home" element={UserHeaderlessLayout(Home)} />
         <Route
           exact
