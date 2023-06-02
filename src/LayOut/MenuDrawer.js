@@ -112,7 +112,7 @@ export default function TemporaryDrawer() {
       <Divider />
       <List>
         <ListItem
-          key={1}
+          key={`logout_5`}
           onClick={() => {
             localStorage.clear();
             window.location.replace("#/");

@@ -1,13 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
-import { GoogleMap, Circle, Marker } from "react-google-maps";
-import mapStyles from "../css/mapStyles";
-import CircleViewDetailsModal from "../components/CircleViewDetailsModal";
-import CaptureData from "../components/CaptureData";
+import { GoogleMap, Circle, MarkerF } from "@react-google-maps/api";
 
 export default function Map({
   defaultZoom,
-
   route,
   handleClick,
   currentLocation,
@@ -22,13 +18,14 @@ export default function Map({
       {route && (
         <>
           <GoogleMap
-            defaultZoom={defaultZoom}
-            defaultCenter={currentLocation}
-            defaultOptions={{ styles: mapStyles }}
+            zoom={defaultZoom}
+            center={currentLocation}
+            mapContainerClassName="map-container"
+
             // onClick={(e) => handleClick(e)}
           >
             {currentLocation && (
-              <Marker
+              <MarkerF
                 position={reCenterLoocation}
                 // label={user?.name
                 //   .split(" ")

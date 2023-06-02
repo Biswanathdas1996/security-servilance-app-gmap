@@ -1,26 +1,15 @@
 import React from "react";
 import Map from "../components/Map";
-import { withGoogleMap, withScriptjs } from "react-google-maps";
 import { Google_Map_URL, MAP_KEY } from "../config";
 import { get, post } from "../helper/apiHelper";
 import TextField from "@mui/material/TextField";
-
-import mapStyles from "../css/mapStyles";
-import Button from "@mui/material/Button";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import CircleViewDetailsModal from "../components/CircleViewDetailsModal";
 import CaptureData from "../components/CaptureData";
 import { validateResponseUser } from "../helper/validateResponse";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Card from "@mui/material/Card";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import IconButton from "@mui/material/IconButton";
 import { useParams } from "react-router-dom";
 import swal from "sweetalert";
 import "../css/dutylist.css";
-import PersonIcon from "../assets/person.jpg";
 import VisitTable from "../components/VisitTable";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
@@ -62,7 +51,7 @@ function a11yProps(index) {
   };
 }
 
-const MapWrapped = withScriptjs(withGoogleMap(Map));
+//const MapWrapped = withScriptjs(withGoogleMap(Map));
 let watchId;
 
 function Home() {
@@ -294,8 +283,7 @@ function Home() {
         <TabPanel value={value} index={0}>
           <div style={{ width: "auto", height: "60vh" }}>
             {!loading ? (
-              <MapWrapped
-                googleMapURL={`${Google_Map_URL}?v=3.exp&libraries=geometry,drawing,places&key=${MAP_KEY}`}
+              <Map
                 // loadingElement={<div style={{ height: `100%` }} />}
                 // containerElement={<div style={{ height: `100%` }} />}
                 // mapElement={<div style={{ height: `100%` }} />}
