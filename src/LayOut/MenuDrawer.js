@@ -1,7 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
@@ -9,8 +8,6 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import MenuIcon from "@mui/icons-material/Menu";
 import PeopleIcon from "@mui/icons-material/People";
 import MapIcon from "@mui/icons-material/Map";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -39,22 +36,10 @@ export default function TemporaryDrawer() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      {/* <div className="row profile-dtl" style={{ background: "#AD0004" }}>
-        <div className="col-2"></div>
-        <div className="col-8">
-          <div className="desc-hldr">
-            <h2>
-              <strong style={{ color: "#ad0004" }}>Menu</strong>
-            </h2>
-            <small style={{ color: "black" }}>Superintendent of police</small>
-          </div>
-        </div>
-        <div className="col-2"></div>
-      </div> */}
 
       <List style={{ marginTop: "2rem" }}>
         <ListItem
-          key={1}
+          key={`users_1`}
           onClick={() => (window.location.href = "#/admin/users")}
           style={{ color: "#ad0004" }}
           disablePadding
@@ -70,7 +55,7 @@ export default function TemporaryDrawer() {
       <Divider />
       <List>
         <ListItem
-          key={2}
+          key={`routes_2`}
           onClick={() => (window.location.href = "#/admin/list-of_routs")}
           style={{ color: "#ad0004" }}
           disablePadding
@@ -83,7 +68,7 @@ export default function TemporaryDrawer() {
           </ListItemButton>
         </ListItem>
         <ListItem
-          key={2}
+          key={`pdfReport_3`}
           style={{ color: "#ad0004" }}
           onClick={() => (window.location.href = "#/admin/status-reports")}
           disablePadding
@@ -96,7 +81,7 @@ export default function TemporaryDrawer() {
           </ListItemButton>
         </ListItem>
         <ListItem
-          key={2}
+          key={`onlineReport_4`}
           style={{ color: "#ad0004" }}
           onClick={() => (window.location.href = "#/admin/route-report")}
           disablePadding
@@ -112,7 +97,7 @@ export default function TemporaryDrawer() {
       <Divider />
       <List>
         <ListItem
-          key={1}
+          key={`logout_5`}
           onClick={() => {
             localStorage.clear();
             window.location.replace("#/");

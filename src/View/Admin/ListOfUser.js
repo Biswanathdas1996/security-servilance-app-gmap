@@ -3,9 +3,10 @@ import HowToRegIcon from "@mui/icons-material/HowToReg";
 import { styled,createStyles } from '@mui/material/styles';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch, { SwitchProps } from '@mui/material/Switch';
+import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
+import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 
 const styles= createStyles({
   formControlLabel: { fontSize: '10px', color: '#BAB9B9',
@@ -50,7 +51,6 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 
 const ListOfUserView = ({ users, approveUser, updateUserStatus, updateUserLockedStatus }) => {
-  console.log("---->users", users);
   return (
     <>
       {users ? (
@@ -59,7 +59,7 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus, updateUserLocked
             <div
               className="list-hldr n-route mt-3"
               style={{ justifyContent: "space-between" }}
-              key={index + user?.id}
+              key={`userIndex${index}_${user?.id}`}
             >
               <div className="desc-hldr">
                 <div>
@@ -127,8 +127,9 @@ const ListOfUserView = ({ users, approveUser, updateUserStatus, updateUserLocked
                   </button>
                 ) : (
                   <>
-                  {/* <Switch checked = {user?.status} 
-                  onChange={()=>updateUserStatus(user?.id)} /> */}
+                    {user?.roles[0]?.name !== "Admin" && 
+                    <ManageAccountsOutlinedIcon sx={{color: "#AD0004", cursor: "pointer"}}
+                    onClick={() => (window.location.href = `#/admin/user/${user.id}`)} />}
                       <FormGroup>
                         <FormControlLabel
                           control={<MaterialUISwitch sx={{ m: 1 }} checked = {user?.status} 

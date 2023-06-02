@@ -1,5 +1,4 @@
 import * as React from "react";
-import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import MenuDrawer from "../LayOut/MenuDrawer";
@@ -12,8 +11,6 @@ function ResponsiveAppBar() {
       setUser(JSON.parse(user));
     }
   }, []);
-
-  console.log("--user-->", user);
 
   return (
     <div className="row profile-dtl">
